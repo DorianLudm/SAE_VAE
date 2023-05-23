@@ -2,13 +2,17 @@ public class Utilisateur {
     private int idUt;
     private String pseudo;
     private String email;
-    private String role;
+    private String mdp;
+    private String active;
+    private int idRole;
 
-    public Utilisateur(int idUt, String pseudo, String email, String role){
+    public Utilisateur(int idUt, String pseudo, String email, String mdp, String active, int role){
         this.idUt = idUt;
         this.pseudo = pseudo;
         this.email = email;
-        this.role = role;
+        this.mdp = mdp;
+        this.active = active;
+        this.idRole = role;
     }
 
     public int getId(){
@@ -23,8 +27,16 @@ public class Utilisateur {
         return this.email;
     }
 
-    public String getRole(){
-        return this.role;
+    public String getMDP(){
+        return this.mdp;
+    }
+
+    public String getActive(){
+        return this.active;
+    }
+
+    public int getRole(){
+        return this.idRole;
     }
 
     public void setId(int newId){
@@ -39,7 +51,15 @@ public class Utilisateur {
         this.email = newEmail;
     }
 
-    public void setRole(String newRole){
-        this.role = newRole;
+    public void setMDP(String newMDP){
+        this.mdp = newMDP;
+    }
+
+    public void setActive(String activ){
+        this.active = activ;
+    }
+
+    public void setRole(int newIdR){
+        this.idRole = newIdR;
     }
 }
