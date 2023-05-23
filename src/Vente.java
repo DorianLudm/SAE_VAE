@@ -4,13 +4,17 @@ public class Vente {
     private String debVente;
     private String finVente;
     private double prixMin;
+    private double prixBase;
+    private Objet objet;
 
-    public Vente(int idVente, String statut, String debVente, String finVente,double prixMin){
+    public Vente(int idVente, String statut, String debVente, String finVente, double prixMin, double prixBase, Objet objet){
         this.idVente = idVente;
         this.statut = statut;
         this.debVente = debVente;
         this.finVente = finVente;
         this.prixMin = prixMin;
+        this.prixBase = prixBase;
+        this.objet = objet;
     }
 
     public int getId(){
@@ -33,6 +37,14 @@ public class Vente {
         return this.prixMin;
     }
 
+    public double getPrixBase(){
+        return this.prixBase;
+    }
+
+    public Objet getObjet(){
+        return this.objet;
+    }
+
     public void setId(int idV){
         this.idVente = idV;
     }
@@ -51,5 +63,13 @@ public class Vente {
 
     public void setPrixMin(double newPrixMin){
         this.prixMin = newPrixMin;
+    }
+
+    public void setPrixBase(double newPrixBase){
+        this.prixBase = newPrixBase;
+    }
+
+    public void setObjet(Objet obj){
+        this.objet = obj;
     }
 }
