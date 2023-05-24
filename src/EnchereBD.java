@@ -32,7 +32,7 @@ public class EnchereBD {
 
     public void majEnchereBD(Enchere enchere) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(enchere.getDateHeure());
-        PreparedStatement s = this.laConnexion.prepareStatement("insert into VENTE values (?,?,?,?,?,?,?)");
+        PreparedStatement s = this.laConnexion.prepareStatement("update ENCHERIR SET idut=?, idve=?, dateheure=?, montant=?");
         s.setInt(1, enchere.getUtilisateur().getId());
         s.setInt(2, enchere.getVente().getId());
         s.setDate(3, date);

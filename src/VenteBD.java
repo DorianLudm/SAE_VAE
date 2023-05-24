@@ -40,7 +40,7 @@ public class VenteBD {
     }
 
     public void majVenteBD(Vente vente) throws SQLException{
-        PreparedStatement s = this.laConnexion.prepareStatement("insert into VENTE values (?,?,?,?,?,?,?)");
+        PreparedStatement s = this.laConnexion.prepareStatement("update VENTE SET idve=?, prixbase=?, prixmin=?, debutve=?, finve=?, idob=?, idst=?");
         s.setInt(1, vente.getId());
         s.setDouble(2, vente.getPrixBase());
         s.setDouble(3, vente.getPrixMin());
