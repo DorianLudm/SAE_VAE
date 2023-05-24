@@ -19,7 +19,7 @@ public class VenteBD {
         return val;
     }
 
-    public int insererUtilBD(Vente vente) throws SQLException{
+    public int insererVenteBD(Vente vente) throws SQLException{
         vente.setId(maxNumVente()+1);
         PreparedStatement s = this.laConnexion.prepareStatement("insert into VENTE values (?,?,?,?,?,?,?)");
         s.setInt(1, vente.getId());
@@ -33,13 +33,13 @@ public class VenteBD {
         return vente.getId();
     }
 
-    public void effacerUtilBD(int id) throws SQLException{
+    public void effacerVenteBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from VENTE where idUt = ?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
-    public void majUtilBD(Vente vente) throws SQLException{
+    public void majVenteBD(Vente vente) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("insert into VENTE values (?,?,?,?,?,?,?)");
         s.setInt(1, vente.getId());
         s.setDouble(2, vente.getPrixBase());
