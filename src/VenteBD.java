@@ -12,8 +12,8 @@ public class VenteBD {
     }
 
     public int maxNumVente() throws SQLException{
-        Statement s = this.laConnexion.createStatement();
-        ResultSet rs = s.executeQuery("select count(idve) from VENTE");
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select count(idve) from VENTE");
         rs.next();
         int val = rs.getInt(1);
         return val;

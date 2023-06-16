@@ -12,8 +12,8 @@ public class CategorieBD {
     }
 
     public int maxNumCategorie() throws SQLException{
-        Statement s = this.laConnexion.createStatement();
-        ResultSet rs = s.executeQuery("select count(idcat) from CATEGORIE");
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select count(idcat) from CATEGORIE");
         rs.next();
         int val = rs.getInt(1);
         return val;

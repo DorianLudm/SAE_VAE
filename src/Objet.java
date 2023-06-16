@@ -2,11 +2,15 @@ public class Objet {
     private int idObj;
     private String nom;
     private String description;
+    private Utilisateur util;
+    private Categorie cat;
 
-    public Objet(int idObj, String nom, String description){
+    public Objet(int idObj, String nom, String description, Utilisateur util, Categorie cat){
         this.idObj = idObj;
         this.nom = nom;
         this.description = description;
+        this.util = util;
+        this.cat = cat;
     }
 
     public int getId(){
@@ -21,6 +25,14 @@ public class Objet {
         return this.description;
     }
 
+    public Utilisateur getUtilisateur(){
+        return this.util;
+    }
+
+    public Categorie getCat(){
+        return this.cat;
+    }
+
     public void setId(int newId){
         this.idObj = newId;
     }
@@ -31,5 +43,13 @@ public class Objet {
 
     public void setDescription(String newDesc){
         this.description = newDesc;
+    }
+
+    public void setUtilisateur(Utilisateur newUtil){
+        this.util = newUtil;
+    }
+
+    public void setCategorie(Categorie newCat){
+        this.cat = newCat;
     }
 }

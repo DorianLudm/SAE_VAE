@@ -12,8 +12,8 @@ public class UtilisateurBD{
     }
 
     public int maxNumUtilisateur() throws SQLException{
-        Statement s = this.laConnexion.createStatement();
-        ResultSet rs = s.executeQuery("select count(pseudo) from UTILISATEUR");
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select count(pseudo) from UTILISATEUR");
         rs.next();
         int val = rs.getInt(1);
         return val;

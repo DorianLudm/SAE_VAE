@@ -4,9 +4,9 @@ import javafx.scene.control.Button;
 
 
 public class GestionConnexion implements EventHandler<ActionEvent>{
-    private Connexion appli;
+    private ConnexionIHM appli;
     
-    public GestionConnexion(Connexion appli){
+    public GestionConnexion(ConnexionIHM appli){
         this.appli = appli;
     }
     

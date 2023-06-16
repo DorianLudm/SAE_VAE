@@ -12,8 +12,8 @@ public class ObjetBD {
     }
 
     public int maxNumObjet() throws SQLException{
-        Statement s = this.laConnexion.createStatement();
-        ResultSet rs = s.executeQuery("select count(idob) from OBJET");
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select count(idob) from OBJET");
         rs.next();
         int val = rs.getInt(1);
         return val;
