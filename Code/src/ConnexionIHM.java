@@ -115,7 +115,7 @@ public class ConnexionIHM extends Application{
         connexion.setOnAction(new GestionConnexion(this));
         HBox.setMargin(connexion, new Insets(1));
         Button inscription = new Button("Inscrivez-vous!");
-        inscription.setOnAction(new GestionConnexion(this));
+        inscription.setOnAction(new GestionSwapConnexion(this));
         HBox.setMargin(inscription, new Insets(1));
         box.getChildren().addAll(connexion,inscription);
         VBox.setMargin(box, new Insets(0, 35, 10, 10));
@@ -174,7 +174,7 @@ public class ConnexionIHM extends Application{
         text.setFont(Font.font("Arial",FontWeight.BOLD,12));
         VBox.setMargin(text, new Insets(0, 40, 2, 10));
         Button connexion = new Button("Connectez-vous!");
-        connexion.setOnAction(new GestionConnexion(this));
+        connexion.setOnAction(new GestionSwapConnexion(this));
         VBox.setMargin(connexion, new Insets(0, 40, 10, 10));
         mainBox.getChildren().addAll(username,this.tf1,password,this.tf2,mail,this.tf3,inscription,text,connexion);        
         //Ajout des éléments à root

@@ -21,11 +21,6 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
     
     public void handle(ActionEvent e){
         Button button = (Button) (e.getSource());
-        boolean inboucle = false;
-        if(button.getText().contains("Inscrivez")){
-            this.appli.inscription();
-            inboucle = true;
-        }
         if(button.getText().equals("Démarrer!")){
             try{
                 this.sql.connecter();
@@ -34,9 +29,21 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 System.out.println("Lien avec la base de donnée non réussi! (Handle)");
             }
         }
-        if(!inboucle){
-            this.appli.connection();
-            System.out.println(this.sql.isConnecte());
+        if(button.getText().equals("Connexion")){
+            // try{
+            //     this.sql.connecter();
+            // }
+            // catch(SQLException sqlE){
+            //     System.out.println("Lien avec la base de donnée non réussi! (Handle)");
+            // }
+        }
+        if(button.getText().equals("Inscription")){
+            // try{
+            //     this.sql.connecter();
+            // }
+            // catch(SQLException sqlE){
+            //     System.out.println("Lien avec la base de donnée non réussi! (Handle)");
+            // }
         }
     }
 }
