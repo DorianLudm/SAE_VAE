@@ -40,4 +40,17 @@ public class CategorieBD {
         s.setString(2, cat.getNom());
         s.executeUpdate();
     }
+
+    public Categorie getCategorieBD(Integer id) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select * from CATEGORIE where idcat="+ id.toString());
+        while (rs.next()){
+            int idCat = rs.getInt(1);
+            String nomCat = rs.getString(2);
+
+            Categorie cat = new Categorie(idCat, nomCat);
+            return cat;
+        }
+        return null;
+    }
 }
