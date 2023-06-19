@@ -7,13 +7,16 @@ public class Vente {
     private Objet objet;
     private Statut statut;
 
-    public Vente(Statut statut, String debVente, String finVente, double prixMin, double prixBase, Objet objet){
-        this.statut = statut;
+    
+
+    public Vente(int id, String debVente, String finVente, double prixMin, double prixBase, Objet objet, Statut statut) {
+        this.id = id;
         this.debVente = debVente;
         this.finVente = finVente;
         this.prixMin = prixMin;
         this.prixBase = prixBase;
         this.objet = objet;
+        this.statut = statut;
     }
 
     public Statut getStatut() {

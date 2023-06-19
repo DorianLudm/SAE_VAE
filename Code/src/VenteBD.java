@@ -80,7 +80,8 @@ public class VenteBD {
             Categorie cat = new Categorie(idCat, nomCat);
             Utilisateur util = new Utilisateur(idUt, pseudoUt, emailUt, mdpUt, activeUt, role);
             Objet objet = new Objet(idOb, nomOb, descriptionOb, util, cat);
-            Vente vente = new Vente(statut, nomSt, finVe, prixMin, prixBase, objet);
+            Vente vente = new Vente(idVe, debutVe, finVe, prixMin, prixBase, objet, statut);
+            return vente;
         }
         return null;
     }
