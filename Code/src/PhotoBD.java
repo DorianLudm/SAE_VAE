@@ -44,4 +44,34 @@ public class PhotoBD {
         s.setInt(4, photo.getObjet().getId());
         s.executeUpdate();
     }
+
+    public Photo getPhotoBD(Integer id) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select * from PHOTO natural join OBJET natural join UTILISATEUR natural join ROLE natural join CATEGORIE where idph="+id.toString());
+        while (rs.next()){
+            int idCat = rs.getInt(1);
+            int idRole = rs.getInt(2);
+            int idUt = rs.getInt(3);
+            int idOb = rs.getInt(4);
+            int idPh = rs.getInt(5);
+            String titrePh = rs.getString(6);
+            String imgPh = rs.getString(7);
+            String nomOb = rs.getString(8);
+            String descriptionOb = rs.getString(9);
+            String pseudoUt = rs.getString(10);
+            String emailUt = rs.getString(11);
+            String mdpUt = rs.getString(12);
+            String activeUt = rs.getString(13);
+            String nomRole = rs.getString(14);
+            String nomCat = rs.getString(15);
+
+            Role role = new Role(idRole, nomRole);
+            Categorie cat = new Categorie(idCat, nomCat);
+            Utilisateur util = new Utilisateur(idUt, pseudoUt, emailUt, mdpUt, activeUt, role);
+            Objet objet = new Objet(idOb, nomOb, descriptionOb, util, cat);
+            Photo photo = new Photo(idPh, titrePh, imgPh, objet);
+            return photo;
+        }
+        return null;
+    }
 }

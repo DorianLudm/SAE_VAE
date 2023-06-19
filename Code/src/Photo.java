@@ -3,12 +3,13 @@ import java.io.File;
 public class Photo {
     private int id;
     private String titre;
-    private File img;
+    private String urlImg;
     private Objet objet;
 
-   public Photo(int id, String titre, Objet obj){
+   public Photo(int id, String titre, String url, Objet obj){
         this.id = id;
         this.titre = titre;
+        this.urlImg = url;
         this.objet = obj;
     }
 
@@ -29,15 +30,16 @@ public class Photo {
     }
     
     public File getImg(){
-        return this.img;
+        File img = new File(this.urlImg);
+        return img;
     }
     
     public String getURLImg() {
-        return img.getAbsolutePath();
+        return this.urlImg;
     }
 
     public void setImg(String url) {
-        this.img = new File(url);
+        this.urlImg = url;
     }
 
     public Objet getObjet() {
