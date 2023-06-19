@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +26,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.sql.SQLException;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -52,7 +56,18 @@ public class ConnexionIHM extends Application{
     }
 
     @Override
-    public void init(){}
+    public void init(){
+        try{
+            this.sql = new ConnexionBD();
+            this.sql.connecter();
+        }
+        catch(SQLException sqlE){
+            System.out.println("Erreur lors du chargement de la base");
+        }
+        catch(ClassNotFoundException sqlE){
+            System.out.println("Erreur lors du chargement de la base");
+        }
+    }
 
     @Override
     public void start(Stage stage){
@@ -67,7 +82,7 @@ public class ConnexionIHM extends Application{
         view.setPreserveRatio(true);
         user.setGraphic(view);
         user.setContentDisplay(ContentDisplay.TOP);
-        user.setOnAction(new GestionConnexion(this));
+        user.setOnAction(new GestionConnexion(this, this.sql));
         user.setStyle(
                 "-fx-background-color: transparent;" +
                 "-fx-border-width: 5em;" +
@@ -75,7 +90,7 @@ public class ConnexionIHM extends Application{
         );
         VBox box = new VBox();
         Button connexion = new Button("Démarrer!");
-        connexion.setOnAction(new GestionConnexion(this));
+        connexion.setOnAction(new GestionConnexion(this, this.sql));
         box.getChildren().add(connexion);
         box.setAlignment(Pos.CENTER);
         //Ajout des éléments à root
@@ -115,7 +130,7 @@ public class ConnexionIHM extends Application{
         //Création de la boite des boutons
         HBox box = new HBox();
         Button connexion = new Button("Connexion");
-        connexion.setOnAction(new GestionConnexion(this));
+        connexion.setOnAction(new GestionConnexion(this, this.sql));
         HBox.setMargin(connexion, new Insets(1));
         Button inscription = new Button("Inscrivez-vous!");
         inscription.setOnAction(new GestionSwapConnexion(this));
@@ -169,7 +184,7 @@ public class ConnexionIHM extends Application{
         VBox.setMargin(this.tf3, new Insets(0, 40, 10, 10));
         //Button
         Button inscription = new Button("Inscription");
-        inscription.setOnAction(new GestionConnexion(this));
+        inscription.setOnAction(new GestionConnexion(this, this.sql));
         VBox.setMargin(inscription, new Insets(0, 40, 10, 10));
         //Lower
         Label text = new Label("Vous avez déjà un compte ?");
@@ -212,20 +227,24 @@ public class ConnexionIHM extends Application{
         this.stage.setResizable(false);
     }
 
-    public void erreurSQL() {
+    public Alert erreurSQL() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("ErreurSQL");
 		alert.setContentText("L'application n'a pas réussi à se connecter à la base de données!");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        return alert;
 	}
 
-    public void erreurConnexion() {
+    public Alert erreurConnexion() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Erreur Connexion");
 		alert.setContentText("Erreur de connexion!\nVeuillez vérifier votre nom et votre mot de passe!");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        return alert;
 	}
 
     public void mainPage(Utilisateur user){
-        System.out.println("Soon (TM)" + user.toString());
+        System.out.println(user.toString());
     }
 
     public void setConnexion(ConnexionBD connexion){
