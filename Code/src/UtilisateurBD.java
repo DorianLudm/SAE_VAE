@@ -14,17 +14,20 @@ public class UtilisateurBD{
     public Utilisateur getUser(String pseudo, String mdp) throws SQLException{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
+        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR natural join ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
         System.out.println("1");
         if(rs.next()){
             System.out.println("2");
             Integer id = rs.getInt(1);
-            String pseudoUt = rs.getString("pseudout");
-            String mail = rs.getString(3);
-            String mdpUt = rs.getString(4);
-            String active = rs.getString(5);
-            Integer idRole = rs.getInt(6);
-            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, idRole);
+            Integer idRole = rs.getInt(2);
+            String pseudoUt = rs.getString(3);
+            String mail = rs.getString(4);
+            String mdpUt = rs.getString(5);
+            String active = rs.getString(6);
+            String nomRole = rs.getString(7);
+
+            Role role = new Role(idRole, nomRole);
+            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, role);
         }
         return res;
     }
