@@ -39,4 +39,43 @@ public class EnchereBD {
         s.setDouble(4, enchere.getMontant());
         s.executeUpdate();
     }
+
+    public Enchere getEnchereBD(Integer id) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select * from ENCHERIR natural join UTILISATEUR natural join VENTE natural join ROLE natural join OBJET natural join CATEGORIE natural join STATUT where idve="+id.toString());
+        while (rs.next()){
+            int idCat = rs.getInt(1);
+            int idUt = rs.getInt(2);
+            int idOb = rs.getInt(3);
+            int idRole = rs.getInt(4);
+            int idVe = rs.getInt(5);
+            String date = rs.getString(6);
+            double montant = rs.getDouble(7);
+            String pseudoUt = rs.getString(8);
+            String emailUt = rs.getString(9);
+            String mdpUt = rs.getString(10);
+            String activeUt = rs.getString(11);
+            double prixBase = rs.getDouble(12);
+            double prixMin = rs.getDouble(13);
+            String debutVe = rs.getString(14);
+            String finVe = rs.getString(15);
+            int idSt = rs.getInt(16);
+            String nomRole = rs.getString(17);
+            String nomOb = rs.getString(18);
+            String descriptionOb = rs.getString(19);
+            String nomCat = rs.getString(20);
+            String nomSt = rs.getString(21);
+
+            Categorie cat = new Categorie(idCat, nomCat);
+            Role role = new Role(idRole, nomRole);
+            Statut statut = new Statut(idSt, nomSt);
+
+            Utilisateur util = new Utilisateur(idUt, pseudoUt, emailUt, mdpUt, activeUt, role);
+            Objet objet = new Objet(idOb, nomOb, descriptionOb, util, cat);
+            Vente vente = new Vente(idVe, debutVe, finVe, prixMin, prixBase, objet, statut);
+            Enchere enchere = new Enchere(util, vente, date, montant);
+            return enchere;
+        }
+        return null;
+    }
 }

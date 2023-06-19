@@ -65,7 +65,7 @@ public class UtilisateurBD{
         s.setString(3, util.getEmail());
         s.setString(4, util.getMDP());
         s.setString(5, util.getActive());
-        s.setInt(6, util.getRole());
+        s.setInt(6, util.getRole().getId());
         s.executeUpdate();
     }
 }

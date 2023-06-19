@@ -4,15 +4,15 @@ public class Utilisateur {
     private String email;
     private String mdp;
     private String active;
-    private int idRole;
+    private Role role;
 
-    public Utilisateur(int idUt, String pseudo, String email, String mdp, String active, int role){
+    public Utilisateur(int idUt, String pseudo, String email, String mdp, String active, Role role){
         this.idUt = idUt;
         this.pseudo = pseudo;
         this.email = email;
         this.mdp = mdp;
         this.active = active;
-        this.idRole = role;
+        this.role = role;
     }
 
     public int getId(){
@@ -35,8 +35,8 @@ public class Utilisateur {
         return this.active;
     }
 
-    public int getRole(){
-        return this.idRole;
+    public Role getRole(){
+        return this.role;
     }
 
     public void setId(int newId){
@@ -59,7 +59,7 @@ public class Utilisateur {
         this.active = activ;
     }
 
-    public void setRole(int newIdR){
-        this.idRole = newIdR;
+    public void setRole(Role role){
+        this.role = role;
     }
 }
