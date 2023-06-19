@@ -28,7 +28,7 @@ public class VenteBD {
         s.setString(4, vente.getDebutVente());
         s.setString(5, vente.getFinVente());
         s.setInt(6, vente.getObjet().getId());
-        s.setString(7, vente.getStatut());
+        s.setInt(7, vente.getStatut().getId());
         s.executeUpdate();
         return vente.getId();
     }
@@ -47,7 +47,41 @@ public class VenteBD {
         s.setString(4, vente.getDebutVente());
         s.setString(5, vente.getFinVente());
         s.setInt(6, vente.getObjet().getId());
-        s.setString(7, vente.getStatut());
+        s.setInt(7, vente.getStatut().getId());
         s.executeUpdate();
+    }
+
+    public Vente getVenteBD(Integer id) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = st.executeQuery("select * from VENTE natural join OBJET natural join UTILISATEUR natural join CATEGORIE natural join ROLE natural join STATUT where idve="+id.toString());
+        while (rs.next()){
+            int idSt = rs.getInt(1);
+            int idRole = rs.getInt(2);
+            int idCat = rs.getInt(3);
+            int idUt = rs.getInt(4);
+            int idOb = rs.getInt(5);
+            int idVe = rs.getInt(6);
+            double prixBase = rs.getDouble(7);
+            double prixMin = rs.getDouble(8);
+            String debutVe = rs.getString(9);
+            String finVe = rs.getString(10);
+            String nomOb = rs.getString(11);
+            String descriptionOb = rs.getString(12);
+            String pseudoUt = rs.getString(13);
+            String emailUt = rs.getString(14);
+            String mdpUt = rs.getString(15);
+            String activeUt = rs.getString(16);
+            String nomCat = rs.getString(17);
+            String nomRole = rs.getString(18);
+            String nomSt = rs.getString(19);
+
+            Statut statut = new Statut(idSt, nomSt);
+            Role role = new Role(idRole, nomRole);
+            Categorie cat = new Categorie(idCat, nomCat);
+            Utilisateur util = new Utilisateur(idUt, pseudoUt, emailUt, mdpUt, activeUt, role);
+            Objet objet = new Objet(idOb, nomOb, descriptionOb, util, cat);
+            Vente vente = new Vente(statut, nomSt, finVe, prixMin, prixBase, objet);
+        }
+        return null;
     }
 }
