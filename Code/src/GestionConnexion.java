@@ -7,43 +7,51 @@ import javafx.scene.control.Button;
 
 public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
-    private ConnexionMySQL sql;
+    private ConnexionBD sql;
     
-    public GestionConnexion(ConnexionIHM appli){
+    public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion){
         this.appli = appli;
-        try{
-            this.sql = new ConnexionMySQL();
-        }
-        catch(ClassNotFoundException e){
-            System.out.println("Lien avec la base de donnée non réussi! (Constructeur)");
-        }
+        this.sql = connexion;
     }
     
     public void handle(ActionEvent e){
         Button button = (Button) (e.getSource());
         if(button.getText().equals("Démarrer!")){
-            try{
-                this.sql.connecter();
-            }
-            catch(SQLException sqlE){
-                System.out.println("Lien avec la base de donnée non réussi! (Handle)");
-            }
+                this.appli.connection();
         }
         if(button.getText().equals("Connexion")){
-            // try{
-            //     this.sql.connecter();
-            // }
-            // catch(SQLException sqlE){
-            //     System.out.println("Lien avec la base de donnée non réussi! (Handle)");
-            // }
+            UtilisateurBD methode = new UtilisateurBD(this.sql); 
+            try{
+                Utilisateur user = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
+                if(!user.equals(null)){
+                    this.appli.mainPage(user);
+                }
+                else{
+                    this.appli.erreurConnexion().showAndWait();
+                }
+            }
+            catch(NullPointerException excption1){
+                System.out.println(excption1.getMessage());
+                this.appli.erreurConnexion().showAndWait();
+            }
+            catch(SQLException exception2){
+                System.out.println(exception2.getMessage());
+                this.appli.erreurSQL().showAndWait();
+            }
+            
         }
         if(button.getText().equals("Inscription")){
-            // try{
-            //     this.sql.connecter();
-            // }
-            // catch(SQLException sqlE){
-            //     System.out.println("Lien avec la base de donnée non réussi! (Handle)");
-            // }
+            System.out.println("Hi");
+            UtilisateurBD methode = new UtilisateurBD(this.sql); 
+            try{
+                System.out.println("I");
+                Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getPassword(), this.appli.getMail());
+                System.out.println("1");
+                this.appli.mainPage(newUser);
+            }
+            catch(SQLException exception){
+                this.appli.erreurSQL().showAndWait();
+            }
         }
     }
 }
