@@ -7,17 +7,20 @@ import javafx.scene.control.Button;
 
 public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
-    private ConnexionBD sql;
+    private ConnexionMySQL sql;
     
     public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion){
         this.appli = appli;
+
         this.sql = connexion;
+
     }
     
     public void handle(ActionEvent e){
         Button button = (Button) (e.getSource());
         boolean gotInLoop = false;
         if(button.getText().equals("Démarrer!")){
+
             gotInLoop = true;
             this.appli.connection();
                 
@@ -53,6 +56,7 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
             }
+
         }
     }
 }

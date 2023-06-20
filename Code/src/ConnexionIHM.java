@@ -49,7 +49,6 @@ public class ConnexionIHM extends Application{
     Le stage de l'application
     */
     private Stage stage;
-
     /**
     La connexion vers la BD
     */
@@ -73,6 +72,7 @@ public class ConnexionIHM extends Application{
     /**
     La taille max des boutons
     */
+
     private static final double BUTTON_HEIGHT = 150;
 
     public ConnexionIHM(){
@@ -282,6 +282,7 @@ public class ConnexionIHM extends Application{
     /**
     * Affiche la fenêtre
     */
+
     public void afficherFenetre(){
         //Affichage de la fenêtre
         Scene scene = new Scene(this.mainPane,400,650);
@@ -290,6 +291,7 @@ public class ConnexionIHM extends Application{
         this.stage.show();
         this.stage.setResizable(false);
     }
+
 
     /**
     * Utilisée pour affiché un pop-up lorsqu'une erreur SQL intervient

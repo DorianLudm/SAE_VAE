@@ -37,17 +37,17 @@ public class UtilisateurBD{
 		return -1;
     }
 
-    public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException{
-        int id = maxNumUtilisateur() + 1;
+    public int insererUtilBD(Utilisateur util) throws SQLException{
+        util.setId(maxNumUtilisateur()+1);
         PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
-        s.setInt(1, id);
-        s.setString(2, username);
-        s.setString(3, mail);
-        s.setString(4, mdp);
-        s.setString(5, "O");
-        s.setInt(6, 2);
+        s.setInt(1, util.getId());
+        s.setString(2, util.getPseudo());
+        s.setString(3, util.getEmail());
+        s.setString(4, util.getMDP());
+        s.setString(5, util.getActive());
+        s.setInt(6, util.getRole());
         s.executeUpdate();
-        return getUser(username, mdp);
+        return util.getId();
     }
 
     public void effacerUtilBD(int id) throws SQLException{
