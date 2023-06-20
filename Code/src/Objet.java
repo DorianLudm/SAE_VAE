@@ -39,7 +39,13 @@ public class Objet {
     }
 
     public void ajoutePhoto(Photo photo){
-        this.lesPhotos.add(photo);
+        if (this.lesPhotos.size()<5){
+            this.lesPhotos.add(photo);
+        }
+        else{
+            this.lesPhotos.add(3, photo);
+        }
+        
     }
 
     public List<Photo> getLesPhotos() {
