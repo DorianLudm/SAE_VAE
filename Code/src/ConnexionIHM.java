@@ -1,7 +1,5 @@
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
@@ -36,12 +34,11 @@ import javafx.scene.image.ImageView;
 
 
 public class ConnexionIHM extends Application{
-    private TextField tf1; //NomUt
-    private PasswordField tf2; //Password
-    private TextField tf3; //Email
+    private TextField tf1;
+    private PasswordField tf2;
+    private TextField tf3;
     private GridPane mainPane;
     private Stage stage;
-    private ConnexionBD sql;
     private static final double BUTTON_HEIGHT = 150;
 
     public ConnexionIHM(){
@@ -191,18 +188,6 @@ public class ConnexionIHM extends Application{
         this.afficherFenetre();
     }
 
-    public String getNomUt(){
-        return this.tf1.getText();
-    }
-
-    public String getPassword(){
-        return this.tf2.getText();
-    }
-
-    public String getMail(){
-        return this.tf3.getText();
-    }
-
     public void afficherFenetre(){
         //Affichage de la fenêtre
         Scene scene = new Scene(this.mainPane,400,650);
@@ -210,26 +195,6 @@ public class ConnexionIHM extends Application{
         this.stage.setTitle("Fenêtre de connexion");
         this.stage.show();
         this.stage.setResizable(false);
-    }
-
-    public void erreurSQL() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("ErreurSQL");
-		alert.setContentText("L'application n'a pas réussi à se connecter à la base de données!");
-	}
-
-    public void erreurConnexion() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Erreur Connexion");
-		alert.setContentText("Erreur de connexion!\nVeuillez vérifier votre nom et votre mot de passe!");
-	}
-
-    public void mainPage(Utilisateur user){
-        System.out.println("Soon (TM)" + user.toString());
-    }
-
-    public void setConnexion(ConnexionBD connexion){
-        this.sql = connexion;
     }
 
     public static void main(String[] args) {
