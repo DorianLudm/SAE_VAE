@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "vmArgs": "--module-path C:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ConnexionIHM",
+            "request": "launch",
+            "mainClass": "ConnexionIHM",
+            "vmArgs": "--module-path C:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib --add-modules javafx.controls,javafx.fxml",
+            "projectName": "SAE_VAE_8d25eef"
+        }
+    ]
+}

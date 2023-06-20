@@ -1,28 +1,30 @@
 public class Vente {
-    private int idVente;
-    private String statut;
+    private int id;
     private String debVente;
     private String finVente;
     private double prixMin;
     private double prixBase;
     private Objet objet;
+    private Statut statut;
 
-    public Vente(int idVente, String statut, String debVente, String finVente, double prixMin, double prixBase, Objet objet){
-        this.idVente = idVente;
-        this.statut = statut;
+    
+
+    public Vente(int id, String debVente, String finVente, double prixMin, double prixBase, Objet objet, Statut statut) {
+        this.id = id;
         this.debVente = debVente;
         this.finVente = finVente;
         this.prixMin = prixMin;
         this.prixBase = prixBase;
         this.objet = objet;
+        this.statut = statut;
     }
 
-    public int getId(){
-        return this.idVente;
+    public Statut getStatut() {
+        return statut;
     }
 
-    public String getStatut(){
-        return this.statut;
+    public void setStatut(Statut statut) {
+        this.statut = statut;
     }
 
     public String getDebutVente(){
@@ -45,14 +47,6 @@ public class Vente {
         return this.objet;
     }
 
-    public void setId(int idV){
-        this.idVente = idV;
-    }
-
-    public void setStatut(String status){
-        this.statut = status;
-    }
-
     public void setDebutVente(String debut){
         this.debVente = debut;
     }
@@ -71,5 +65,13 @@ public class Vente {
 
     public void setObjet(Objet obj){
         this.objet = obj;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
