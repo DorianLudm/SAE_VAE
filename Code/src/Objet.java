@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Objet {
     private int idObj;
     private String nom;
     private String description;
     private Utilisateur util;
     private Categorie cat;
+    private List<Photo> lesPhotos;
 
     public Objet(int idObj, String nom, String description, Utilisateur util, Categorie cat){
         this.idObj = idObj;
@@ -11,6 +15,7 @@ public class Objet {
         this.description = description;
         this.util = util;
         this.cat = cat;
+        this.lesPhotos = new ArrayList<>();
     }
 
     public int getId(){
@@ -31,6 +36,14 @@ public class Objet {
 
     public Categorie getCat(){
         return this.cat;
+    }
+
+    public void ajoutePhoto(Photo photo){
+        this.lesPhotos.add(photo);
+    }
+
+    public List<Photo> getLesPhotos() {
+        return this.lesPhotos;
     }
 
     public void setId(int newId){

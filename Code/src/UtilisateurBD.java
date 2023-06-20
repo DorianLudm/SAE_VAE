@@ -36,7 +36,7 @@ public class UtilisateurBD{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select max(idUt) from UTILISATEUR");
         if(rs.next()){
-			int maxNum = rs.getInt(1); //Valeur à la valeur de la première colonne de la dernière ligne éxécutée (ici à l'aide de rs.next())  
+			int maxNum = rs.getInt(1); //Valeur à la valeur de la première colonne de la dernière ligne exécutée (ici à l'aide de rs.next())  
 			return maxNum;
 		}
 		return -1;

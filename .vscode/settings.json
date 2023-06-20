@@ -12,6 +12,7 @@
         "c:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib\\javafx.media.jar",
         "c:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib\\javafx.swing.jar",
         "c:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib\\javafx.web.jar",
-        "c:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib\\javafx-swt.jar"
+        "c:\\Users\\casso\\Documents\\IUT\\openjfx\\javafx-sdk-17.0.7\\lib\\javafx-swt.jar",
+        "c:\\Users\\casso\\Documents\\IUT\\mariadb\\mariadb-java-client.jar"
     ]
 }
