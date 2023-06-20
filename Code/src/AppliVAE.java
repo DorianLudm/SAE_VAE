@@ -60,7 +60,7 @@ public class AppliVAE extends Application{
         this.banniere = new BorderPane();
         this.couleur = "9370DB";
         ImageView imgtest = null;
-        this.item = new Objet()
+        // this.item = new Objet();
     }
 
     /**
@@ -128,10 +128,11 @@ public class AppliVAE extends Application{
         Label ajoutenchereL = new Label("Ajouter une enchère");
         ajoutenchereL.setStyle("-fx-text-fill: #"+this.couleur+";");
         ajoutenchereL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ajoutenchereL.setPadding(new Insets(20,10,20,10));
 
         HBox image1 = new HBox();
-        ImageView img1 = new ImageView(new Image("file:img/app_photo.png", 50, 50, true, true));
-        ImageView img2 = new ImageView(new Image("file:img/app_photo.png", 50, 50, true, true));
+        ImageView img1 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
+        ImageView img2 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
         Button img1B = new Button();
         img1B.setGraphic(img1);
         img1B.setStyle("-fx-background-color: #FFF5EE");
@@ -141,10 +142,11 @@ public class AppliVAE extends Application{
         img2B.setStyle("-fx-background-color: #FFF5EE");
         img2B.setOnAction(e -> openImageFile(img2));
         image1.getChildren().addAll(img1B, img2B);
+        image1.setPadding(new Insets(20,10,20,10));
 
         HBox image2 = new HBox();
-        ImageView img3 = new ImageView(new Image("file:img/app_photo.png", 50, 50, true, true));
-        ImageView img4 = new ImageView(new Image("file:img/app_photo.png", 50, 50, true, true));
+        ImageView img3 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
+        ImageView img4 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
         Button img3B = new Button();
         img3B.setGraphic(img3);
         img3B.setStyle("-fx-background-color: #FFF5EE");
@@ -154,6 +156,7 @@ public class AppliVAE extends Application{
         img4B.setStyle("-fx-background-color: #FFF5EE");
         img4B.setOnAction(e -> openImageFile(img4));
         image2.getChildren().addAll(img3B, img4B);
+        image2.setPadding(new Insets(20,10,20,10));
 
         ImageView plus = new ImageView(new Image("file:img/union.png", 50, 50, true, true));
         Button ajouterphoto = new Button("Ajouter une photo", plus);
@@ -170,6 +173,10 @@ public class AppliVAE extends Application{
         }
 
         gauche.getChildren().addAll(ajoutenchereL, image1, image2, ajouterphoto);
+        gauche.setSpacing(10);
+        gauche.setPadding(new Insets(50, 150, 0, 100));
+        gauche.setStyle("-fx-border-width: 0 5px 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
+
 
 
         VBox droite = new VBox();
@@ -179,38 +186,47 @@ public class AppliVAE extends Application{
         Label nomL = new Label("Nom de l'article :");
         nomL.setStyle("-fx-text-fill: #"+this.couleur+";");
         nomL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        nomL.setPadding(new Insets(0, 50, 0, 0));
         TextField nomT = new TextField();
-        nomT.setStyle("-fx-border-color: #"+this.couleur+";");
+        nomT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         nom.getChildren().addAll(nomL, nomT);
+        nom.setPadding(new Insets(20,10,20,10));
 
         HBox prixdeb = new HBox();
         Label prixdebL = new Label("Prix de départ :");
         prixdebL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixdebL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        prixdebL.setPadding(new Insets(0, 50, 0, 0));
         TextField prixdebT = new TextField();
-        prixdebT.setStyle("-fx-border-color: #"+this.couleur+";");
+        prixdebT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         prixdeb.getChildren().addAll(prixdebL, prixdebT);
+        prixdeb.setPadding(new Insets(20,10,20,10));
 
         HBox prixmin = new HBox();
         Label prixminL = new Label("Prix de vente minimum :");
         prixminL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixminL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        prixminL.setPadding(new Insets(0, 50, 0, 0));
         TextField prixminT = new TextField();
-        prixminT.setStyle("-fx-border-color: #"+this.couleur+";");
+        prixminT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         prixmin.getChildren().addAll(prixminL, prixminT);
+        prixmin.setPadding(new Insets(20,10,20,10));
 
         HBox categorie = new HBox();
         Label categorieL = new Label("Catégories :");
         categorieL.setStyle("-fx-text-fill: #"+this.couleur+";");
         categorieL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        categorieL.setPadding(new Insets(0, 50, 0, 0));
         TextField categorieT = new TextField();
-        categorieT.setStyle("-fx-border-color: #"+this.couleur+";");
+        categorieT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         categorie.getChildren().addAll(categorieL, categorieT);
+        categorie.setPadding(new Insets(20,10,20,10));
 
         HBox etat = new HBox();
         Label etatL = new Label("Etat de l'article :");
         etatL.setStyle("-fx-text-fill: #"+this.couleur+";");
         etatL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        etatL.setPadding(new Insets(0, 50, 0, 0));
         String tbe = "Très bon état";
         String be = "Bon état";
         String c = "Correct";
@@ -220,6 +236,7 @@ public class AppliVAE extends Application{
         etatC.getItems().addAll(tbe,be,c,me,tme);
         etatC.setValue(tbe);
         etatC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        etat.setPadding(new Insets(20,10,20,10));
         
         etat.getChildren().addAll(etatL, etatC);
 
@@ -229,11 +246,18 @@ public class AppliVAE extends Application{
         TextArea descriptionT = new TextArea();
         descriptionT.setPadding(new Insets(8));
         descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        description.setPadding(new Insets(20,10,20,10));
 
+        HBox ajouterH = new HBox();
         Button ajouter = new Button("Ajouter");
         ajouter.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        ajouter.setPadding(new Insets(20,10,20,10));
+        ajouterH.getChildren().addAll(ajouter);
 
         droite.getChildren().addAll(nom, prixdeb, prixmin, categorie, etat, description, descriptionT, ajouter);
+        droite.setSpacing(10);
+        droite.setPadding(new Insets(50,0,0,300));
+
 
         res.getChildren().addAll(gauche, droite);
 
@@ -247,7 +271,7 @@ public class AppliVAE extends Application{
                 new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif"));
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-            Image image = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
+            Image image = new Image(selectedFile.toURI().toString(), 250, 250, true, true);
             imageView.setImage(image);
         }
     }
