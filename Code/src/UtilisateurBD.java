@@ -15,9 +15,7 @@ public class UtilisateurBD{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from UTILISATEUR where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
-        System.out.println("1");
         if(rs.next()){
-            System.out.println("2");
             Integer id = rs.getInt(1);
             String pseudoUt = rs.getString("pseudout");
             String mail = rs.getString(3);
