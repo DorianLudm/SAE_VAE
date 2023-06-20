@@ -115,7 +115,7 @@ public class ConnexionIHM extends Application{
 
         //Ajout des bouttons
         Button user = new Button();
-        ImageView view = new ImageView(new Image("file:img/User.png"));
+        ImageView view = new ImageView(new Image("file:img/user.png"));
         view.setFitHeight(BUTTON_HEIGHT);
         view.setPreserveRatio(true);
         user.setGraphic(view);
@@ -321,6 +321,7 @@ public class ConnexionIHM extends Application{
     */
     public void mainPage(Utilisateur user){
         this.user = user;
+        System.out.println("Connexion en cours...");
     }
 
     public static void main(String[] args){

@@ -1,3 +1,8 @@
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
 public class Enchere {
     private Utilisateur encherisseur;
     private Vente vente;
@@ -41,5 +46,27 @@ public class Enchere {
 
     public void setMontant(double newMontant){
         this.montant = newMontant;
+    }
+
+    public VBox toVBox(){
+        VBox res = new VBox();
+        ImageView image = ???;
+        Label nomItem = new Label(this.vente.getObjet().getNom());
+        Label prix = new Label(String.valueOf(this.montant) + "€");
+        Label temps = new Label(this.vente.tempsRestant());
+        res.getChildren().addAll(image, nomItem, prix, temps);
+        return res;
+    }
+
+    public HBox toHBox(){
+        HBox res = new HBox();
+        VBox rightBox = new VBox();
+        ImageView image = ???;
+        Label nomItem = new Label(this.vente.getObjet().getNom());
+        Label prix = new Label(String.valueOf(this.montant) + "€");
+        Label temps = new Label(this.vente.tempsRestant());
+        rightBox.getChildren().addAll(nomItem, prix, temps);
+        res.getChildren().addAll(image, rightBox);
+        return res;
     }
 }
