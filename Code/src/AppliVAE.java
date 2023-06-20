@@ -18,10 +18,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar.ButtonData ;
 import javafx.scene.control.ButtonType ;
 import java.util.List;
+import javafx.scene.shape.Line;
+import javax.swing.plaf.LabelUI;
+import javax.swing.text.LabelView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import java.util.Arrays;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.stage.Screen;
+import javafx.scene.layout.Region;
 
 public class AppliVAE extends Application{
     private BorderPane banniere;
@@ -139,7 +145,7 @@ public class AppliVAE extends Application{
         ComboBox<String> categoriesComboBox = new ComboBox<>();
         categoriesComboBox.getItems().addAll("Catégorie 1", "Catégorie 2", "Catégorie 3");
         categoriesComboBox.setPromptText("Catégories");
-        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: white;");
+        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: #FFFFFF;");
 
         ComboBox<String> etatComboBox = new ComboBox<>();
         etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
@@ -155,8 +161,93 @@ public class AppliVAE extends Application{
         top.setSpacing(10);
         top.setPadding(new Insets(10));
 
+
+
+
+        //Partie gauche
+
         VBox gauche = new VBox();
+
+        Label recommandation = new Label("Ce qui pourrait vous intéressez");
+        recommandation.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        recommandation.setTextFill(Color.web("#"+this.couleur));
+        recommandation.setPadding(new Insets(15));
+
+        HBox container = new HBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(245, 220);
+            container.getChildren().add(button);
+        }
+       
+
+        ScrollPane scrollPaneR = new ScrollPane();
+        scrollPaneR.setContent(container);
+        scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneR.setPrefSize(1200,250);
+
+
+
+        Label actu = new Label("Fil d'actu");
+        actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        actu.setTextFill(Color.web("#"+this.couleur));
+        actu.setPadding(new Insets(15));
+
+        HBox container2 = new HBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(245, 220);
+            container2.getChildren().add(button);
+        }
+       
+
+        ScrollPane scrollPaneA = new ScrollPane();
+        scrollPaneA.setContent(container2);
+        scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneA.setPrefSize(1200,250);
+
+        gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
+
+
+
+
+
+
+
         VBox droite = new VBox();
+        droite.setPadding(new Insets(0,100,50,50));
+
+
+        Label vente = new Label("Vos ventes");
+        vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        vente.setTextFill(Color.web("#"+this.couleur));
+        vente.setPadding(new Insets(15));
+
+        VBox container3 = new VBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(260, 220);
+            container3.getChildren().add(button);
+        }
+
+        ScrollPane scrollPaneO = new ScrollPane();
+        scrollPaneO.setContent(container3);
+        scrollPaneO.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneO.setPrefSize(300,600);
+        scrollPaneO.setPannable(true);
+
+
+
+        droite.getChildren().addAll(vente,scrollPaneO);
+
+
+
+
+
+
 
         panel.setTop(top);
         panel.setLeft(gauche);
