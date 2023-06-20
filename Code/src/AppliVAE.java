@@ -18,10 +18,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar.ButtonData ;
 import javafx.scene.control.ButtonType ;
 import java.util.List;
+
+
 import java.util.Arrays;
 import java.io.File;
 import java.util.ArrayList;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.scene.control.ListCell;
@@ -30,6 +31,15 @@ import javafx.scene.control.cell.TextFieldListCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javax.swing.plaf.LabelUI;
+import javax.swing.text.LabelView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import java.io.File;
+import java.util.ArrayList;
+import javafx.stage.Screen;
+import javafx.scene.layout.Region;
 
 
 public class AppliVAE extends Application{
@@ -51,16 +61,10 @@ public class AppliVAE extends Application{
 
     private String couleur;
 
-    private ImageView imgtest;
-
-    private Objet item;
-
     @Override
     public void init() {
         this.banniere = new BorderPane();
         this.couleur = "9370DB";
-        ImageView imgtest = null;
-        // this.item = new Objet();
     }
 
     /**
@@ -80,10 +84,19 @@ public class AppliVAE extends Application{
 
         Label vae = new Label("VAE");
         vae.setFont(Font.font("Ubuntu", FontWeight.BOLD, 50));
+        vae.setTextFill(Color.web("#FFFFFF"));
         vae.setPadding(new Insets(15));
 
 
+
+        ImageView icon = new ImageView(new Image("file:img/loupe.png", 55, 55, true, true));
+
+
         this.recherche = new TextField();
+        this.recherche.setPromptText("Rechercher");
+        this.recherche.setPrefHeight(60);
+        this.recherche.setPrefWidth(500);
+        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #9370DB;");
 
         this.message = new Button();
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
@@ -107,7 +120,9 @@ public class AppliVAE extends Application{
         
         // Création d'un conteneur horizontal pour les boutons
         HBox boutonsContainer = new HBox(10);
-        boutonsContainer.getChildren().addAll(this.recherche, this.message, this.favoris, this.panier, this.utilisateur);
+
+        boutonsContainer.getChildren().addAll(icon,this.recherche, this.message, this.favoris, this.panier, this.utilisateur);
+
         boutonsContainer.setPadding(new Insets(15));
         
         // Alignement horizontal du titre et des boutons
@@ -121,7 +136,14 @@ public class AppliVAE extends Application{
         return banniere;
     }
 
-    public void modeAjout(){
+
+
+
+
+        
+
+
+public void modeAjout(){
         HBox res = new HBox();
         VBox gauche = new VBox();
 
@@ -176,12 +198,9 @@ public class AppliVAE extends Application{
         gauche.setSpacing(10);
         gauche.setPadding(new Insets(50, 150, 0, 100));
         gauche.setStyle("-fx-border-width: 0 5px 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
-
-
-
+  
         VBox droite = new VBox();
-
-
+  
         HBox nom = new HBox();
         Label nomL = new Label("Nom de l'article :");
         nomL.setStyle("-fx-text-fill: #"+this.couleur+";");
@@ -276,9 +295,131 @@ public class AppliVAE extends Application{
         }
     }
 
-    public void modeAccueil(){
+    public void modeAccueil() {
+        BorderPane panel = new BorderPane();
+        HBox top = new HBox();
 
+        TitledPane prixPane = new TitledPane("Prix",null);
+
+
+        prixPane.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 10px;");
+
+        VBox prixContent = new VBox();
+        prixContent.setSpacing(10);
+        TextField prixMinTextField = new TextField();
+        prixMinTextField.setPromptText("Prix Min");
+        TextField prixMaxTextField = new TextField();
+        prixMaxTextField.setPromptText("Prix Max");
+        prixContent.getChildren().addAll(prixMinTextField, prixMaxTextField);
+        prixPane.setContent(prixContent);
+
+        ComboBox<String> categoriesComboBox = new ComboBox<>();
+        categoriesComboBox.getItems().addAll("Catégorie 1", "Catégorie 2", "Catégorie 3");
+        categoriesComboBox.setPromptText("Catégories");
+        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: #FFFFFF;");
+
+        ComboBox<String> etatComboBox = new ComboBox<>();
+        etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
+        etatComboBox.setPromptText("État");
+        etatComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: white;");
+
+        ComboBox<String> filtreComboBox = new ComboBox<>();
+        filtreComboBox.getItems().addAll("Filtre 1", "Filtre 2", "Filtre 3");
+        filtreComboBox.setPromptText("Filtre");
+        filtreComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: white;");
+
+        top.getChildren().addAll(prixPane, categoriesComboBox, etatComboBox, filtreComboBox);
+        top.setSpacing(10);
+        top.setPadding(new Insets(10));
+
+
+
+
+        //Partie gauche
+
+        VBox gauche = new VBox();
+
+        Label recommandation = new Label("Ce qui pourrait vous intéressez");
+        recommandation.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        recommandation.setTextFill(Color.web("#"+this.couleur));
+        recommandation.setPadding(new Insets(15));
+
+        HBox container = new HBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(245, 220);
+            container.getChildren().add(button);
+        }
+       
+
+        ScrollPane scrollPaneR = new ScrollPane();
+        scrollPaneR.setContent(container);
+        scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneR.setPrefSize(1200,250);
+
+
+
+        Label actu = new Label("Fil d'actu");
+        actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        actu.setTextFill(Color.web("#"+this.couleur));
+        actu.setPadding(new Insets(15));
+
+        HBox container2 = new HBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(245, 220);
+            container2.getChildren().add(button);
+        }
+       
+
+        ScrollPane scrollPaneA = new ScrollPane();
+        scrollPaneA.setContent(container2);
+        scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneA.setPrefSize(1200,250);
+
+        gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
+        VBox droite = new VBox();
+        droite.setPadding(new Insets(0,100,50,50));
+
+
+        Label vente = new Label("Vos ventes");
+        vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        vente.setTextFill(Color.web("#"+this.couleur));
+        vente.setPadding(new Insets(15));
+
+        VBox container3 = new VBox();
+        
+        for (int i = 1; i <= 10; i++) {
+            Button button = new Button("Button " + i);
+            button.setPrefSize(260, 220);
+            container3.getChildren().add(button);
+        }
+
+        ScrollPane scrollPaneO = new ScrollPane();
+        scrollPaneO.setContent(container3);
+        scrollPaneO.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+        scrollPaneO.setPrefSize(300,600);
+        scrollPaneO.setPannable(true);
+
+
+
+        droite.getChildren().addAll(vente,scrollPaneO);
+
+
+
+
+
+
+
+        panel.setTop(top);
+        panel.setLeft(gauche);
+        panel.setRight(droite);
+    
+        this.panelCentral = panel;
     }
+
 
     public void majAffichage(){
         this.fenetre.setCenter(this.panelCentral);
@@ -298,8 +439,7 @@ public class AppliVAE extends Application{
         stage.setHeight(screenBounds.getHeight());
         
         stage.setScene(this.laScene());
-        this.modeAjout();
-        // this.modeAccueil(); // Appel de la méthode modeAccueil() avant la création de la scène
+        this.modeAccueil(); // Appel de la méthode modeAccueil() avant la création de la scène
         this.majAffichage();
         stage.show();
     }

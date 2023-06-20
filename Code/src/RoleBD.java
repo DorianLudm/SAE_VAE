@@ -40,4 +40,17 @@ public class RoleBD{
         s.setString(2, role.getNom());
         s.executeUpdate();
     }
+
+    public Role getRoleBD(Integer id) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select * from ROLE where idrole=" + id.toString());
+        while (rs.next()){
+            int idRole = rs.getInt(1);
+            String nomRole = rs.getString(2);
+
+            Role role = new Role(idRole, nomRole);
+            return role;
+        }
+        return null;
+    }
 }
