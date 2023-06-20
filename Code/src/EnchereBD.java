@@ -7,10 +7,19 @@ public class EnchereBD {
     private ConnexionBD laConnexion;
     private Statement st;
 
+    /**
+     * Constructeur de base de la classe EnchereBD
+     * @param laConnexion
+     */
     public EnchereBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
+    /**
+     * Permet d'insérer une enchère dans la base de données
+     * @param enchere
+     * @throws SQLException
+     */
     public void insererEnchereBD(Enchere enchere) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(enchere.getDateHeure());
         PreparedStatement s = this.laConnexion.prepareStatement("insert into ENCHERIR values (?,?,?,?)");
@@ -21,6 +30,13 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
+    /**
+     * Permet d'effacer une enchère de la base de données
+     * @param idUt
+     * @param idVe
+     * @param dateheure
+     * @throws SQLException
+     */
     public void effacerEnchereBD(int idUt, int idVe, String dateheure) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(dateheure);
         PreparedStatement s = this.laConnexion.prepareStatement("delete from ENCHERIR where idUt = ? and idVe = ? and dateheure = ?");
@@ -30,6 +46,11 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
+    /**
+     * Permet de mettre à jour une enchère de la base de données
+     * @param enchere
+     * @throws SQLException
+     */
     public void majEnchereBD(Enchere enchere) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(enchere.getDateHeure());
         PreparedStatement s = this.laConnexion.prepareStatement("update ENCHERIR SET idut=?, idve=?, dateheure=?, montant=?");
@@ -40,6 +61,12 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
+    /**
+     * 
+     * @param id
+     * @return l'enchère que l'on recherchait et ses informations
+     * @throws SQLException
+     */
     public Enchere getEnchereBD(Integer id) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from ENCHERIR natural join UTILISATEUR natural join VENTE natural join ROLE natural join OBJET natural join CATEGORIE natural join STATUT where idve="+id.toString());

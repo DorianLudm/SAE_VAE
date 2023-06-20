@@ -7,10 +7,21 @@ public class UtilisateurBD{
     private ConnexionBD laConnexion;
     private Statement st;
     
+    /**
+     * Constructeur de base de la classe UtilisateurBD
+     * @param laConnexion
+     */
     public UtilisateurBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
+    /**
+     * 
+     * @param pseudo
+     * @param mdp
+     * @return l'utilisateur que l'on recherchait et ses informations
+     * @throws SQLException
+     */
     public Utilisateur getUser(String pseudo, String mdp) throws SQLException{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
@@ -32,6 +43,11 @@ public class UtilisateurBD{
         return res;
     }
 
+    /**
+     * 
+     * @return le nombre d'utilisateurs dans la base de données
+     * @throws SQLException
+     */
     public int maxNumUtilisateur() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select max(idUt) from UTILISATEUR");
@@ -42,6 +58,14 @@ public class UtilisateurBD{
 		return -1;
     }
 
+    /**
+     * 
+     * @param username
+     * @param mdp
+     * @param mail
+     * @return l'utilisateur que l'on vient d'ajouter dans la base de données
+     * @throws SQLException
+     */
     public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException{
         int id = maxNumUtilisateur() + 1;
         PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
@@ -55,12 +79,22 @@ public class UtilisateurBD{
         return getUser(username, mdp);
     }
 
+    /**
+     * Permet d'effacer un utilisateur de la base de données
+     * @param id
+     * @throws SQLException
+     */
     public void effacerUtilBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from UTILISATEUR where idUt = ?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
+    /**
+     * Permet de mettre à jour un utilisateur de la base de données
+     * @param util
+     * @throws SQLException
+     */
     public void majUtilBD(Utilisateur util) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("update UTILISATEUR SET idut=?, pseudout=?, emailut=?, mdput=?, activeut=?, idrole=?");
         s.setInt(1, util.getId());

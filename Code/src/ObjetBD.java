@@ -7,10 +7,19 @@ public class ObjetBD {
     private ConnexionBD laConnexion;
     private Statement st;
 
+    /**
+     * Constructeur de base de la classe ObjetBD
+     * @param laConnexion
+     */
     public ObjetBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
+    /**
+     * 
+     * @return le nombre d'objets existants dans la base de données
+     * @throws SQLException
+     */
     public int maxNumObjet() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select count(idob) from OBJET");
@@ -19,6 +28,12 @@ public class ObjetBD {
         return val;
     }
 
+    /**
+     * 
+     * @param obj
+     * @return l'identifiant de l'objet que l'on vient d'insérer dans la base de données
+     * @throws SQLException
+     */
     public int insererObjetBD(Objet obj) throws SQLException{
         obj.setId(maxNumObjet()+1);
         PreparedStatement s = this.laConnexion.prepareStatement("insert into OBJET values (?,?,?,?,?)");
@@ -31,12 +46,22 @@ public class ObjetBD {
         return obj.getId();
     }
 
+    /**
+     * Permet d'effacer un objet de la base de données
+     * @param id
+     * @throws SQLException
+     */
     public void effacerObjetBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from OBJET where idob = ?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
+    /**
+     * Permet de mettre à jour un objet de la base de données
+     * @param obj
+     * @throws SQLException
+     */
     public void majObjetBD(Objet obj) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("update OBJET SET idob=?, nomob=?, descriptionob=?, idut=?, idcat=?");
         s.setInt(1, obj.getId());
@@ -47,6 +72,12 @@ public class ObjetBD {
         s.executeUpdate();
     }
 
+    /**
+     * 
+     * @param id
+     * @return l'objet que nous cherchions et ses informations
+     * @throws SQLException
+     */
     public Objet getObjetBD(Integer id) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from OBJET natural join CATEGORIE natural join UTILISATEUR natural join ROLE natural join PHOTO where idob="+ id.toString());
