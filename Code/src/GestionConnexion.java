@@ -7,19 +7,26 @@ import javafx.scene.control.Button;
 
 public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
-    private ConnexionBD sql;
+    private ConnexionMySQL sql;
     
     public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion){
         this.appli = appli;
+
         this.sql = connexion;
+
     }
     
     public void handle(ActionEvent e){
         Button button = (Button) (e.getSource());
+        boolean gotInLoop = false;
         if(button.getText().equals("Démarrer!")){
-                this.appli.connection();
+
+            gotInLoop = true;
+            this.appli.connection();
+                
         }
-        if(button.getText().equals("Connexion")){
+        if(!gotInLoop && button.getText().equals("Connexion")){
+            gotInLoop = true;
             UtilisateurBD methode = new UtilisateurBD(this.sql); 
             try{
                 Utilisateur user = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
@@ -40,18 +47,16 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
             }
             
         }
-        if(button.getText().equals("Inscription")){
-            System.out.println("Hi");
+        if(!gotInLoop && button.getText().equals("Inscription")){
             UtilisateurBD methode = new UtilisateurBD(this.sql); 
             try{
-                System.out.println("I");
                 Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getPassword(), this.appli.getMail());
-                System.out.println("1");
                 this.appli.mainPage(newUser);
             }
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
             }
+
         }
     }
 }
