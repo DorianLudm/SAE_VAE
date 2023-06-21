@@ -66,6 +66,8 @@ public class AppliVAE extends Application{
 
     private ConnexionIHM vueConnexion;
 
+    private Stage stage;
+
 
 
     @Override
@@ -580,19 +582,18 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM();
-
-        Stage stage = new Stage();
-        stage.setTitle("VAE");
+        this.stage = new Stage();
+        this.stage.setTitle("VAE");
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
-        stage.setX(screenBounds.getMinX());
-        stage.setY(screenBounds.getMinY());
-        stage.setWidth(screenBounds.getWidth());
-        stage.setHeight(screenBounds.getHeight());
+        this.stage.setX(screenBounds.getMinX());
+        this.stage.setY(screenBounds.getMinY());
+        this.stage.setWidth(screenBounds.getWidth());
+        this.stage.setHeight(screenBounds.getHeight());
         this.modeAccueil();
         
-        stage.setScene(this.laScene());        
+        this.stage.setScene(this.laScene());        
         this.majAffichage();
-        stage.show();
+        this.stage.show();
     }
 
 
@@ -604,18 +605,19 @@ public class AppliVAE extends Application{
     public void start(Stage stage) {
         GridPane root = new ConnexionIHM();
         this.scene = new Scene(root, 400, 650);
+        this.stage = stage;
 
-        stage.setTitle("VAE");
+        this.stage.setTitle("VAE");
         // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
         // stage.setX(screenBounds.getMinX());
         // stage.setY(screenBounds.getMinY());
         // stage.setWidth(screenBounds.getWidth());
         // stage.setHeight(screenBounds.getHeight());
         
-        stage.setScene(this.scene);
+        this.stage.setScene(this.scene);
         
         this.majAffichage();
-        stage.show();
+        this.stage.show();
     }
 
     /**

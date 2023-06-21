@@ -33,9 +33,7 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 Utilisateur user = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
                 if(!user.equals(null)){
                     this.appli.mainPage(user);
-                    System.out.println(2);
                     this.vueVAE.afficheApp();
-                    System.out.println(5);
                 }
                 else{
                     this.appli.erreurConnexion().showAndWait();
@@ -57,6 +55,9 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 int idNewUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword(), "O", 2);
                 Utilisateur newUser = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
                 this.appli.mainPage(newUser);
+                this.vueVAE.afficheApp();
+
+
             }
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
