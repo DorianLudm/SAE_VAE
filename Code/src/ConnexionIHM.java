@@ -101,7 +101,7 @@ public class ConnexionIHM extends GridPane{
 
         //Ajout des boutons
         Button user = new Button();
-        ImageView view = new ImageView(new Image("file:img/user.png"));
+        ImageView view = new ImageView(new Image("file:img/User.png"));
         view.setFitHeight(BUTTON_HEIGHT);
         view.setPreserveRatio(true);
         user.setGraphic(view);
@@ -270,19 +270,6 @@ public class ConnexionIHM extends GridPane{
     }
 
     /**
-    * Affiche la fenêtre
-    */
-    // public void afficherFenetre(){
-    //     //Affichage de la fenêtre
-    //     Scene scene = new Scene(this,400,650);
-    //     this.stage.setScene(scene);
-    //     this.stage.setTitle("Fenêtre de connexion");
-    //     this.stage.show();
-    //     this.stage.setResizable(false);
-    // }
-
-
-    /**
     * Utilisée pour affiché un pop-up lorsqu'une erreur SQL intervient
     * @return L'alerte pour l'erreur du SQL
     */
@@ -307,48 +294,14 @@ public class ConnexionIHM extends GridPane{
 	}
 
     /**
-    * Utilisée pour affiché un pop-up lorsqu'une erreur d'inscription utilisateur intervient
-    * @return L'alerte lorsqu'un des champs est vide
-    */
-    public Alert champVidePopup() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Erreur Inscription");
-		alert.setContentText("Erreur lors de l'inscription!\nVeuillez complétez tout les champs!");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        return alert;
-	}
-
-    /**
-    * Utilisée pour affiché un pop-up lorsqu'un utilisateur s'incrit avec un pseudo déjà utiliser
-    * @return L'alerte lorsque l'erreur est produite
-    */
-    public Alert UtilisateurExistantPopup() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Erreur Inscription");
-		alert.setContentText("Ce pseudo est déjà utilisé! Utilisez en un autre");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        return alert;
-	}
-
-    /**
     * Envoie vers la page d'acceuil de VAE
     * @param Utitlisateur l'utilisateur qui s'est connecté
     */
     public void mainPage(Utilisateur user){
         this.user = user;
-        // System.out.println("Connexion en cours...");
-        System.out.println(this.user.toString());
-    }
-
-    /**
-    * Clear l'entrée du textfield mot de passe
-    */
-    public void clearMdp(){
-        this.password.clear();
     }
 
     public Utilisateur getUser(){
         return this.user;
     }
-
 }

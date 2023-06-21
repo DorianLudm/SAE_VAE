@@ -23,6 +23,7 @@ public class UtilisateurBD{
             String mdpUt = rs.getString(5);
             String active = rs.getString(6);
             String nomRole = rs.getString(7);
+            
             res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, new Role(idRole, nomRole));
         }
         return res;
@@ -38,28 +39,18 @@ public class UtilisateurBD{
 		return -1;
     }
 
+    public int insererUtilBD(String pseudo, String email, String mdp, String active, int role) throws SQLException{
+        PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
+        s.setInt(1, maxNumUtilisateur()+1);
+        s.setString(2, pseudo);
+        s.setString(3, email);
+        s.setString(4, mdp);
+        s.setString(5, active);
+        s.setInt(6, role);
+        s.executeUpdate();
 
-    public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException, ChampVideException, UtilisateurExistant{
-        if(username.equals("") || mdp.equals("") || mail.equals("")){
-            throw new ChampVideException();
-        }
-        else{
-            if(this.utilExistant(username)){
-                int id = maxNumUtilisateur() + 1;
-                PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
-                s.setInt(1, id);
-                s.setString(2, username);
-                s.setString(3, mail);
-                s.setString(4, mdp);
-                s.setString(5, "O");
-                s.setInt(6, 2);
-                s.executeUpdate();
-                return getUser(username, mdp);
-            }
-            else{
-                throw new UtilisateurExistant();
-            }
-        }
+        Utilisateur util = new Utilisateur(maxNumUtilisateur()+1, pseudo, email, mdp, active, new Role(role, "Utilisateur"));
+        return util.getId();
     }
 
     public void effacerUtilBD(int id) throws SQLException{
@@ -77,18 +68,5 @@ public class UtilisateurBD{
         s.setString(5, util.getActive());
         s.setInt(6, util.getRole().getId());
         s.executeUpdate();
-    }
-
-    private boolean utilExistant(String nom) throws SQLException{
-        try{
-            ResultSet rs = this.st.executeQuery("select pseudout from UTILISATEUR where pseudout = '"+ nom +"'");
-            if(rs.next()){
-                return true;
-            }
-            return false;
-        }
-        catch(NullPointerException e){
-            return false;
-        }
     }
 }
