@@ -114,6 +114,10 @@ public class ConnexionIHM extends GridPane{
         );
         VBox box = new VBox();
         this.connecter.setText("Démarrer!");
+        this.connecter.setStyle("-fx-background-color: #FFF5EE;-fx-text-fill: #9370db;-fx-border-color: #9370db;-fx-border-width: 2px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        this.connecter.setFont(Font.font("Ubuntu", FontWeight.BOLD, 13));
+        this.swapper.setStyle("-fx-background-color: #FFF5EE;-fx-text-fill: #9370db;-fx-border-color: #9370db;-fx-border-width: 2px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        this.swapper.setFont(Font.font("Ubuntu", FontWeight.BOLD, 13));
         box.getChildren().add(this.connecter);
         box.setAlignment(Pos.CENTER);
 
@@ -190,7 +194,7 @@ public class ConnexionIHM extends GridPane{
 
         // this.mainBox = new VBox();
         this.mainBox.getChildren().clear();
-        BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/BgInscription.png",254,400,false,true), null, null, null, null);
+        BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/BgInscription.png",254,410,false,true), null, null, null, null);
         this.mainBox.setBackground(new Background(backGround2));
         this.mainBox.setPrefWidth(254);
         this.mainBox.setPrefHeight(400);
