@@ -16,12 +16,14 @@ public class UtilisateurBD{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from UTILISATEUR NATURAL JOIN ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
         if(rs.next()){
+        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR natural join ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
+        if(rs.next()){
+            Integer idRole = rs.getInt(1);
             Integer id = rs.getInt(2);
             String pseudoUt = rs.getString(3);
             String mail = rs.getString(4);
             String mdpUt = rs.getString(5);
             String active = rs.getString(6);
-            Integer idRole = rs.getInt(1);
             String nomRole = rs.getString(7);
             res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, new Role(idRole, nomRole));
         }
@@ -37,6 +39,7 @@ public class UtilisateurBD{
 		}
 		return -1;
     }
+
 
     public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException, ChampVideException, UtilisateurExistant{
         if(username.equals("") || mdp.equals("") || mail.equals("")){
