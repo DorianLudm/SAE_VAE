@@ -328,6 +328,18 @@ public class ConnexionIHM extends Application{
 	}
 
     /**
+    * Utilisée pour affiché un pop-up lorsqu'un utilisateur s'incrit avec un pseudo déjà utiliser
+    * @return L'alerte lorsque l'erreur est produite
+    */
+    public Alert UtilisateurExistantPopup() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Erreur Inscription");
+		alert.setContentText("Ce pseudo est déjà utilisé! Utilisez en un autre");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        return alert;
+	}
+
+    /**
     * Envoie vers la page d'acceuil de VAE
     * @param Utitlisateur l'utilisateur qui c'est connecter
     */
@@ -335,6 +347,13 @@ public class ConnexionIHM extends Application{
         this.user = user;
         // System.out.println("Connexion en cours...");
         System.out.println(this.user.toString());
+    }
+
+    /**
+    * Clear l'entrée du textfield mot de passe
+    */
+    public void clearMdp(){
+        this.password.clear();
     }
 
     public static void main(String[] args){
