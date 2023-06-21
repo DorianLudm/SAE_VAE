@@ -316,12 +316,25 @@ public class ConnexionIHM extends Application{
 	}
 
     /**
+    * Utilisée pour affiché un pop-up lorsqu'une erreur d'inscription utilisateur intervient
+    * @return L'alerte lorsqu'un des champs est vide
+    */
+    public Alert champVidePopup() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Erreur Inscription");
+		alert.setContentText("Erreur lors de l'inscription!\nVeuillez complétez tout les champs!");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        return alert;
+	}
+
+    /**
     * Envoie vers la page d'acceuil de VAE
     * @param Utitlisateur l'utilisateur qui c'est connecter
     */
     public void mainPage(Utilisateur user){
         this.user = user;
-        System.out.println("Connexion en cours...");
+        // System.out.println("Connexion en cours...");
+        System.out.println(this.user.toString());
     }
 
     public static void main(String[] args){

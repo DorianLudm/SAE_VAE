@@ -38,17 +38,22 @@ public class UtilisateurBD{
 		return -1;
     }
 
-    public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException{
-        int id = maxNumUtilisateur() + 1;
-        PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
-        s.setInt(1, id);
-        s.setString(2, username);
-        s.setString(3, mail);
-        s.setString(4, mdp);
-        s.setString(5, "O");
-        s.setInt(6, 2);
-        s.executeUpdate();
-        return getUser(username, mdp);
+    public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException, ChampVideException{
+        if(username.equals("") || mdp.equals("") || mail.equals("")){
+            throw new ChampVideException();
+        }
+        else{
+            int id = maxNumUtilisateur() + 1;
+            PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
+            s.setInt(1, id);
+            s.setString(2, username);
+            s.setString(3, mail);
+            s.setString(4, mdp);
+            s.setString(5, "O");
+            s.setInt(6, 2);
+            s.executeUpdate();
+            return getUser(username, mdp);
+        }
     }
 
     public void effacerUtilBD(int id) throws SQLException{

@@ -75,4 +75,9 @@ public class Utilisateur {
     public List<Enchere> getEncheresLiked(){
         return this.listeLiked;
     }
+
+    @Override
+    public String toString(){
+        return "L'utilisateur possédant un ID de "+ this.getId() + " s'appelant " + this.getPseudo() + " utilise le mail suivant: " + this.getEmail();
+    }
 }

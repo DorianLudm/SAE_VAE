@@ -50,6 +50,9 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getPassword(), this.appli.getMail());
                 this.appli.mainPage(newUser);
             }
+            catch(ChampVideException exception1){
+                this.appli.champVidePopup().showAndWait();
+            }
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
             }
