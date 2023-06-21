@@ -7,12 +7,13 @@ import javafx.scene.control.Button;
 
 public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
-    private ConnexionMySQL sql;
+    private AppliVAE vueVAE;
+    private ConnexionBD sql;
     
-    public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion){
+    public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion, AppliVAE vueVAE){
         this.appli = appli;
-
         this.sql = connexion;
+        this.vueVAE = vueVAE;
 
     }
     
@@ -32,6 +33,9 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 Utilisateur user = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
                 if(!user.equals(null)){
                     this.appli.mainPage(user);
+                    System.out.println(2);
+                    this.vueVAE.afficheApp();
+                    System.out.println(5);
                 }
                 else{
                     this.appli.erreurConnexion().showAndWait();
@@ -50,7 +54,8 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
         if(!gotInLoop && button.getText().equals("Inscription")){
             UtilisateurBD methode = new UtilisateurBD(this.sql); 
             try{
-                Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getPassword(), this.appli.getMail());
+                int idNewUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword(), "O", 2);
+                Utilisateur newUser = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
                 this.appli.mainPage(newUser);
             }
             catch(SQLException exception){
