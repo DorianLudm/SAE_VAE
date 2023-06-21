@@ -1,3 +1,11 @@
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
+
 public class Vente {
     private int id;
     private String debVente;
@@ -137,5 +145,14 @@ public class Vente {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String tempsRestant() throws ParseException{
+        String res = "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(this.finVente, formatter);
+        LocalDateTime dateActuel = LocalDateTime.now();
+        Duration tempsDiff = Duration.between((Temporal) dateActuel, dateTime);
+        return tempsDiff.toString();
     }
 }

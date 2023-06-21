@@ -36,11 +36,13 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                     this.vueVAE.afficheApp();
                 }
                 else{
+                    this.appli.clearMdp();
                     this.appli.erreurConnexion().showAndWait();
                 }
             }
             catch(NullPointerException excption1){
                 System.out.println(excption1.getMessage());
+                this.appli.clearMdp();
                 this.appli.erreurConnexion().showAndWait();
             }
             catch(SQLException exception2){
@@ -58,6 +60,12 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 this.vueVAE.afficheApp();
 
 
+            }
+            catch(ChampVideException exception1){
+                this.appli.champVidePopup().showAndWait();
+            }
+            catch(UtilisateurExistant exception2){
+                this.appli.UtilisateurExistantPopup().showAndWait();
             }
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
