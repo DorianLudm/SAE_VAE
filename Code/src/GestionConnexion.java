@@ -9,12 +9,11 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
     private AppliVAE vueVAE;
     private ConnexionBD sql;
-    
+
     public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion, AppliVAE vueVAE){
         this.appli = appli;
         this.sql = connexion;
         this.vueVAE = vueVAE;
-
     }
     
     public void handle(ActionEvent e){
@@ -36,13 +35,11 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                     this.vueVAE.afficheApp();
                 }
                 else{
-                    this.appli.clearMdp();
                     this.appli.erreurConnexion().showAndWait();
                 }
             }
             catch(NullPointerException excption1){
                 System.out.println(excption1.getMessage());
-                this.appli.clearMdp();
                 this.appli.erreurConnexion().showAndWait();
             }
             catch(SQLException exception2){
@@ -54,17 +51,12 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
         if(!gotInLoop && button.getText().equals("Inscription")){
             UtilisateurBD methode = new UtilisateurBD(this.sql); 
             try{
-                Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword());
+                int idNewUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword(), "O", 2);
+                Utilisateur newUser = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
                 this.appli.mainPage(newUser);
                 this.vueVAE.afficheApp();
 
 
-            }
-            catch(ChampVideException exception1){
-                this.appli.champVidePopup().showAndWait();
-            }
-            catch(UtilisateurExistant exception2){
-                this.appli.UtilisateurExistantPopup().showAndWait();
             }
             catch(SQLException exception){
                 this.appli.erreurSQL().showAndWait();
