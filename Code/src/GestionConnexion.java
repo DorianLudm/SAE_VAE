@@ -9,12 +9,11 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
     private ConnexionIHM appli;
     private AppliVAE vueVAE;
     private ConnexionBD sql;
-    
+
     public GestionConnexion(ConnexionIHM appli, ConnexionBD connexion, AppliVAE vueVAE){
         this.appli = appli;
         this.sql = connexion;
         this.vueVAE = vueVAE;
-
     }
     
     public void handle(ActionEvent e){
