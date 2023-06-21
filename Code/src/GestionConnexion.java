@@ -54,8 +54,7 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
         if(!gotInLoop && button.getText().equals("Inscription")){
             UtilisateurBD methode = new UtilisateurBD(this.sql); 
             try{
-                int idNewUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword(), "O", 2);
-                Utilisateur newUser = methode.getUser(this.appli.getNomUt(), this.appli.getPassword());
+                Utilisateur newUser = methode.insererUtilBD(this.appli.getNomUt(), this.appli.getMail(), this.appli.getPassword());
                 this.appli.mainPage(newUser);
                 this.vueVAE.afficheApp();
 
