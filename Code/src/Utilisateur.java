@@ -119,4 +119,16 @@ public class Utilisateur {
     public void setRole(Role role){
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o){return true;}
+        if (o == null){return false;}
+        if (o instanceof Utilisateur){
+            Utilisateur u = (Utilisateur) o;
+            return this.idUt == u.idUt && this.pseudo.equals(u.pseudo) && this.email.equals(u.email) && this.mdp.equals(u.mdp) && this.active.equals(u.active) && this.role.equals(u.role);
+        }
+        return false;
+    
+    }
 }

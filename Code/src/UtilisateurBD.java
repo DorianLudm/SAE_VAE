@@ -7,94 +7,58 @@ public class UtilisateurBD{
     private ConnexionBD laConnexion;
     private Statement st;
     
-    /**
-     * Constructeur de base de la classe UtilisateurBD
-     * @param laConnexion
-     */
     public UtilisateurBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
-    /**
-     * 
-     * @param pseudo
-     * @param mdp
-     * @return l'utilisateur que l'on recherchait et ses informations
-     * @throws SQLException
-     */
     public Utilisateur getUser(String pseudo, String mdp) throws SQLException{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from UTILISATEUR natural join ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
-        System.out.println("1");
         if(rs.next()){
-            System.out.println("2");
-            Integer id = rs.getInt(1);
-            Integer idRole = rs.getInt(2);
+            Integer idRole = rs.getInt(1);
+            Integer id = rs.getInt(2);
             String pseudoUt = rs.getString(3);
             String mail = rs.getString(4);
             String mdpUt = rs.getString(5);
             String active = rs.getString(6);
             String nomRole = rs.getString(7);
-
-            Role role = new Role(idRole, nomRole);
-            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, role);
+            
+            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, new Role(idRole, nomRole));
         }
         return res;
     }
 
-    /**
-     * 
-     * @return le nombre d'utilisateurs dans la base de données
-     * @throws SQLException
-     */
     public int maxNumUtilisateur() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select max(idUt) from UTILISATEUR");
         if(rs.next()){
-			int maxNum = rs.getInt(1); //Valeur à la valeur de la première colonne de la dernière ligne exécutée (ici à l'aide de rs.next())  
+			int maxNum = rs.getInt(1); //Valeur à la valeur de la première colonne de la dernière ligne éxécutée (ici à l'aide de rs.next())  
 			return maxNum;
 		}
 		return -1;
     }
 
-    /**
-     * 
-     * @param username
-     * @param mdp
-     * @param mail
-     * @return l'utilisateur que l'on vient d'ajouter dans la base de données
-     * @throws SQLException
-     */
-    public Utilisateur insererUtilBD(String username, String mdp, String mail) throws SQLException{
-        int id = maxNumUtilisateur() + 1;
+    public int insererUtilBD(String pseudo, String email, String mdp, String active, int role) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
-        s.setInt(1, id);
-        s.setString(2, username);
-        s.setString(3, mail);
+        s.setInt(1, maxNumUtilisateur()+1);
+        s.setString(2, pseudo);
+        s.setString(3, email);
         s.setString(4, mdp);
-        s.setString(5, "O");
-        s.setInt(6, 2);
+        s.setString(5, active);
+        s.setInt(6, role);
         s.executeUpdate();
-        return getUser(username, mdp);
+
+        Utilisateur util = new Utilisateur(maxNumUtilisateur()+1, pseudo, email, mdp, active, new Role(role, "Utilisateur"));
+        return util.getId();
     }
 
-    /**
-     * Permet d'effacer un utilisateur de la base de données
-     * @param id
-     * @throws SQLException
-     */
     public void effacerUtilBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from UTILISATEUR where idUt = ?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
-    /**
-     * Permet de mettre à jour un utilisateur de la base de données
-     * @param util
-     * @throws SQLException
-     */
     public void majUtilBD(Utilisateur util) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("update UTILISATEUR SET idut=?, pseudout=?, emailut=?, mdput=?, activeut=?, idrole=?");
         s.setInt(1, util.getId());
