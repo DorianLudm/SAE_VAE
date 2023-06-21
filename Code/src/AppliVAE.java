@@ -127,7 +127,7 @@ public class AppliVAE extends Application{
         this.home = new Button();
         this.home.setGraphic(new ImageView(new Image("file:img/accueil.png", 50, 50, true, true)));
         this.home.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.home.setOnAction();
+        this.home.setOnAction(new ControleurAccueil(this));
         
         // Création d'un conteneur horizontal pour les boutons
         HBox boutonsContainer = new HBox(10);
