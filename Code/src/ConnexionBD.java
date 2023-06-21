@@ -7,24 +7,18 @@ public class ConnexionBD {
 		Class.forName("org.mariadb.jdbc.Driver");
 	}
 
-	public void connecter(String nomServeur, String nomBase, String nomLogin, String motDePasse) throws SQLException {
-		// si tout c'est bien passé la connexion n'est plus nulle
-		Connection c;
-		try {
-			c = DriverManager.getConnection("jdbc:mysql://"+nomBase,nomLogin,motDePasse);
-			this.mysql=c;
-		} catch ( SQLException ex ) {
-			System.out.println("Msg : " + ex.getMessage() + ex.getErrorCode());
-		}
-
+	public void connecter() throws SQLException {
+		this.mysql = DriverManager.getConnection("jdbc:mysql://servinfo-mariadb:3306/DBludmann", "ludmann", "ludmann");                                                                                                                                                           
 		this.connecte=this.mysql!=null;
-	}
+    }
+	
 	public void close() throws SQLException {
 		// fermer la connexion
 		this.connecte=false;
 	}
 
-    	public boolean isConnecte() { return this.connecte;}
+    public boolean isConnecte() {return this.connecte;}
+	
 	public Statement createStatement() throws SQLException {
 		return this.mysql.createStatement();
 	}
@@ -33,4 +27,7 @@ public class ConnexionBD {
 		return this.mysql.prepareStatement(requete);
 	}
 	
+	public Connection getCon(){
+        return this.mysql;
+    }
 }

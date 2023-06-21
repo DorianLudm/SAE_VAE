@@ -24,7 +24,7 @@ import javafx.scene.image.ImageView;
 import java.sql.SQLException;
 
 
-public class ConnexionIHM extends Application{
+public class ConnexionIHM extends GridPane{
     /**
     Le TextField dans lequel l'utilisateur rentre son pseudo 
     */
@@ -39,11 +39,6 @@ public class ConnexionIHM extends Application{
     Le TextField dans lequel l'utilisateur rentre son mail lors de l'inscription
     */
     private TextField mail;
-
-    /**
-    La Gridpane principale
-    */
-    private GridPane mainPane;
 
     /**
     Le stage de l'application
@@ -74,21 +69,20 @@ public class ConnexionIHM extends Application{
     */
 
     private static final double BUTTON_HEIGHT = 150;
+    private VBox mainBox;
+    private AppliVAE appliVAE;
+
+
 
     public ConnexionIHM(){
         super();
-    }
-
-    /**
-    * Initialise l'application
-    */
-    @Override
-    public void init(){
         this.username = new TextField();
         this.password = new PasswordField();
         this.mail = new TextField();
         this.swapper = new Button("");
         this.connecter = new Button("");
+        this.mainBox = new VBox();
+        this.appliVAE = new AppliVAE();
         try{
             this.sql = new ConnexionBD();
             this.sql.connecter();
@@ -100,27 +94,19 @@ public class ConnexionIHM extends Application{
             System.out.println("Erreur lors du chargement de la base");
         }
         swapper.setOnAction(new GestionSwapConnexion(this));
-        connecter.setOnAction(new GestionConnexion(this, this.sql));
-    }
+        connecter.setOnAction(new GestionConnexion(this, this.sql, this.appliVAE));
 
-    /**
-    * Lance l'application
-    * @param Stage le stage de la fenêtre
-    */
-    @Override
-    public void start(Stage stage){
-        GridPane root = new GridPane();
         BackgroundImage backGround = new BackgroundImage(new Image("file:img/BackgroundWithLogo.png",400,650,false,true), null, null, null, null);
-        root.setBackground(new Background(backGround));
+        this.setBackground(new Background(backGround));
 
-        //Ajout des bouttons
+        //Ajout des boutons
         Button user = new Button();
         ImageView view = new ImageView(new Image("file:img/User.png"));
         view.setFitHeight(BUTTON_HEIGHT);
         view.setPreserveRatio(true);
         user.setGraphic(view);
         user.setContentDisplay(ContentDisplay.TOP);
-        user.setOnAction(new GestionConnexion(this, this.sql));
+        user.setOnAction(new GestionConnexion(this, this.sql, this.appliVAE));
         user.setStyle(
                 "-fx-background-color: transparent;" +
                 "-fx-border-width: 5em;" +
@@ -131,33 +117,34 @@ public class ConnexionIHM extends Application{
         box.getChildren().add(this.connecter);
         box.setAlignment(Pos.CENTER);
 
-        //Ajout des éléments à root
-        root.add(user,0,0);
-        root.add(box,0,1);
-        root.setAlignment(Pos.CENTER);
+        //Ajout des éléments à this
+        this.add(user,0,0);
+        this.add(box,0,1);
+        this.setAlignment(Pos.CENTER);
 
         //Ajout de la GridPane dans l'attribut mainPane
-        this.mainPane = root;
+        // this.mainPane = this;
         this.stage = stage;
 
         //Affichage de la fenêtre
-        this.afficherFenetre();
+        // this.afficherFenetre();
     }
 
     /**
     * Affiche la page de connection
     */
     public void connection(){
-        GridPane root = new GridPane();
         BackgroundImage backGround = new BackgroundImage(new Image("file:img/BackgroundWithLogo.png",400,650,false,true), null, null, null, null);
-        root.setBackground(new Background(backGround));
+        this.setBackground(new Background(backGround));
 
         //Création de la boite principale
-        VBox mainBox = new VBox();
         BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/Background2.png",254,311,false,true), null, null, null, null);
-        mainBox.setBackground(new Background(backGround2));
-        mainBox.setPrefWidth(254);
-        mainBox.setPrefHeight(311);
+        this.mainBox.setBackground(new Background(backGround2));
+
+        // this.mainBox = new VBox();
+        this.mainBox.getChildren().clear();
+        this.mainBox.setPrefWidth(254);
+        this.mainBox.setPrefHeight(311);
         Label username = new Label("Nom d'utilisateur");
         username.setFont(Font.font("Arial",FontWeight.BOLD,18));
         username.setTextFill(Color.web("#ffffff"));
@@ -179,33 +166,35 @@ public class ConnexionIHM extends Application{
         HBox.setMargin(this.swapper, new Insets(1));
         box.getChildren().addAll(this.connecter,this.swapper);
         VBox.setMargin(box, new Insets(0, 35, 10, 10));
-        mainBox.getChildren().addAll(username,this.username,password,this.password,box);
+        this.mainBox.getChildren().addAll(username,this.username,password,this.password,box);
         
 
-        //Ajout des éléments à root
-        root.add(mainBox,0,0);
-        root.setAlignment(Pos.CENTER);
+        //Ajout des éléments à this
+        this.getChildren().clear();
+        this.add(this.mainBox,0,0);
+        this.setAlignment(Pos.CENTER);
 
         //Ajout de la GridPane dans l'attribut mainPane
-        this.mainPane = root;
+        // this.mainPane = this;
 
         //Affichage de la fenêtre
-        this.afficherFenetre();
+        // this.afficherFenetre();
     }
 
     /**
     * Affiche la page d'inscription
     */
     public void inscription(){
-        GridPane root = new GridPane();
         BackgroundImage backGround = new BackgroundImage(new Image("file:img/BackgroundWithLogo.png",400,650,false,true), null, null, null, null);
-        root.setBackground(new Background(backGround));
+        this.setBackground(new Background(backGround));
 
-        VBox mainBox = new VBox();
+        // this.mainBox = new VBox();
+        this.mainBox.getChildren().clear();
         BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/BgInscription.png",254,400,false,true), null, null, null, null);
-        mainBox.setBackground(new Background(backGround2));
-        mainBox.setPrefWidth(254);
-        mainBox.setPrefHeight(400);
+        this.mainBox.setBackground(new Background(backGround2));
+        this.mainBox.setPrefWidth(254);
+        this.mainBox.setPrefHeight(400);
+
 
         //Username
         Label username = new Label("Nom d'utilisateur");
@@ -242,17 +231,18 @@ public class ConnexionIHM extends Application{
         VBox.setMargin(text, new Insets(0, 40, 2, 10));
         this.swapper.setText("Connectez-vous!");
         VBox.setMargin(this.swapper, new Insets(0, 40, 10, 10));
-        mainBox.getChildren().addAll(username,this.username,password,this.password,mail,this.mail,this.connecter,text,this.swapper);
+        this.mainBox.getChildren().addAll(username,this.username,password,this.password,mail,this.mail,this.connecter,text,this.swapper);
 
-        //Ajout des éléments à root
-        root.add(mainBox,0,0);
-        root.setAlignment(Pos.CENTER);
+        //Ajout des éléments à this
+        this.getChildren().clear();
+        this.add(this.mainBox,0,0);
+        this.setAlignment(Pos.CENTER);
 
         //Ajout de la GridPane dans l'attribut mainPane
-        this.mainPane = root;
+        // this.mainPane = this;
 
         //Affichage de la fenêtre
-        this.afficherFenetre();
+        // this.afficherFenetre();
     }
 
     /**
@@ -282,15 +272,14 @@ public class ConnexionIHM extends Application{
     /**
     * Affiche la fenêtre
     */
-
-    public void afficherFenetre(){
-        //Affichage de la fenêtre
-        Scene scene = new Scene(this.mainPane,400,650);
-        this.stage.setScene(scene);
-        this.stage.setTitle("Fenêtre de connexion");
-        this.stage.show();
-        this.stage.setResizable(false);
-    }
+    // public void afficherFenetre(){
+    //     //Affichage de la fenêtre
+    //     Scene scene = new Scene(this,400,650);
+    //     this.stage.setScene(scene);
+    //     this.stage.setTitle("Fenêtre de connexion");
+    //     this.stage.show();
+    //     this.stage.setResizable(false);
+    // }
 
 
     /**
@@ -319,13 +308,14 @@ public class ConnexionIHM extends Application{
 
     /**
     * Envoie vers la page d'acceuil de VAE
-    * @param Utitlisateur l'utilisateur qui c'est connecter
+    * @param Utitlisateur l'utilisateur qui s'est connecté
     */
     public void mainPage(Utilisateur user){
         this.user = user;
     }
 
-    public static void main(String[] args){
-        launch(ConnexionIHM.class, args);
+    public Utilisateur getUser(){
+        return this.user;
     }
+
 }

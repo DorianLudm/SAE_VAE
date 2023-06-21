@@ -14,15 +14,17 @@ public class UtilisateurBD{
     public Utilisateur getUser(String pseudo, String mdp) throws SQLException{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
+        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR natural join ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
         if(rs.next()){
-            Integer id = rs.getInt(1);
-            String pseudoUt = rs.getString("pseudout");
-            String mail = rs.getString(3);
-            String mdpUt = rs.getString(4);
-            String active = rs.getString(5);
-            Integer idRole = rs.getInt(6);
-            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, idRole);
+            Integer idRole = rs.getInt(1);
+            Integer id = rs.getInt(2);
+            String pseudoUt = rs.getString(3);
+            String mail = rs.getString(4);
+            String mdpUt = rs.getString(5);
+            String active = rs.getString(6);
+            String nomRole = rs.getString(7);
+            
+            res = new Utilisateur(id, pseudoUt, mail, mdpUt, active, new Role(idRole, nomRole));
         }
         return res;
     }
@@ -37,16 +39,17 @@ public class UtilisateurBD{
 		return -1;
     }
 
-    public int insererUtilBD(Utilisateur util) throws SQLException{
-        util.setId(maxNumUtilisateur()+1);
+    public int insererUtilBD(String pseudo, String email, String mdp, String active, int role) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("insert into UTILISATEUR values (?,?,?,?,?,?)");
-        s.setInt(1, util.getId());
-        s.setString(2, util.getPseudo());
-        s.setString(3, util.getEmail());
-        s.setString(4, util.getMDP());
-        s.setString(5, util.getActive());
-        s.setInt(6, util.getRole());
+        s.setInt(1, maxNumUtilisateur()+1);
+        s.setString(2, pseudo);
+        s.setString(3, email);
+        s.setString(4, mdp);
+        s.setString(5, active);
+        s.setInt(6, role);
         s.executeUpdate();
+
+        Utilisateur util = new Utilisateur(maxNumUtilisateur()+1, pseudo, email, mdp, active, new Role(role, "Utilisateur"));
         return util.getId();
     }
 

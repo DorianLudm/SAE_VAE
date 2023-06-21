@@ -43,6 +43,9 @@ import javafx.scene.layout.Region;
 
 
 public class AppliVAE extends Application{
+
+    private Scene scene;
+
     private BorderPane banniere;
 
     private TextField recherche;
@@ -51,9 +54,9 @@ public class AppliVAE extends Application{
 
     private Button favoris;
 
-    private Button panier;
+    private Button user;
 
-    private Button utilisateur;
+    private Button home;
 
     private BorderPane fenetre;
 
@@ -61,10 +64,18 @@ public class AppliVAE extends Application{
 
     private String couleur;
 
+    private ConnexionIHM vueConnexion;
+
+    private Stage stage;
+
+
+
     @Override
     public void init() {
         this.banniere = new BorderPane();
-        this.couleur = "9370DB";
+        this.fenetre = new BorderPane();
+        this.couleur = "9370db";
+        this.vueConnexion = new ConnexionIHM();
     }
 
     /**
@@ -74,7 +85,8 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.fenetre.setTop(this.bandeau());
         this.fenetre.setCenter(this.panelCentral);
-        return new Scene(this.fenetre);
+        this.scene = new Scene(this.fenetre);
+        return this.scene;
     }
 
 
@@ -97,6 +109,7 @@ public class AppliVAE extends Application{
         this.recherche.setPrefHeight(60);
         this.recherche.setPrefWidth(500);
         this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #9370DB;");
+        
 
         this.message = new Button();
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
@@ -108,21 +121,21 @@ public class AppliVAE extends Application{
         this.favoris.setStyle("-fx-background-color: #"+this.couleur+";");
         //this.favoris.setOnAction();
 
-        this.panier = new Button();
-        this.panier.setGraphic(new ImageView(new Image("file:img/panier.png", 50, 50, true, true)));
-        this.panier.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.panier.setOnAction();
+        this.user = new Button();
+        this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
+        this.user.setStyle("-fx-background-color: #"+this.couleur+";");
+        //this.user.setOnAction();
 
-        this.utilisateur = new Button();
-        this.utilisateur.setGraphic(new ImageView(new Image("file:img/user.png", 50, 50, true, true)));
-        this.utilisateur.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.utilisateur.setOnAction();
+        this.home = new Button();
+        this.home.setGraphic(new ImageView(new Image("file:img/accueil.png", 50, 50, true, true)));
+        this.home.setStyle("-fx-background-color: #"+this.couleur+";");
+        this.home.setOnAction(new ControleurAccueil(this));
         
         // Création d'un conteneur horizontal pour les boutons
         HBox boutonsContainer = new HBox(10);
 
-        boutonsContainer.getChildren().addAll(icon,this.recherche, this.message, this.favoris, this.panier, this.utilisateur);
 
+        boutonsContainer.getChildren().addAll(icon,this.recherche, this.message, this.favoris, this.user, this.home);
         boutonsContainer.setPadding(new Insets(15));
         
         // Alignement horizontal du titre et des boutons
@@ -136,14 +149,7 @@ public class AppliVAE extends Application{
         return banniere;
     }
 
-
-
-
-
-        
-
-
-public void modeAjout(){
+    public void modeAjout(){
         HBox res = new HBox();
         VBox gauche = new VBox();
 
@@ -300,9 +306,12 @@ public void modeAjout(){
         HBox top = new HBox();
 
         TitledPane prixPane = new TitledPane("Prix",null);
+        prixPane.setExpanded(false);
 
 
-        prixPane.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 10px;");
+        prixPane.setStyle("-fx-color: #"+this.couleur+"; -fx-background-radius: 10px;");
+
+
 
         VBox prixContent = new VBox();
         prixContent.setSpacing(10);
@@ -338,6 +347,9 @@ public void modeAjout(){
         //Partie gauche
 
         VBox gauche = new VBox();
+        gauche.setPadding(new Insets(0,10,50,100));
+        gauche.setSpacing(5);
+        gauche.setStyle("-fx-border-width: 0 5 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
 
         Label recommandation = new Label("Ce qui pourrait vous intéressez");
         recommandation.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -347,16 +359,49 @@ public void modeAjout(){
         HBox container = new HBox();
         
         for (int i = 1; i <= 10; i++) {
-            Button button = new Button("Button " + i);
-            button.setPrefSize(245, 220);
+            VBox vButton = new VBox();
+            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
+            Label titre = new Label("Nom de l'objet");
+            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+            titre.setTextFill(Color.web("#FFFFFF"));
+
+            HBox boxPrix = new HBox();
+            Label prix = new Label("prix de l'objet");
+            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            prix.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
+            boxPrix.getChildren().addAll(prix, logoPrix);
+
+            HBox boxTemps = new HBox();
+            Label temps = new Label("temps restant");
+            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            temps.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
+            boxTemps.getChildren().addAll(temps, logoTemps);
+
+            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
+            vButton.setSpacing(10);
+
+            Button button = new Button();
+            button.setGraphic(vButton);
+
+
+            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
+
+            button.setPrefSize(270, 320);
             container.getChildren().add(button);
         }
        
 
         ScrollPane scrollPaneR = new ScrollPane();
+        container.setSpacing(20);
         scrollPaneR.setContent(container);
+        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-        scrollPaneR.setPrefSize(1200,250);
+        scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
+
+        scrollPaneR.setPrefSize(1200,600);
 
 
 
@@ -367,20 +412,63 @@ public void modeAjout(){
 
         HBox container2 = new HBox();
         
-        for (int i = 1; i <= 10; i++) {
-            Button button = new Button("Button " + i);
-            button.setPrefSize(245, 220);
+        for (int i = 1; i <= 5; i++) {
+
+            VBox vButton = new VBox();
+            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
+            Label titre = new Label("Nom de l'objet");
+            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+            titre.setTextFill(Color.web("#FFFFFF"));
+
+            HBox boxPrix = new HBox();
+            Label prix = new Label("prix de l'objet");
+            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            prix.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
+            boxPrix.getChildren().addAll(prix, logoPrix);
+
+            HBox boxTemps = new HBox();
+            Label temps = new Label("temps restant");
+            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            temps.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
+            boxTemps.getChildren().addAll(temps, logoTemps);
+
+            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
+            vButton.setSpacing(10);
+
+            Button button = new Button();
+            button.setGraphic(vButton);
+
+
+            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
+
+            button.setPrefSize(270, 320);
             container2.getChildren().add(button);
         }
        
 
         ScrollPane scrollPaneA = new ScrollPane();
         scrollPaneA.setContent(container2);
+        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        container2.setSpacing(20);
         scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-        scrollPaneA.setPrefSize(1200,250);
+        scrollPaneA.setVbarPolicy(ScrollBarPolicy.NEVER);
+
+
+        scrollPaneA.setPrefSize(1200,600);
+        
+
 
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
+
+
+
+
+
+
         VBox droite = new VBox();
+        droite.setSpacing(10);
         droite.setPadding(new Insets(0,100,50,50));
 
 
@@ -392,26 +480,82 @@ public void modeAjout(){
         VBox container3 = new VBox();
         
         for (int i = 1; i <= 10; i++) {
-            Button button = new Button("Button " + i);
-            button.setPrefSize(260, 220);
+            
+            HBox hButton = new HBox();
+            
+            
+            VBox vButton = new VBox();
+            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
+            Label titre = new Label("Nom de l'objet");
+            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+            titre.setTextFill(Color.web("#FFFFFF"));
+
+            HBox boxPrix = new HBox();
+            Label prix = new Label("prix de l'objet");
+            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            prix.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
+            boxPrix.getChildren().addAll(prix, logoPrix);
+
+            HBox boxTemps = new HBox();
+            Label temps = new Label("temps restant");
+            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            temps.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
+            boxTemps.getChildren().addAll(temps, logoTemps);
+
+            HBox boxFavoris = new HBox();
+            Label favoris = new Label("Nombre de favoris");
+            favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+            favoris.setTextFill(Color.web("#FFFFFF"));
+            ImageView logoFavoris = new ImageView(new Image("file:img/coeur.png", 30, 30, true, true));
+            boxFavoris.getChildren().addAll(favoris, logoFavoris);
+
+            vButton.getChildren().addAll(titre,boxPrix,boxTemps,boxFavoris);
+            vButton.setSpacing(10);
+            vButton.setAlignment(Pos.CENTER);
+            
+
+            hButton.getChildren().addAll(imgO,vButton);
+            hButton.setAlignment(Pos.CENTER);
+            hButton.setSpacing(10);
+
+            Button button = new Button();
+            button.setGraphic(hButton);
+
+
+            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
+
+            button.setPrefSize(410, 220);
             container3.getChildren().add(button);
         }
 
         ScrollPane scrollPaneO = new ScrollPane();
+        scrollPaneO.setStyle("-fx-background-color: transparent;");
         scrollPaneO.setContent(container3);
         scrollPaneO.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-        scrollPaneO.setPrefSize(300,600);
+        scrollPaneO.setHbarPolicy(ScrollBarPolicy.NEVER);
+        scrollPaneO.setPrefSize(450,600);
         scrollPaneO.setPannable(true);
+        container3.setSpacing(10);
 
 
+        HBox contenantBouton = new HBox();
+        contenantBouton.setAlignment(Pos.CENTER);
+        contenantBouton.setSpacing(10);
+        ImageView plus = new ImageView(new Image("file:img/plus.png", 80, 80, true, true));
+        Label ajout = new Label("Ajouter un Objet");
+        ajout.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+        ajout.setTextFill(Color.web("#FFFFFF"));
+        contenantBouton.getChildren().addAll(plus, ajout);
 
-        droite.getChildren().addAll(vente,scrollPaneO);
+        Button boutonAjout = new Button();
+        boutonAjout.setPrefSize(320, 120);
+        boutonAjout.setGraphic(contenantBouton);
+        boutonAjout.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
+        boutonAjout.setOnAction(new ControleurNouvelleEnchere(this));
 
-
-
-
-
-
+        droite.getChildren().addAll(vente,scrollPaneO,boutonAjout);
 
         panel.setTop(top);
         panel.setLeft(gauche);
@@ -420,10 +564,38 @@ public void modeAjout(){
         this.panelCentral = panel;
     }
 
+    //public void modeUser()
+
+    public void afficheFenetreConexion(){
+        GridPane root = new ConnexionIHM();
+        this.scene.setRoot(root);
+    }
 
     public void majAffichage(){
+        this.fenetre.setTop(this.banniere);
         this.fenetre.setCenter(this.panelCentral);
     }
+
+
+    public void afficheApp(){
+        this.banniere = new BorderPane();
+        this.fenetre = new BorderPane();
+        this.couleur = "9370db";
+        this.vueConnexion = new ConnexionIHM();
+        this.stage = new Stage();
+        this.stage.setTitle("VAE");
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
+        this.stage.setX(screenBounds.getMinX());
+        this.stage.setY(screenBounds.getMinY());
+        this.stage.setWidth(screenBounds.getWidth());
+        this.stage.setHeight(screenBounds.getHeight());
+        this.modeAccueil();
+        
+        this.stage.setScene(this.laScene());        
+        this.majAffichage();
+        this.stage.show();
+    }
+
 
     /**
      * créer le graphe de scène et lance le jeu
@@ -431,17 +603,21 @@ public void modeAjout(){
      */
     @Override
     public void start(Stage stage) {
-        stage.setTitle("VAE");
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
-        stage.setX(screenBounds.getMinX());
-        stage.setY(screenBounds.getMinY());
-        stage.setWidth(screenBounds.getWidth());
-        stage.setHeight(screenBounds.getHeight());
+        GridPane root = new ConnexionIHM();
+        this.scene = new Scene(root, 400, 650);
+        this.stage = stage;
+
+        this.stage.setTitle("VAE");
+        // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
+        // stage.setX(screenBounds.getMinX());
+        // stage.setY(screenBounds.getMinY());
+        // stage.setWidth(screenBounds.getWidth());
+        // stage.setHeight(screenBounds.getHeight());
         
-        stage.setScene(this.laScene());
-        this.modeAccueil(); // Appel de la méthode modeAccueil() avant la création de la scène
+        this.stage.setScene(this.scene);
+        
         this.majAffichage();
-        stage.show();
+        this.stage.show();
     }
 
     /**
