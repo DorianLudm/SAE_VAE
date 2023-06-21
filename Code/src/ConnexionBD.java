@@ -8,9 +8,9 @@ public class ConnexionBD {
 	}
 
 	public void connecter() throws SQLException {
-		this.mysql = DriverManager.getConnection("jdbc:mysql://servinfo-mariadb:3306/DBludmann", "ludmann", "ludmann");                                                                                                                                                           
-		this.connecte=this.mysql!=null;
-    }
+			this.mysql = DriverManager.getConnection("jdbc:mysql://servinfo-mariadb:3306/DBludmann", "ludmann", "ludmann");                                                                                                                                                           
+			this.connecte=this.mysql!=null;
+	}
 	
 	public void close() throws SQLException {
 		// fermer la connexion
