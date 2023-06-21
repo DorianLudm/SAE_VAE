@@ -7,10 +7,19 @@ public class StatutBD {
     private ConnexionBD laConnexion;
     private Statement st;
 
+    /**
+     * Constructeur de base de la classe StatutBD
+     * @param laConnexion
+     */
     public StatutBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
+    /**
+     * 
+     * @return le nombre de statuts existants dans la base de données
+     * @throws SQLException
+     */
     public int maxNumStatut() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select count(idst) from STATUT");
@@ -19,21 +28,36 @@ public class StatutBD {
         return val;
     }
 
-    public int insererStatutBD(Statut statut) throws SQLException{
+    /**
+     * Permet d'insérer un statut dans la base de données
+     * @param statut
+     * @throws SQLException
+     */
+    public void insererStatutBD(Statut statut) throws SQLException{
         statut.setId(maxNumStatut()+1);
         PreparedStatement s = this.laConnexion.prepareStatement("insert into STATUT values (?,?)");
         s.setInt(1, statut.getId());
         s.setString(2, statut.getNom());
         s.executeUpdate();
-        return statut.getId();
     }
 
+    /**
+     * Permet d'effacer un rôle de la base de données
+     * @param id
+     * @throws SQLException
+     */
     public void effacerStatutBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from STATUT SET where idst=?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
+    /**
+     * 
+     * @param id
+     * @return le statut que nous cherchions et ses informations
+     * @throws SQLException
+     */
     public Statut getStatutBD(Integer id) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from STATUT where idst="+id.toString());

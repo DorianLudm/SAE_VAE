@@ -7,10 +7,19 @@ public class VenteBD {
     private ConnexionBD laConnexion;
     private Statement st;
     
+    /**
+     * Constructeur de base de la classe VenteBD
+     * @param laConnexion
+     */
     public VenteBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
+    /**
+     * 
+     * @return le nombre de ventes existantes dans la base de données
+     * @throws SQLException
+     */
     public int maxNumVente() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select count(idve) from VENTE");
@@ -19,6 +28,12 @@ public class VenteBD {
         return val;
     }
 
+    /**
+     * 
+     * @param vente
+     * @return l'identifiant de la vente que l'on vient d'ajouter dans la base de données
+     * @throws SQLException
+     */
     public int insererVenteBD(Vente vente) throws SQLException{
         vente.setId(maxNumVente()+1);
         PreparedStatement s = this.laConnexion.prepareStatement("insert into VENTE values (?,?,?,?,?,?,?)");
@@ -33,12 +48,22 @@ public class VenteBD {
         return vente.getId();
     }
 
+    /**
+     * Permet d'effacer une vente de la base de données
+     * @param id
+     * @throws SQLException
+     */
     public void effacerVenteBD(int id) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("delete from VENTE where idUt = ?");
         s.setInt(1, id);
         s.executeUpdate();
     }
 
+    /**
+     * Permet de mettre à jour une vente de la base de données
+     * @param vente
+     * @throws SQLException
+     */
     public void majVenteBD(Vente vente) throws SQLException{
         PreparedStatement s = this.laConnexion.prepareStatement("update VENTE SET idve=?, prixbase=?, prixmin=?, debutve=?, finve=?, idob=?, idst=?");
         s.setInt(1, vente.getId());
@@ -51,6 +76,12 @@ public class VenteBD {
         s.executeUpdate();
     }
 
+    /**
+     * 
+     * @param id
+     * @return la vente que l'on cherchait et ses informations
+     * @throws SQLException
+     */
     public Vente getVenteBD(Integer id) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = st.executeQuery("select * from VENTE natural join OBJET natural join UTILISATEUR natural join CATEGORIE natural join ROLE natural join STATUT where idve="+id.toString());
