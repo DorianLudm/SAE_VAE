@@ -301,6 +301,137 @@ public class AppliVAE extends Application{
         }
     }
 
+    public void modeObjets(){
+        
+        HBox resO = new HBox();
+
+
+        VBox gaucheO = new VBox();
+
+        HBox image = new HBox();
+        ImageView flecheGauche = new ImageView(new Image("file:img/Polygongauche.png", 50, 50, true, true));
+        Button imgfg = new Button();
+        imgfg.setGraphic(flecheGauche);
+        imgfg.setStyle("-fx-background-color: #FFF5EE");
+        ImageView imageObjet = new ImageView(new Image("file:img/test.gif", 700, 700, true, true));
+        ImageView flechedroit = new ImageView(new Image("file:img/Polygondroit.png", 50, 50, true, true));
+        Button imgfd = new Button();
+        imgfd.setStyle("-fx-background-color: #FFF5EE");
+        imgfd.setGraphic(flechedroit);
+        image.getChildren().addAll(imgfg, imageObjet, imgfd);
+        image.setAlignment(Pos.CENTER);
+
+        HBox animation = new HBox();
+        ImageView ani1 = new ImageView(new Image("file:img/Ellipse.png", 50, 50, true, true));
+        ImageView ani2 = new ImageView(new Image("file:img/Rectangle.png", 50, 50, true, true));
+        ImageView ani3 = new ImageView(new Image("file:img/Rectangle.png", 50, 50, true, true));
+        ImageView ani4 = new ImageView(new Image("file:img/Rectangle.png", 50, 50, true, true));
+        animation.getChildren().addAll(ani1, ani2, ani3, ani4);
+        animation.setSpacing(10);
+        animation.setAlignment(Pos.CENTER);
+
+        HBox prix = new HBox();
+        Label prixL = new Label("Prix actuel : ####");
+        prixL.setStyle("-fx-text-fill: #"+this.couleur+";");
+        prixL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ImageView prixI = new ImageView(new Image("file:img/euro.png", 50, 50, true, true));
+        prix.getChildren().addAll(prixL, prixI);
+        prix.setSpacing(10);
+        prix.setAlignment(Pos.CENTER_LEFT);
+        prix.setPadding(new Insets(0, 0, 0, 60));
+
+        
+        Label surenchere = new Label("Surenchère minimal : +####");
+        surenchere.setStyle("-fx-text-fill: #"+this.couleur+";");
+        surenchere.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        surenchere.setPadding(new Insets(0, 0, 0, 60));
+
+        HBox encherir = new HBox();
+        HBox encherir1 = new HBox();
+        Label encherirL = new Label("Entrez votre prix :");
+        encherirL.setStyle("-fx-text-fill: #FFFFFF;");
+        encherirL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        TextField encherirT = new TextField();
+        encherirT.setStyle("-fx-background-color: #"+this.couleur+";");
+        encherirT.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
+        encherir1.getChildren().addAll(encherirL, encherirT);
+        encherir1.setStyle("-fx-background-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        encherir1.setPadding(new Insets(10,10,10,10));
+        Button encherirB = new Button("Enchérir");
+        encherirB.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        encherirB.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        encherir.getChildren().addAll(encherir1, encherirB);
+        encherir.setSpacing(10);
+        encherir.setAlignment(Pos.CENTER_LEFT);
+        encherir.setPadding(new Insets(0, 0, 0, 60));
+
+        gaucheO.getChildren().addAll(image, animation, prix, surenchere, encherir);
+        gaucheO.setSpacing(10);
+        gaucheO.setPadding(new Insets(0, 150, 0, 50));
+        gaucheO.setAlignment(Pos.CENTER_LEFT);
+
+
+        VBox droiteO = new VBox();
+
+        Label nomArticle = new Label("####");
+        nomArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
+        nomArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+        HBox hbox1 = new HBox();
+        Label ajouteLe = new Label("Ajouté le : ####");
+        ajouteLe.setStyle("-fx-text-fill: #"+this.couleur+";");
+        ajouteLe.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ImageView ajouteLeI = new ImageView(new Image("file:img/calendar.png", 50, 50, true, true));
+        Label prixDep = new Label("Prix de départ : ####");
+        prixDep.setStyle("-fx-text-fill: #"+this.couleur+";");
+        prixDep.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ImageView prixDepI = new ImageView(new Image("file:img/euro.png", 50, 50, true, true));
+        hbox1.getChildren().addAll(ajouteLe, ajouteLeI, prixDep, prixDepI);
+        hbox1.setSpacing(10);
+        hbox1.setAlignment(Pos.CENTER_LEFT);
+
+
+        HBox hbox2 = new HBox();
+        Label tempsRestant = new Label("Temps restant : ####");
+        tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
+        tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ImageView tempsRestantI = new ImageView(new Image("file:img/stopwatch.png", 50, 50, true, true));
+        Label favoris = new Label("Favoris : ####");
+        favoris.setStyle("-fx-text-fill: #"+this.couleur+";");
+        favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        ImageView favorisI = new ImageView(new Image("file:img/favourite-heart.png", 50, 50, true, true));
+        hbox2.getChildren().addAll(tempsRestant, tempsRestantI, favoris, favorisI);
+        hbox2.setSpacing(10);
+        hbox2.setAlignment(Pos.CENTER_LEFT);
+
+
+
+        Label etatArticle = new Label("Etat de l'article : ####");
+        etatArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
+        etatArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+
+
+
+        Label description = new Label("Description :                                                                                        ");
+        description.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-width: 5px 0 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
+        description.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+        Label desctext = new Label("#######################################\n#######################################\n#######################################\n#######################################\n");
+        desctext.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        desctext.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        desctext.setPadding(new Insets(10,10,10,10));
+
+        droiteO.getChildren().addAll(nomArticle, hbox1, hbox2, etatArticle, description, desctext);
+        droiteO.setSpacing(50);
+        droiteO.setPadding(new Insets(50,0,0,0));
+        droiteO.setAlignment(Pos.CENTER_LEFT);
+
+        resO.getChildren().addAll(gaucheO, droiteO);
+
+        this.panelCentral = resO;
+    }
+
     public void modeAccueil() {
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
