@@ -88,37 +88,37 @@ public class Enchere {
         this.montant = newMontant;
     }
 
-    public VBox toVBox(){
-        VBox res = new VBox();
-        ImageView image = new ImageView();
-        try{
-            image = new ImageView(new Image(this.vente.getObjet().getLesPhotos().get(0)));
-        }
-        catch(Exception e){
-            image = new ImageView(new Image("file:/e"));
-        }
-        Label nomItem = new Label(this.vente.getObjet().getNom());
-        Label prix = new Label(String.valueOf(this.montant) + "€");
-        Label temps = new Label(this.vente.tempsRestant());
-        res.getChildren().addAll(image, nomItem, prix, temps);
-        return res;
-    }
+    // public VBox toVBox(){
+    //     VBox res = new VBox();
+    //     ImageView image = new ImageView();
+    //     try{
+    //         image = new ImageView(new Image(this.vente.getObjet().getLesPhotos().get(0)));
+    //     }
+    //     catch(Exception e){
+    //         image = new ImageView(new Image("file:/e"));
+    //     }
+    //     Label nomItem = new Label(this.vente.getObjet().getNom());
+    //     Label prix = new Label(String.valueOf(this.montant) + "€");
+    //     Label temps = new Label(this.vente.tempsRestant());
+    //     res.getChildren().addAll(image, nomItem, prix, temps);
+    //     return res;
+    // }
 
-    public HBox toHBox(){
-        HBox res = new HBox();
-        VBox rightBox = new VBox();
-        ImageView image = new ImageView();
-        try{
-            image = new ImageView(new Image(this.vente.getObjet().getLesPhotos().get(0)));
-        }
-        catch(Exception e){
-            image = new ImageView(new Image("file:/e"));
-        }
-        Label nomItem = new Label(this.vente.getObjet().getNom());
-        Label prix = new Label(String.valueOf(this.montant) + "€");
-        Label temps = new Label(this.vente.tempsRestant());
-        rightBox.getChildren().addAll(nomItem, prix, temps);
-        res.getChildren().addAll(image, rightBox);
-        return res;
-    }
+    // public HBox toHBox(){
+    //     HBox res = new HBox();
+    //     VBox rightBox = new VBox();
+    //     ImageView image = new ImageView();
+    //     try{
+    //         image = new ImageView(new Image(this.vente.getObjet().getLesPhotos().get(0)));
+    //     }
+    //     catch(Exception e){
+    //         image = new ImageView(new Image("file:/e"));
+    //     }
+    //     Label nomItem = new Label(this.vente.getObjet().getNom());
+    //     Label prix = new Label(String.valueOf(this.montant) + "€");
+    //     Label temps = new Label(this.vente.tempsRestant());
+    //     rightBox.getChildren().addAll(nomItem, prix, temps);
+    //     res.getChildren().addAll(image, rightBox);
+    //     return res;
+    // }
 }

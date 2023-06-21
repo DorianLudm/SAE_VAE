@@ -24,13 +24,13 @@ public class ModeleVAE {
         this.user = user;
     }
 
-    public List<VBox> getEncheresLiked(){
-        List<VBox> res = new ArrayList<>();
-        for(Enchere elem: this.user.getEncheresLiked()){
-            res.add(elem.toVBox());
-        }
-        return res;
-    }
+    // public List<VBox> getEncheresLiked(){
+    //     List<VBox> res = new ArrayList<>();
+    //     for(Enchere elem: this.user.getEncheresLiked()){
+    //         res.add(elem.toVBox());
+    //     }
+    //     return res;
+    // }
 
     public List<VBox> getEncheresRecentes(int nombreDencheres) throws SQLException{
         List<VBox> res = new ArrayList<>();

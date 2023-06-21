@@ -14,8 +14,6 @@ public class UtilisateurBD{
     public Utilisateur getUser(String pseudo, String mdp) throws SQLException{
         Utilisateur res = null;
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select * from UTILISATEUR NATURAL JOIN ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
-        if(rs.next()){
         ResultSet rs = this.st.executeQuery("select * from UTILISATEUR natural join ROLE where pseudout = '"+ pseudo +"' and mdput = '"+ mdp +"'");
         if(rs.next()){
             Integer idRole = rs.getInt(1);
