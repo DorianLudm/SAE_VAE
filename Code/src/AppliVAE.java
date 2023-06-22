@@ -80,7 +80,9 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM(this);
+
         this.modele = new ModeleVAE(this.vueConnexion.getSQL(),this);
+
     }
 
     /**
@@ -129,7 +131,7 @@ public class AppliVAE extends Application{
         this.user = new Button();
         this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
         this.user.setStyle("-fx-background-color: #"+this.couleur+";");
-        this.user.setOnAction(new ControleurProfil(this));
+        //this.user.setOnAction();
 
         this.home = new Button();
         this.home.setGraphic(new ImageView(new Image("file:img/accueil.png", 50, 50, true, true)));
@@ -328,7 +330,7 @@ public class AppliVAE extends Application{
         }
     }
 
-    public void modeObjets(){
+    public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
         
         HBox resO = new HBox();
 
@@ -358,7 +360,7 @@ public class AppliVAE extends Application{
         animation.setAlignment(Pos.CENTER);
 
         HBox prix = new HBox();
-        Label prixL = new Label("Prix actuel : ####");
+        Label prixL = new Label("Prix actuel : "+montantAct);
         prixL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -400,16 +402,16 @@ public class AppliVAE extends Application{
 
         VBox droiteO = new VBox();
 
-        Label nomArticle = new Label("####");
+        Label nomArticle = new Label(nomO);
         nomArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
         nomArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
         HBox hbox1 = new HBox();
-        Label ajouteLe = new Label("Ajouté le : ####");
+        Label ajouteLe = new Label("Ajouté le :"+debutve);
         ajouteLe.setStyle("-fx-text-fill: #"+this.couleur+";");
         ajouteLe.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView ajouteLeI = new ImageView(new Image("file:img/calendar.png", 50, 50, true, true));
-        Label prixDep = new Label("Prix de départ : ####");
+        Label prixDep = new Label("Prix de départ :"+prixbase);
         prixDep.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixDep.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixDepI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -419,7 +421,7 @@ public class AppliVAE extends Application{
 
 
         HBox hbox2 = new HBox();
-        Label tempsRestant = new Label("Temps restant : ####");
+        Label tempsRestant = new Label("Temps restant :"+finve);
         tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
         tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView tempsRestantI = new ImageView(new Image("file:img/stopwatch.png", 50, 50, true, true));
@@ -444,7 +446,7 @@ public class AppliVAE extends Application{
         description.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-width: 5px 0 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
         description.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
-        Label desctext = new Label("#######################################\n#######################################\n#######################################\n#######################################\n");
+        Label desctext = new Label(desc);
         desctext.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         desctext.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         desctext.setPadding(new Insets(10,10,10,10));
@@ -458,59 +460,8 @@ public class AppliVAE extends Application{
 
         this.panelCentral = resO;
     }
-  
-    public void modeProfil() {
-        VBox Vprofil = new VBox();
 
-        ImageView imageProfil = new ImageView(new Image("file:img/user.png", 200, 200, true, true));
-
-        Label nom = new Label("Nom : "+ this.modele.getUser().getPseudo());
-        nom.setStyle("-fx-text-fill: #"+this.couleur+";");
-        nom.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-
-        Label mail = new Label("Email : "+ this.modele.getUser().getEmail());
-        mail.setStyle("-fx-text-fill: #"+this.couleur+";");
-        mail.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-
-        String mdp = "";
-        for (int i = 0; i < this.modele.getUser().getMDP().length(); i++) {
-            mdp += "*";
-        }
-        Label motDePasse = new Label("Mot de passe : "+ mdp);
-        motDePasse.setStyle("-fx-text-fill: #"+this.couleur+";");
-        motDePasse.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-
-        ColorPicker changeCouleur = new ColorPicker();
-        changeCouleur.setPromptText("Choisissez une couleur");
-        changeCouleur.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
-        changeCouleur.setOnAction(new ControleurCouleur(this.modele,this,changeCouleur));
-
-        Button Deconnexion = new Button("Deconnexion");
-        Deconnexion.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        Deconnexion.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-        Deconnexion.setOnAction(new ControleurDeconnexion(this));
-
-
-        Vprofil.getChildren().addAll(imageProfil, nom, mail, motDePasse, changeCouleur, Deconnexion);
-        Vprofil.setSpacing(20);
-        Vprofil.setAlignment(Pos.CENTER);
-        Vprofil.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;");
-        
-
-        this.panelCentral = Vprofil;
-        
-    }
-
-    public void changeCouleur(ColorPicker changeCouleur) {
-        String hex = changeCouleur.getValue().toString();
-        String color = ""+hex.substring(2,8);
-        this.couleur = color;
-        this.modeProfil();
-        System.out.println(color);
-
-    }
-
-    public void modeAccueil() throws SQLException {
+    public void modeAccueil() throws SQLException{
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
 
@@ -532,17 +483,13 @@ public class AppliVAE extends Application{
         prixPane.setContent(prixContent);
 
         ComboBox<String> categoriesComboBox = new ComboBox<>();
-        for (String cate : this.modele.getCategorie()) {
-            categoriesComboBox.getItems().add(cate);
-        }
-        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
-        categoriesComboBox.setValue("Choisissez une catégorie");
-
-        
+        categoriesComboBox.getItems().addAll("Catégorie 1", "Catégorie 2", "Catégorie 3");
+        categoriesComboBox.setPromptText("Catégories");
+        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: #FFFFFF;");
 
         ComboBox<String> etatComboBox = new ComboBox<>();
         etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
-        etatComboBox.setPromptText("Choisissez un état");
+        etatComboBox.setPromptText("État");
         etatComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: white;");
 
         ComboBox<String> filtreComboBox = new ComboBox<>();
@@ -722,22 +669,19 @@ public class AppliVAE extends Application{
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
-        this.stage.setHeight(650);
-        this.stage.setWidth(400);
-        this.stage.centerOnScreen();
     }
 
     public void majAffichage(){
-        this.banniere = this.bandeau();
         this.fenetre.setTop(this.banniere);
         this.fenetre.setCenter(this.panelCentral);
     }
+
+
 
     public void afficheApp() throws SQLException{
         if (this.stage == null) {
             this.stage = new Stage();
         }
-        this.modele.setUser(this.vueConnexion.getUser());
     
 
     
@@ -767,8 +711,8 @@ public class AppliVAE extends Application{
      */
     @Override
     public void start(Stage stage){
-        this.vueConnexion = new ConnexionIHM(this);
-        this.scene = new Scene(this.vueConnexion, 400, 650);
+        GridPane root = new ConnexionIHM(this);
+        this.scene = new Scene(root, 400, 650);
         this.stage = stage;
 
         this.stage.setTitle("VAE");
