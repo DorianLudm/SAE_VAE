@@ -75,7 +75,7 @@ public class AppliVAE extends Application{
         this.banniere = new BorderPane();
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
-        this.vueConnexion = new ConnexionIHM();
+        this.vueConnexion = new ConnexionIHM(this);
     }
 
     /**
@@ -701,7 +701,7 @@ public class AppliVAE extends Application{
     //public void modeUser()
 
     public void afficheFenetreConexion(){
-        GridPane root = new ConnexionIHM();
+        GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
     }
 
@@ -717,9 +717,7 @@ public class AppliVAE extends Application{
             this.stage = new Stage();
         }
     
-        this.banniere = new BorderPane();
-        this.couleur = "9370db";
-        this.vueConnexion = new ConnexionIHM();
+
     
         this.stage.setTitle("VAE");
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -745,7 +743,7 @@ public class AppliVAE extends Application{
      */
     @Override
     public void start(Stage stage){
-        GridPane root = new ConnexionIHM();
+        GridPane root = new ConnexionIHM(this);
         this.scene = new Scene(root, 400, 650);
         this.stage = stage;
 
