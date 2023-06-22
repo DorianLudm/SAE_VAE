@@ -80,9 +80,7 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM(this);
-
         this.modele = new ModeleVAE(this.vueConnexion.getSQL());
-
     }
 
     /**
@@ -131,7 +129,7 @@ public class AppliVAE extends Application{
         this.user = new Button();
         this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
         this.user.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.user.setOnAction();
+        this.user.setOnAction(new ControleurProfil(this));
 
         this.home = new Button();
         this.home.setGraphic(new ImageView(new Image("file:img/accueil.png", 50, 50, true, true)));
@@ -461,7 +459,58 @@ public class AppliVAE extends Application{
         this.panelCentral = resO;
     }
 
-    public void modeAccueil() {
+    public void modeProfil() {
+        VBox Vprofil = new VBox();
+
+        ImageView imageProfil = new ImageView(new Image("file:img/user.png", 200, 200, true, true));
+
+        Label nom = new Label("Nom : "+ this.modele.getUser().getPseudo());
+        nom.setStyle("-fx-text-fill: #"+this.couleur+";");
+        nom.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+        Label mail = new Label("Email : "+ this.modele.getUser().getEmail());
+        mail.setStyle("-fx-text-fill: #"+this.couleur+";");
+        mail.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+        String mdp = "";
+        for (int i = 0; i < this.modele.getUser().getMDP().length(); i++) {
+            mdp += "*";
+        }
+        Label motDePasse = new Label("Mot de passe : "+ mdp);
+        motDePasse.setStyle("-fx-text-fill: #"+this.couleur+";");
+        motDePasse.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+
+        ColorPicker changeCouleur = new ColorPicker();
+        changeCouleur.setPromptText("Choisissez une couleur");
+        changeCouleur.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        changeCouleur.setOnAction(new ControleurCouleur(this.modele,this,changeCouleur));
+
+        Button Deconnexion = new Button("Deconnexion");
+        Deconnexion.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        Deconnexion.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        Deconnexion.setOnAction(new ControleurDeconnexion(this));
+
+
+        Vprofil.getChildren().addAll(imageProfil, nom, mail, motDePasse, changeCouleur, Deconnexion);
+        Vprofil.setSpacing(20);
+        Vprofil.setAlignment(Pos.CENTER);
+        Vprofil.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;");
+        
+
+        this.panelCentral = Vprofil;
+        
+    }
+
+    public void changeCouleur(ColorPicker changeCouleur) {
+        String hex = changeCouleur.getValue().toString();
+        String color = ""+hex.substring(2,8);
+        this.couleur = color;
+        this.modeProfil();
+        System.out.println(color);
+
+    }
+
+    public void modeAccueil() throws SQLException {
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
 
@@ -483,13 +532,17 @@ public class AppliVAE extends Application{
         prixPane.setContent(prixContent);
 
         ComboBox<String> categoriesComboBox = new ComboBox<>();
-        categoriesComboBox.getItems().addAll("Catégorie 1", "Catégorie 2", "Catégorie 3");
-        categoriesComboBox.setPromptText("Catégories");
-        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: #FFFFFF;");
+        for (String cate : this.modele.getCategorie()) {
+            categoriesComboBox.getItems().add(cate);
+        }
+        categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        categoriesComboBox.setValue("Choisissez une catégorie");
+
+        
 
         ComboBox<String> etatComboBox = new ComboBox<>();
         etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
-        etatComboBox.setPromptText("État");
+        etatComboBox.setPromptText("Choisissez un état");
         etatComboBox.setStyle("-fx-background-color: #"+this.couleur+"; -fx-text-fill: white;");
 
         ComboBox<String> filtreComboBox = new ComboBox<>();
@@ -732,19 +785,24 @@ public class AppliVAE extends Application{
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
+        this.stage.setHeight(650);
+        this.stage.setWidth(400);
+        this.stage.centerOnScreen();
     }
 
     public void majAffichage(){
+        this.banniere = this.bandeau();
         this.fenetre.setTop(this.banniere);
         this.fenetre.setCenter(this.panelCentral);
     }
 
 
 
-    public void afficheApp() {
+    public void afficheApp() throws SQLException {
         if (this.stage == null) {
             this.stage = new Stage();
         }
+        this.modele.setUser(this.vueConnexion.getUser());
     
 
     
@@ -772,8 +830,8 @@ public class AppliVAE extends Application{
      */
     @Override
     public void start(Stage stage){
-        GridPane root = new ConnexionIHM(this);
-        this.scene = new Scene(root, 400, 650);
+        this.vueConnexion = new ConnexionIHM(this);
+        this.scene = new Scene(this.vueConnexion, 400, 650);
         this.stage = stage;
 
         this.stage.setTitle("VAE");
