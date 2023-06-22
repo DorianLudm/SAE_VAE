@@ -28,7 +28,6 @@ public class ModeleVAE {
     private Statement st;
     private AppliVAE app;
 
-
     public ModeleVAE(ConnexionBD laConnexion, AppliVAE app){
         // try{
         //     this.laConnexion = new ConnexionBD();
@@ -46,6 +45,10 @@ public class ModeleVAE {
 
     public void setUser(Utilisateur user){
         this.user = user;
+    }
+
+    public Utilisateur getUser(){
+        return this.user;
     }
 
     // public List<VBox> getEncheresLiked(){
