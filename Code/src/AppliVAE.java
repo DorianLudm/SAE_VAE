@@ -488,6 +488,7 @@ public class AppliVAE extends Application{
         Button Deconnexion = new Button("Deconnexion");
         Deconnexion.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         Deconnexion.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        Deconnexion.setOnAction(new ControleurDeconnexion(this));
 
 
         Vprofil.getChildren().addAll(imageProfil, nom, mail, motDePasse, changeCouleur, Deconnexion);
@@ -784,6 +785,9 @@ public class AppliVAE extends Application{
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
+        this.stage.setHeight(650);
+        this.stage.setWidth(400);
+        this.stage.centerOnScreen();
     }
 
     public void majAffichage(){
