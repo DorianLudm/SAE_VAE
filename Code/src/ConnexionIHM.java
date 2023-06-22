@@ -74,7 +74,7 @@ public class ConnexionIHM extends GridPane{
 
 
 
-    public ConnexionIHM(){
+    public ConnexionIHM(AppliVAE appli){
         super();
         this.username = new TextField();
         this.password = new PasswordField();
@@ -82,7 +82,7 @@ public class ConnexionIHM extends GridPane{
         this.swapper = new Button("");
         this.connecter = new Button("");
         this.mainBox = new VBox();
-        this.appliVAE = new AppliVAE();
+        this.appliVAE = appli;
         try{
             this.sql = new ConnexionBD();
             this.sql.connecter();
@@ -307,5 +307,9 @@ public class ConnexionIHM extends GridPane{
 
     public Utilisateur getUser(){
         return this.user;
+    }
+
+    public ConnexionBD getSQL(){
+        return this.sql;
     }
 }
