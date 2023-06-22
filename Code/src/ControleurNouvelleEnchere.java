@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -10,7 +12,10 @@ public class ControleurNouvelleEnchere implements EventHandler<ActionEvent> {
     
     @Override
     public void handle(ActionEvent actionEvent) {
-        this.vueVAE.modeAjout();
+        try {
+            this.vueVAE.modeAjout();
+        } catch (SQLException e) {
+        }
         this.vueVAE.majAffichage();
     }
 }

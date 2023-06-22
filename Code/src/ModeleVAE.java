@@ -19,17 +19,22 @@ public class ModeleVAE {
     private Utilisateur user;
     private Statement st;
 
-    public ModeleVAE(Utilisateur user){
-        try{
-            this.laConnexion = new ConnexionBD();
-            this.laConnexion.connecter();
-        }
-        catch(SQLException sqlE){
-            System.out.println("Erreur lors du chargement de la base");
-        }
-        catch(ClassNotFoundException sqlE){
-            System.out.println("Erreur lors du chargement de la base");
-        }
+
+    public ModeleVAE(ConnexionBD laConnexion){
+        // try{
+        //     this.laConnexion = new ConnexionBD();
+        //     this.laConnexion.connecter();
+        // }
+        // catch(SQLException sqlE){
+        //     System.out.println("Erreur lors du chargement de la base");
+        // }
+        // catch(ClassNotFoundException sqlE){
+        //     System.out.println("Erreur lors du chargement de la base");
+        // }
+        this.laConnexion = laConnexion;
+    }
+
+    public void setUser(Utilisateur user){
         this.user = user;
     }
 
