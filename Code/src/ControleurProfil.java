@@ -1,21 +1,16 @@
-import java.sql.SQLException;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class ControleurAccueil implements EventHandler<ActionEvent> {
+public class ControleurProfil implements EventHandler<ActionEvent> {
     private AppliVAE vueVAE;
 
-    public ControleurAccueil(AppliVAE vue){
+    public ControleurProfil(AppliVAE vue){
         this.vueVAE = vue;
     }
     
     @Override
     public void handle(ActionEvent actionEvent) {
-        try {
-            this.vueVAE.modeAccueil();
-        } catch (SQLException e) {
-        }
+        this.vueVAE.modeProfil();
         this.vueVAE.majAffichage();
     }
 }
