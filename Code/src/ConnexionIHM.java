@@ -308,4 +308,8 @@ public class ConnexionIHM extends GridPane{
     public Utilisateur getUser(){
         return this.user;
     }
+
+    public ConnexionBD getSQL(){
+        return this.sql;
+    }
 }

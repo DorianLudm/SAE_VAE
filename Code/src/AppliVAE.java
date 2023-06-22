@@ -22,6 +22,7 @@ import java.util.List;
 
 import java.util.Arrays;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -68,14 +69,20 @@ public class AppliVAE extends Application{
 
     private Stage stage;
 
+    private ModeleVAE modele;
+
 
 
     @Override
     public void init() {
+        
         this.banniere = new BorderPane();
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM(this);
+
+        this.modele = new ModeleVAE(this.vueConnexion.getSQL(),this);
+
     }
 
     /**
@@ -149,7 +156,7 @@ public class AppliVAE extends Application{
         return banniere;
     }
 
-    public void modeAjout(){
+    public void modeAjout() throws SQLException{
         HBox res = new HBox();
         VBox gauche = new VBox();
 
@@ -163,34 +170,41 @@ public class AppliVAE extends Application{
         ImageView img2 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
         Button img1B = new Button();
         img1B.setGraphic(img1);
-        img1B.setStyle("-fx-background-color: #FFF5EE");
+        img1B.setStyle("-fx-background-color: #FFF5EE;-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         img1B.setOnAction(e -> openImageFile(img1));
+        img1B.setPadding(new Insets(10,10,10,10));
         Button img2B = new Button();
         img2B.setGraphic(img2);
-        img2B.setStyle("-fx-background-color: #FFF5EE");
+        img2B.setStyle("-fx-background-color: #FFF5EE;-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         img2B.setOnAction(e -> openImageFile(img2));
+        img2B.setPadding(new Insets(10,10,10,10));
         image1.getChildren().addAll(img1B, img2B);
         image1.setPadding(new Insets(20,10,20,10));
+        image1.setSpacing(10);
 
         HBox image2 = new HBox();
         ImageView img3 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
         ImageView img4 = new ImageView(new Image("file:img/app_photo.png", 250, 250, true, true));
         Button img3B = new Button();
         img3B.setGraphic(img3);
-        img3B.setStyle("-fx-background-color: #FFF5EE");
+        img3B.setStyle("-fx-background-color: #FFF5EE;-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         img3B.setOnAction(e -> openImageFile(img3));
+        img3B.setPadding(new Insets(10,10,10,10));
         Button img4B = new Button();
         img4B.setGraphic(img4);
-        img4B.setStyle("-fx-background-color: #FFF5EE");
+        img4B.setStyle("-fx-background-color: #FFF5EE;-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         img4B.setOnAction(e -> openImageFile(img4));
+        img4B.setPadding(new Insets(10,10,10,10));
         image2.getChildren().addAll(img3B, img4B);
         image2.setPadding(new Insets(20,10,20,10));
+        image2.setSpacing(10);
 
-        ImageView plus = new ImageView(new Image("file:img/union.png", 50, 50, true, true));
+        ImageView plus = new ImageView(new Image("file:img/union.png", 100, 100, true, true));
         Button ajouterphoto = new Button("Ajouter une photo", plus);
-        ajouterphoto.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        ajouterphoto.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        ajouterphoto.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
-        List listeImage = new ArrayList();
+        List<ImageView> listeImage = new ArrayList<>();
         listeImage.add(img1);
         listeImage.add(img2);
         listeImage.add(img3);
@@ -202,8 +216,9 @@ public class AppliVAE extends Application{
 
         gauche.getChildren().addAll(ajoutenchereL, image1, image2, ajouterphoto);
         gauche.setSpacing(10);
-        gauche.setPadding(new Insets(50, 150, 0, 100));
+        gauche.setPadding(new Insets(0, 150, 0, 100));
         gauche.setStyle("-fx-border-width: 0 5px 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
+        gauche.setAlignment(Pos.CENTER);
   
         VBox droite = new VBox();
   
@@ -216,6 +231,7 @@ public class AppliVAE extends Application{
         nomT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         nom.getChildren().addAll(nomL, nomT);
         nom.setPadding(new Insets(20,10,20,10));
+        nom.setAlignment(Pos.CENTER_LEFT);
 
         HBox prixdeb = new HBox();
         Label prixdebL = new Label("Prix de départ :");
@@ -226,6 +242,7 @@ public class AppliVAE extends Application{
         prixdebT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         prixdeb.getChildren().addAll(prixdebL, prixdebT);
         prixdeb.setPadding(new Insets(20,10,20,10));
+        prixdeb.setAlignment(Pos.CENTER_LEFT);
 
         HBox prixmin = new HBox();
         Label prixminL = new Label("Prix de vente minimum :");
@@ -236,16 +253,22 @@ public class AppliVAE extends Application{
         prixminT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         prixmin.getChildren().addAll(prixminL, prixminT);
         prixmin.setPadding(new Insets(20,10,20,10));
+        prixmin.setAlignment(Pos.CENTER_LEFT);
 
         HBox categorie = new HBox();
         Label categorieL = new Label("Catégories :");
         categorieL.setStyle("-fx-text-fill: #"+this.couleur+";");
         categorieL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         categorieL.setPadding(new Insets(0, 50, 0, 0));
-        TextField categorieT = new TextField();
-        categorieT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        categorie.getChildren().addAll(categorieL, categorieT);
+        ComboBox<String> categorieC = new ComboBox<String>();
+        for (String cate : this.modele.getCategorie()) {
+            categorieC.getItems().add(cate);
+        }
+        categorieC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        categorieC.setValue("Choisissez une catégorie");
+        categorie.getChildren().addAll(categorieL, categorieC);
         categorie.setPadding(new Insets(20,10,20,10));
+        categorie.setAlignment(Pos.CENTER_LEFT);
 
         HBox etat = new HBox();
         Label etatL = new Label("Etat de l'article :");
@@ -262,26 +285,32 @@ public class AppliVAE extends Application{
         etatC.setValue(tbe);
         etatC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
         etat.setPadding(new Insets(20,10,20,10));
-        
         etat.getChildren().addAll(etatL, etatC);
+        etat.setAlignment(Pos.CENTER_LEFT);
 
-        Label description = new Label("Description de l'article :");
+        HBox desc = new HBox();
+        Label description = new Label("Description de l'article :                                  ");
         description.setStyle("-fx-text-fill: #"+this.couleur+";");
         description.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
+        description.setPadding(new Insets(20,10,20,10));
+        desc.getChildren().addAll(description);
+        desc.setAlignment(Pos.CENTER_LEFT);
+
+
         TextArea descriptionT = new TextArea();
         descriptionT.setPadding(new Insets(8));
         descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        description.setPadding(new Insets(20,10,20,10));
+        descriptionT.setWrapText(true);
 
-        HBox ajouterH = new HBox();
         Button ajouter = new Button("Ajouter");
-        ajouter.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
-        ajouter.setPadding(new Insets(20,10,20,10));
-        ajouterH.getChildren().addAll(ajouter);
+        ajouter.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        ajouter.setPadding(new Insets(10,20,10,20));
+        ajouter.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
         droite.getChildren().addAll(nom, prixdeb, prixmin, categorie, etat, description, descriptionT, ajouter);
         droite.setSpacing(10);
-        droite.setPadding(new Insets(50,0,0,300));
+        droite.setPadding(new Insets(0,0,0,300));
+        droite.setAlignment(Pos.CENTER_RIGHT);
 
 
         res.getChildren().addAll(gauche, droite);
@@ -432,7 +461,7 @@ public class AppliVAE extends Application{
         this.panelCentral = resO;
     }
 
-    public void modeAccueil() {
+    public void modeAccueil() throws SQLException{
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
 
@@ -489,39 +518,8 @@ public class AppliVAE extends Application{
 
         HBox container = new HBox();
         
-        for (int i = 1; i <= 10; i++) {
-            VBox vButton = new VBox();
-            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
-            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-            titre.setTextFill(Color.web("#FFFFFF"));
-
-            HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
-            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            prix.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
-            boxPrix.getChildren().addAll(prix, logoPrix);
-
-            HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
-            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            temps.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
-            boxTemps.getChildren().addAll(temps, logoTemps);
-
-            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
-            vButton.setSpacing(10);
-
-            Button button = new Button();
-            button.setGraphic(vButton);
-
-
-            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
-            button.setOnAction(new ControleurObjet(this));
-
-            button.setPrefSize(270, 320);
-            container.getChildren().add(button);
+        for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
+            container.getChildren().add(but);
         }
        
 
@@ -544,40 +542,8 @@ public class AppliVAE extends Application{
 
         HBox container2 = new HBox();
         
-        for (int i = 1; i <= 5; i++) {
-
-            VBox vButton = new VBox();
-            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
-            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-            titre.setTextFill(Color.web("#FFFFFF"));
-
-            HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
-            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            prix.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
-            boxPrix.getChildren().addAll(prix, logoPrix);
-
-            HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
-            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            temps.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
-            boxTemps.getChildren().addAll(temps, logoTemps);
-
-            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
-            vButton.setSpacing(10);
-
-            Button button = new Button();
-            button.setGraphic(vButton);
-
-
-            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
-            button.setOnAction(new ControleurObjet(this));
-
-            button.setPrefSize(270, 320);
-            container2.getChildren().add(button);
+        for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
+            container2.getChildren().add(but);
         }
        
 
@@ -654,7 +620,7 @@ public class AppliVAE extends Application{
             hButton.setSpacing(10);
 
             Button button = new Button();
-            button.setOnAction(new ControleurObjet(this));
+            // button.setOnAction(new ControleurObjet(this));
             button.setGraphic(hButton);
 
 
@@ -712,7 +678,7 @@ public class AppliVAE extends Application{
 
 
 
-    public void afficheApp() {
+    public void afficheApp() throws SQLException{
         if (this.stage == null) {
             this.stage = new Stage();
         }
@@ -726,7 +692,9 @@ public class AppliVAE extends Application{
         this.stage.setWidth(screenBounds.getWidth());
         this.stage.setHeight(screenBounds.getHeight());
     
+
         this.modeAccueil();
+     
         this.scene = this.laScene();
     
         this.stage.setScene(this.scene);
