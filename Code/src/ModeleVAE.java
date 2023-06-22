@@ -19,8 +19,17 @@ public class ModeleVAE {
     private Utilisateur user;
     private Statement st;
 
-    public ModeleVAE(ConnexionBD laConnexion, Utilisateur user){
-        this.laConnexion = laConnexion;
+    public ModeleVAE(Utilisateur user){
+        try{
+            this.laConnexion = new ConnexionBD();
+            this.laConnexion.connecter();
+        }
+        catch(SQLException sqlE){
+            System.out.println("Erreur lors du chargement de la base");
+        }
+        catch(ClassNotFoundException sqlE){
+            System.out.println("Erreur lors du chargement de la base");
+        }
         this.user = user;
     }
 
@@ -86,7 +95,7 @@ public class ModeleVAE {
         return res;
     }
 
-    public List<String> getCategorie(){
+    public List<String> getCategorie() throws SQLException{
         List<String> listeCat = new ArrayList<>();
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select nomcat from CATEGORIE");

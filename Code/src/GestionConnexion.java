@@ -33,6 +33,7 @@ public class GestionConnexion implements EventHandler<ActionEvent>{
                 if(!user.equals(null)){
                     this.appli.mainPage(user);
                     this.vueVAE.afficheApp();
+                    
                 }
                 else{
                     this.appli.erreurConnexion().showAndWait();
