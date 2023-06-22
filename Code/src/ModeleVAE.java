@@ -19,6 +19,7 @@ public class ModeleVAE {
     private Utilisateur user;
     private Statement st;
 
+
     public ModeleVAE(ConnexionBD laConnexion){
         // try{
         //     this.laConnexion = new ConnexionBD();

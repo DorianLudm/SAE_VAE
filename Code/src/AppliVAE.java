@@ -80,7 +80,9 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM(this);
+
         this.modele = new ModeleVAE(this.vueConnexion.getSQL());
+
     }
 
     /**
