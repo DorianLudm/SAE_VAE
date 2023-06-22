@@ -74,7 +74,7 @@ public class ConnexionIHM extends GridPane{
 
 
 
-    public ConnexionIHM(){
+    public ConnexionIHM(AppliVAE appli){
         super();
         this.username = new TextField();
         this.password = new PasswordField();
@@ -82,7 +82,7 @@ public class ConnexionIHM extends GridPane{
         this.swapper = new Button("");
         this.connecter = new Button("");
         this.mainBox = new VBox();
-        this.appliVAE = new AppliVAE();
+        this.appliVAE = appli;
         try{
             this.sql = new ConnexionBD();
             this.sql.connecter();
@@ -101,7 +101,7 @@ public class ConnexionIHM extends GridPane{
 
         //Ajout des boutons
         Button user = new Button();
-        ImageView view = new ImageView(new Image("file:img/user.png"));
+        ImageView view = new ImageView(new Image("file:img/User.png"));
         view.setFitHeight(BUTTON_HEIGHT);
         view.setPreserveRatio(true);
         user.setGraphic(view);
@@ -114,6 +114,10 @@ public class ConnexionIHM extends GridPane{
         );
         VBox box = new VBox();
         this.connecter.setText("Démarrer!");
+        this.connecter.setStyle("-fx-background-color: #FFF5EE;-fx-text-fill: #9370db;-fx-border-color: #9370db;-fx-border-width: 2px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        this.connecter.setFont(Font.font("Ubuntu", FontWeight.BOLD, 13));
+        this.swapper.setStyle("-fx-background-color: #FFF5EE;-fx-text-fill: #9370db;-fx-border-color: #9370db;-fx-border-width: 2px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        this.swapper.setFont(Font.font("Ubuntu", FontWeight.BOLD, 13));
         box.getChildren().add(this.connecter);
         box.setAlignment(Pos.CENTER);
 
@@ -190,7 +194,7 @@ public class ConnexionIHM extends GridPane{
 
         // this.mainBox = new VBox();
         this.mainBox.getChildren().clear();
-        BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/BgInscription.png",254,400,false,true), null, null, null, null);
+        BackgroundImage backGround2 = new BackgroundImage(new Image("file:img/BgInscription.png",254,410,false,true), null, null, null, null);
         this.mainBox.setBackground(new Background(backGround2));
         this.mainBox.setPrefWidth(254);
         this.mainBox.setPrefHeight(400);
@@ -270,19 +274,6 @@ public class ConnexionIHM extends GridPane{
     }
 
     /**
-    * Affiche la fenêtre
-    */
-    // public void afficherFenetre(){
-    //     //Affichage de la fenêtre
-    //     Scene scene = new Scene(this,400,650);
-    //     this.stage.setScene(scene);
-    //     this.stage.setTitle("Fenêtre de connexion");
-    //     this.stage.show();
-    //     this.stage.setResizable(false);
-    // }
-
-
-    /**
     * Utilisée pour affiché un pop-up lorsqu'une erreur SQL intervient
     * @return L'alerte pour l'erreur du SQL
     */
@@ -307,48 +298,18 @@ public class ConnexionIHM extends GridPane{
 	}
 
     /**
-    * Utilisée pour affiché un pop-up lorsqu'une erreur d'inscription utilisateur intervient
-    * @return L'alerte lorsqu'un des champs est vide
-    */
-    public Alert champVidePopup() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Erreur Inscription");
-		alert.setContentText("Erreur lors de l'inscription!\nVeuillez complétez tout les champs!");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        return alert;
-	}
-
-    /**
-    * Utilisée pour affiché un pop-up lorsqu'un utilisateur s'incrit avec un pseudo déjà utiliser
-    * @return L'alerte lorsque l'erreur est produite
-    */
-    public Alert UtilisateurExistantPopup() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Erreur Inscription");
-		alert.setContentText("Ce pseudo est déjà utilisé! Utilisez en un autre");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        return alert;
-	}
-
-    /**
     * Envoie vers la page d'acceuil de VAE
     * @param Utitlisateur l'utilisateur qui s'est connecté
     */
     public void mainPage(Utilisateur user){
         this.user = user;
-        // System.out.println("Connexion en cours...");
-        System.out.println(this.user.toString());
-    }
-
-    /**
-    * Clear l'entrée du textfield mot de passe
-    */
-    public void clearMdp(){
-        this.password.clear();
     }
 
     public Utilisateur getUser(){
         return this.user;
     }
 
+    public ConnexionBD getSQL(){
+        return this.sql;
+    }
 }

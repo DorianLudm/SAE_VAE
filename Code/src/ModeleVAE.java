@@ -19,8 +19,22 @@ public class ModeleVAE {
     private Utilisateur user;
     private Statement st;
 
-    public ModeleVAE(ConnexionBD laConnexion, Utilisateur user){
+
+    public ModeleVAE(ConnexionBD laConnexion){
+        // try{
+        //     this.laConnexion = new ConnexionBD();
+        //     this.laConnexion.connecter();
+        // }
+        // catch(SQLException sqlE){
+        //     System.out.println("Erreur lors du chargement de la base");
+        // }
+        // catch(ClassNotFoundException sqlE){
+        //     System.out.println("Erreur lors du chargement de la base");
+        // }
         this.laConnexion = laConnexion;
+    }
+
+    public void setUser(Utilisateur user){
         this.user = user;
     }
 
@@ -61,14 +75,16 @@ public class ModeleVAE {
     public List<VBox> getEncheresActive(int nombreDencheres) throws SQLException{
         List<VBox> res = new ArrayList<>();
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select montant, finVe, debutVe, imgPh, nomOb, count(montant) nbBid from ENCHERIR NATURAL JOIN VENTE NATURAL JOIN OBJET NATURAL JOIN PHOTO NATURAL JOIN STATUT where idSt = 2 group by idVe order by nbBid DESC");
+        ResultSet rs = this.st.executeQuery("select nomob, finve, idve, montantMax from OBJET natural join VENTE natural join MONTANTENCH order by debutve DESC;");
         int i = nombreDencheres;
         while(i > 0 && rs.next()){
             VBox boxElem = new VBox();
-            int montant = rs.getInt(1);
+            String nomOb = rs.getString(1);
             String finVe = rs.getString(2);
+            int montant = rs.getInt(3);
+            
             String imgPh = rs.getString(3);
-            String nomOb = rs.getString(4);
+            
             ImageView image = new ImageView(new Image(imgPh));
             Label labelObjet = new Label(nomOb);
             Label labelPrix = new Label(String.valueOf(montant));
@@ -83,4 +99,17 @@ public class ModeleVAE {
         }
         return res;
     }
+
+    public List<String> getCategorie() throws SQLException{
+        List<String> listeCat = new ArrayList<>();
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select nomcat from CATEGORIE");
+        while(rs.next()){
+            listeCat.add(rs.getString(1));
+        }
+        return listeCat;
+    }
+    
+
+
 }
