@@ -44,34 +44,44 @@ import javafx.scene.layout.Region;
 
 
 public class AppliVAE extends Application{
-
+    /** Scène de l'application */
     private Scene scene;
 
+    /**Bannière de l'application */
     private BorderPane banniere;
 
+    /**Barre de recherche de l'application */
     private TextField recherche;
 
+    /**Bouton pour la messagerie */
     private Button message;
 
+    /**Bouton pour la page des favoris */
     private Button favoris;
 
+    /**Bouton pour le profil de l'utilisateur */
     private Button user;
 
+    /**Bouton pour la page d'accueil */
     private Button home;
 
+    /**Fenêtre de l'application */
     private BorderPane fenetre;
 
+    /**Partie centrale de l'application */
     private Pane panelCentral;
 
+    /**Couleur de l'interface de l'application */
     private String couleur;
 
+    /**Fenêtre de connexion et d'inscription */
     private ConnexionIHM vueConnexion;
 
+    /**Stage de l'application */
     private Stage stage;
 
+    /**Modèle de l'application */
     private ModeleVAE modele;
-
-
 
     @Override
     public void init() {
@@ -94,9 +104,11 @@ public class AppliVAE extends Application{
         return this.scene;
     }
 
-
+    /**
+     * 
+     * @return le bandeau en haut de la fenêtre de l'application
+     */
     private BorderPane bandeau() {
-        
         this.banniere.setStyle("-fx-background-color: #"+this.couleur+";");
 
         Label vae = new Label("VAE");
@@ -104,27 +116,23 @@ public class AppliVAE extends Application{
         vae.setTextFill(Color.web("#FFFFFF"));
         vae.setPadding(new Insets(15));
 
-
-
         ImageView icon = new ImageView(new Image("file:img/loupe.png", 55, 55, true, true));
-
 
         this.recherche = new TextField();
         this.recherche.setPromptText("Rechercher");
         this.recherche.setPrefHeight(60);
         this.recherche.setPrefWidth(500);
-        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #9370DB;");
-        
+        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #"+this.couleur+";");
 
         this.message = new Button();
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
         this.message.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.message.setOnAction();
+        this.message.setOnAction(new ControleurPopUp(this));
 
         this.favoris = new Button();
         this.favoris.setGraphic(new ImageView(new Image("file:img/favoris.png", 50, 50, true, true)));
         this.favoris.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.favoris.setOnAction();
+        this.favoris.setOnAction(new ControleurPopUp(this));
 
         this.user = new Button();
         this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
@@ -138,8 +146,6 @@ public class AppliVAE extends Application{
         
         // Création d'un conteneur horizontal pour les boutons
         HBox boutonsContainer = new HBox(10);
-
-
         boutonsContainer.getChildren().addAll(icon,this.recherche, this.message, this.favoris, this.user, this.home);
         boutonsContainer.setPadding(new Insets(15));
         
@@ -150,10 +156,13 @@ public class AppliVAE extends Application{
         // Ajout des éléments à la bannière
         banniere.setLeft(vae);
         banniere.setRight(boutonsContainer);
-        
         return banniere;
     }
 
+    /**
+     * Affiche la fenêtre de mise en vente d'un objet
+     * @throws SQLException
+     */
     public void modeAjout() throws SQLException{
         HBox res = new HBox();
         VBox gauche = new VBox();
@@ -294,7 +303,6 @@ public class AppliVAE extends Application{
         desc.getChildren().addAll(description);
         desc.setAlignment(Pos.CENTER_LEFT);
 
-
         TextArea descriptionT = new TextArea();
         descriptionT.setPadding(new Insets(8));
         descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
@@ -309,13 +317,15 @@ public class AppliVAE extends Application{
         droite.setSpacing(10);
         droite.setPadding(new Insets(0,0,0,300));
         droite.setAlignment(Pos.CENTER_RIGHT);
-
-
         res.getChildren().addAll(gauche, droite);
 
         this.panelCentral = res;
     }
 
+    /**
+     * Permet d'afficher une image que l'on aura sélectionné dans nos fichiers
+     * @param imageView
+     */
     private void openImageFile(ImageView imageView) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Sélectionner une image");
@@ -328,11 +338,17 @@ public class AppliVAE extends Application{
         }
     }
 
+    /**
+     * Affiche la fenêtre qui permet de connaître les informations d'un objet mis en vente
+     * @param nomO
+     * @param desc
+     * @param debutve
+     * @param finve
+     * @param prixbase
+     * @param montantAct
+     */
     public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
-        
         HBox resO = new HBox();
-
-
         VBox gaucheO = new VBox();
 
         HBox image = new HBox();
@@ -366,7 +382,6 @@ public class AppliVAE extends Application{
         prix.setSpacing(10);
         prix.setAlignment(Pos.CENTER_LEFT);
         prix.setPadding(new Insets(0, 0, 0, 60));
-
         
         Label surenchere = new Label("Surenchère minimal : +####");
         surenchere.setStyle("-fx-text-fill: #"+this.couleur+";");
@@ -397,7 +412,6 @@ public class AppliVAE extends Application{
         gaucheO.setPadding(new Insets(0, 150, 0, 50));
         gaucheO.setAlignment(Pos.CENTER_LEFT);
 
-
         VBox droiteO = new VBox();
 
         Label nomArticle = new Label(nomO);
@@ -417,7 +431,6 @@ public class AppliVAE extends Application{
         hbox1.setSpacing(10);
         hbox1.setAlignment(Pos.CENTER_LEFT);
 
-
         HBox hbox2 = new HBox();
         Label tempsRestant = new Label("Temps restant :"+finve);
         tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
@@ -431,14 +444,9 @@ public class AppliVAE extends Application{
         hbox2.setSpacing(10);
         hbox2.setAlignment(Pos.CENTER_LEFT);
 
-
-
         Label etatArticle = new Label("Etat de l'article : ####");
         etatArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
         etatArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-
-
-
 
         Label description = new Label("Description :                                                                                        ");
         description.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-width: 5px 0 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
@@ -459,6 +467,9 @@ public class AppliVAE extends Application{
         this.panelCentral = resO;
     }
   
+    /**
+     * Affiche le profil de l'utilisateur
+     */
     public void modeProfil() {
         VBox Vprofil = new VBox();
 
@@ -490,17 +501,18 @@ public class AppliVAE extends Application{
         Deconnexion.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         Deconnexion.setOnAction(new ControleurDeconnexion(this));
 
-
         Vprofil.getChildren().addAll(imageProfil, nom, mail, motDePasse, changeCouleur, Deconnexion);
         Vprofil.setSpacing(20);
         Vprofil.setAlignment(Pos.CENTER);
         Vprofil.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;");
-        
-
         this.panelCentral = Vprofil;
         
     }
 
+    /**
+     * Permet de changer la couleur des éléments (tels que le bandeau) de l'application
+     * @param changeCouleur
+     */
     public void changeCouleur(ColorPicker changeCouleur) {
         String hex = changeCouleur.getValue().toString();
         String color = ""+hex.substring(2,8);
@@ -510,6 +522,10 @@ public class AppliVAE extends Application{
 
     }
 
+    /**
+     * Fenêtre d'accueil de l'application
+     * @throws SQLException
+     */
     public void modeAccueil() throws SQLException {
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
@@ -517,10 +533,7 @@ public class AppliVAE extends Application{
         TitledPane prixPane = new TitledPane("Prix",null);
         prixPane.setExpanded(false);
 
-
         prixPane.setStyle("-fx-color: #"+this.couleur+"; -fx-background-radius: 10px;");
-
-
 
         VBox prixContent = new VBox();
         prixContent.setSpacing(10);
@@ -538,8 +551,6 @@ public class AppliVAE extends Application{
         categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
         categoriesComboBox.setValue("Choisissez une catégorie");
 
-        
-
         ComboBox<String> etatComboBox = new ComboBox<>();
         etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
         etatComboBox.setPromptText("Choisissez un état");
@@ -554,11 +565,7 @@ public class AppliVAE extends Application{
         top.setSpacing(10);
         top.setPadding(new Insets(10));
 
-
-
-
         //Partie gauche
-
         VBox gauche = new VBox();
         gauche.setPadding(new Insets(0,10,50,100));
         gauche.setSpacing(5);
@@ -575,18 +582,14 @@ public class AppliVAE extends Application{
             container.getChildren().add(but);
         }
        
-
         ScrollPane scrollPaneR = new ScrollPane();
         container.setSpacing(20);
         scrollPaneR.setContent(container);
-        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
-
+        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneR.setPadding(new Insets(10, 0, 0, 0));
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
-
         scrollPaneR.setPrefSize(1200,600);
-
-
 
         Label actu = new Label("Fil d'actu");
         actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -598,36 +601,27 @@ public class AppliVAE extends Application{
         for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
             container2.getChildren().add(but);
         }
-       
 
         ScrollPane scrollPaneA = new ScrollPane();
         scrollPaneA.setContent(container2);
-        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setPadding(new Insets(10, 0, 0, 0));        
         container2.setSpacing(20);
         scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneA.setVbarPolicy(ScrollBarPolicy.NEVER);
-
-
         scrollPaneA.setPrefSize(1200,600);
         
-
-
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
-
-
-
-
-
 
         VBox droite = new VBox();
         droite.setSpacing(10);
         droite.setPadding(new Insets(0,100,50,50));
 
-
         Label vente = new Label("Vos ventes");
         vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         vente.setTextFill(Color.web("#"+this.couleur));
-        vente.setPadding(new Insets(15));
+        vente.setPadding(new Insets(15, 235, 20,15));
+        vente.setStyle("-fx-border-width: 0 0 5 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
 
         VBox container3 = new VBox();
         
@@ -638,36 +632,41 @@ public class AppliVAE extends Application{
             
             VBox vButton = new VBox();
             ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
+            Label titre = new Label("Nom de \nl'objet");
             titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
             titre.setTextFill(Color.web("#FFFFFF"));
 
             HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
+            Label prix = new Label("Prix de l'objet");
             prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             prix.setTextFill(Color.web("#FFFFFF"));
             ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
             boxPrix.getChildren().addAll(prix, logoPrix);
+            boxPrix.setSpacing(10);
+            boxPrix.setAlignment(Pos.CENTER_LEFT);
 
             HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
+            Label temps = new Label("Temps restant");
             temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             temps.setTextFill(Color.web("#FFFFFF"));
             ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
             boxTemps.getChildren().addAll(temps, logoTemps);
+            boxTemps.setSpacing(10);
+            boxTemps.setAlignment(Pos.CENTER_LEFT);
 
             HBox boxFavoris = new HBox();
-            Label favoris = new Label("Nombre de favoris");
+            Label favoris = new Label("Favoris");
             favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             favoris.setTextFill(Color.web("#FFFFFF"));
             ImageView logoFavoris = new ImageView(new Image("file:img/coeur.png", 30, 30, true, true));
             boxFavoris.getChildren().addAll(favoris, logoFavoris);
+            boxFavoris.setSpacing(10);
+            boxFavoris.setAlignment(Pos.CENTER_LEFT);
 
             vButton.getChildren().addAll(titre,boxPrix,boxTemps,boxFavoris);
             vButton.setSpacing(10);
             vButton.setAlignment(Pos.CENTER);
             
-
             hButton.getChildren().addAll(imgO,vButton);
             hButton.setAlignment(Pos.CENTER);
             hButton.setSpacing(10);
@@ -675,7 +674,6 @@ public class AppliVAE extends Application{
             Button button = new Button();
             // button.setOnAction(new ControleurObjet(this));
             button.setGraphic(hButton);
-
 
             button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
 
@@ -691,7 +689,6 @@ public class AppliVAE extends Application{
         scrollPaneO.setPrefSize(450,600);
         scrollPaneO.setPannable(true);
         container3.setSpacing(10);
-
 
         HBox contenantBouton = new HBox();
         contenantBouton.setAlignment(Pos.CENTER);
@@ -717,8 +714,20 @@ public class AppliVAE extends Application{
         this.panelCentral = panel;
     }
 
-    //public void modeUser()
+    /**
+     * 
+     * @return une pop-up pour informer l'utilisateur d'une fonctionnalité non disponible pour le moment
+     */
+    public Alert popUpIndisponible(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Cette fonctionnalité n'est pas encore disponible.\nVeuillez réessayer plus tard.");  
+        alert.setHeaderText("Non disponible");
+        alert.setTitle("VAE");     
+        return alert;
+    }
 
+    /**
+     * Affiche la fenêtre de connexion de l'application
+     */
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
@@ -727,19 +736,24 @@ public class AppliVAE extends Application{
         this.stage.centerOnScreen();
     }
 
+    /**
+     * Met à jour l'affichage de l'application
+     */
     public void majAffichage(){
         this.banniere = this.bandeau();
         this.fenetre.setTop(this.banniere);
         this.fenetre.setCenter(this.panelCentral);
     }
 
+    /**
+     * Affiche l'interface de l'utilisateur
+     * @throws SQLException
+     */
     public void afficheApp() throws SQLException{
         if (this.stage == null) {
             this.stage = new Stage();
         }
         this.modele.setUser(this.vueConnexion.getUser());
-    
-
     
         this.stage.setTitle("VAE");
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -747,19 +761,14 @@ public class AppliVAE extends Application{
         this.stage.setY(screenBounds.getMinY());
         this.stage.setWidth(screenBounds.getWidth());
         this.stage.setHeight(screenBounds.getHeight());
-    
 
         this.modeAccueil();
      
         this.scene = this.laScene();
-    
         this.stage.setScene(this.scene);
         this.majAffichage();
         this.stage.show();
     }
-    
-    
-
 
     /**
      * créer le graphe de scène et lance le jeu
