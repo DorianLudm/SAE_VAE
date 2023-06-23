@@ -11,10 +11,13 @@ public class ControleurAccueil implements EventHandler<ActionEvent> {
     }
     
     @Override
-    public void handle(ActionEvent actionEvent) {
-        try {
-            this.vueVAE.modeAccueil();
-        } catch (SQLException e) {
+    public void handle(ActionEvent actionEvent){
+        try{
+           this.vueVAE.modeAccueil(); 
+           this.vueVAE.majAffichage();
+        }
+        catch(SQLException e){
+            
         }
         this.vueVAE.majAffichage();
     }

@@ -80,7 +80,7 @@ public class AppliVAE extends Application{
         this.fenetre = new BorderPane();
         this.couleur = "9370db";
         this.vueConnexion = new ConnexionIHM(this);
-        this.modele = new ModeleVAE(this.vueConnexion.getSQL());
+        this.modele = new ModeleVAE(this.vueConnexion.getSQL(),this);
     }
 
     /**
@@ -328,7 +328,7 @@ public class AppliVAE extends Application{
         }
     }
 
-    public void modeObjets(){
+    public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
         
         HBox resO = new HBox();
 
@@ -358,7 +358,7 @@ public class AppliVAE extends Application{
         animation.setAlignment(Pos.CENTER);
 
         HBox prix = new HBox();
-        Label prixL = new Label("Prix actuel : ####");
+        Label prixL = new Label("Prix actuel : "+montantAct);
         prixL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -400,16 +400,16 @@ public class AppliVAE extends Application{
 
         VBox droiteO = new VBox();
 
-        Label nomArticle = new Label("####");
+        Label nomArticle = new Label(nomO);
         nomArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
         nomArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
         HBox hbox1 = new HBox();
-        Label ajouteLe = new Label("Ajouté le : ####");
+        Label ajouteLe = new Label("Ajouté le :"+debutve);
         ajouteLe.setStyle("-fx-text-fill: #"+this.couleur+";");
         ajouteLe.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView ajouteLeI = new ImageView(new Image("file:img/calendar.png", 50, 50, true, true));
-        Label prixDep = new Label("Prix de départ : ####");
+        Label prixDep = new Label("Prix de départ :"+prixbase);
         prixDep.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixDep.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixDepI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -419,7 +419,7 @@ public class AppliVAE extends Application{
 
 
         HBox hbox2 = new HBox();
-        Label tempsRestant = new Label("Temps restant : ####");
+        Label tempsRestant = new Label("Temps restant :"+finve);
         tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
         tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView tempsRestantI = new ImageView(new Image("file:img/stopwatch.png", 50, 50, true, true));
@@ -444,7 +444,7 @@ public class AppliVAE extends Application{
         description.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-width: 5px 0 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
         description.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
-        Label desctext = new Label("#######################################\n#######################################\n#######################################\n#######################################\n");
+        Label desctext = new Label(desc);
         desctext.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         desctext.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         desctext.setPadding(new Insets(10,10,10,10));
@@ -458,7 +458,7 @@ public class AppliVAE extends Application{
 
         this.panelCentral = resO;
     }
-
+  
     public void modeProfil() {
         VBox Vprofil = new VBox();
 
@@ -571,39 +571,8 @@ public class AppliVAE extends Application{
 
         HBox container = new HBox();
         
-        for (int i = 1; i <= 10; i++) {
-            VBox vButton = new VBox();
-            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
-            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-            titre.setTextFill(Color.web("#FFFFFF"));
-
-            HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
-            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            prix.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
-            boxPrix.getChildren().addAll(prix, logoPrix);
-
-            HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
-            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            temps.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
-            boxTemps.getChildren().addAll(temps, logoTemps);
-
-            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
-            vButton.setSpacing(10);
-
-            Button button = new Button();
-            button.setGraphic(vButton);
-
-
-            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
-            button.setOnAction(new ControleurObjet(this));
-
-            button.setPrefSize(270, 320);
-            container.getChildren().add(button);
+        for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
+            container.getChildren().add(but);
         }
        
 
@@ -626,40 +595,8 @@ public class AppliVAE extends Application{
 
         HBox container2 = new HBox();
         
-        for (int i = 1; i <= 5; i++) {
-
-            VBox vButton = new VBox();
-            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
-            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-            titre.setTextFill(Color.web("#FFFFFF"));
-
-            HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
-            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            prix.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
-            boxPrix.getChildren().addAll(prix, logoPrix);
-
-            HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
-            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            temps.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
-            boxTemps.getChildren().addAll(temps, logoTemps);
-
-            vButton.getChildren().addAll(imgO,titre,boxPrix,boxTemps);
-            vButton.setSpacing(10);
-
-            Button button = new Button();
-            button.setGraphic(vButton);
-
-
-            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
-            button.setOnAction(new ControleurObjet(this));
-
-            button.setPrefSize(270, 320);
-            container2.getChildren().add(button);
+        for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
+            container2.getChildren().add(but);
         }
        
 
@@ -736,7 +673,7 @@ public class AppliVAE extends Application{
             hButton.setSpacing(10);
 
             Button button = new Button();
-            button.setOnAction(new ControleurObjet(this));
+            // button.setOnAction(new ControleurObjet(this));
             button.setGraphic(hButton);
 
 
@@ -803,9 +740,7 @@ public class AppliVAE extends Application{
         this.fenetre.setCenter(this.panelCentral);
     }
 
-
-
-    public void afficheApp() throws SQLException {
+    public void afficheApp() throws SQLException{
         if (this.stage == null) {
             this.stage = new Stage();
         }
@@ -820,7 +755,9 @@ public class AppliVAE extends Application{
         this.stage.setWidth(screenBounds.getWidth());
         this.stage.setHeight(screenBounds.getHeight());
     
+
         this.modeAccueil();
+     
         this.scene = this.laScene();
     
         this.stage.setScene(this.scene);
