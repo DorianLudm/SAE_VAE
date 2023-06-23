@@ -722,7 +722,7 @@ public class AppliVAE extends Application{
     
         this.panelCentral = panel;
     }
-
+  
     /**
      * Affiche la fenêtre de connexion et d'inscription
      */
