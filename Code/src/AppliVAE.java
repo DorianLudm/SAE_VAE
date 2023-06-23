@@ -579,7 +579,8 @@ public class AppliVAE extends Application{
         ScrollPane scrollPaneR = new ScrollPane();
         container.setSpacing(20);
         scrollPaneR.setContent(container);
-        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneR.setPadding(new Insets(10, 0, 0, 0));
 
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -602,7 +603,8 @@ public class AppliVAE extends Application{
 
         ScrollPane scrollPaneA = new ScrollPane();
         scrollPaneA.setContent(container2);
-        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setPadding(new Insets(10, 0, 0, 0));        
         container2.setSpacing(20);
         scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneA.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -627,7 +629,8 @@ public class AppliVAE extends Application{
         Label vente = new Label("Vos ventes");
         vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         vente.setTextFill(Color.web("#"+this.couleur));
-        vente.setPadding(new Insets(15));
+        vente.setPadding(new Insets(15, 235, 20,15));
+        vente.setStyle("-fx-border-width: 0 0 5 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
 
         VBox container3 = new VBox();
         
@@ -638,30 +641,36 @@ public class AppliVAE extends Application{
             
             VBox vButton = new VBox();
             ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de l'objet");
+            Label titre = new Label("Nom de \nl'objet");
             titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
             titre.setTextFill(Color.web("#FFFFFF"));
 
             HBox boxPrix = new HBox();
-            Label prix = new Label("prix de l'objet");
+            Label prix = new Label("Prix de l'objet");
             prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             prix.setTextFill(Color.web("#FFFFFF"));
             ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
             boxPrix.getChildren().addAll(prix, logoPrix);
+            boxPrix.setSpacing(10);
+            boxPrix.setAlignment(Pos.CENTER_LEFT);
 
             HBox boxTemps = new HBox();
-            Label temps = new Label("temps restant");
+            Label temps = new Label("Temps restant");
             temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             temps.setTextFill(Color.web("#FFFFFF"));
             ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
             boxTemps.getChildren().addAll(temps, logoTemps);
+            boxTemps.setSpacing(10);
+            boxTemps.setAlignment(Pos.CENTER_LEFT);
 
             HBox boxFavoris = new HBox();
-            Label favoris = new Label("Nombre de favoris");
+            Label favoris = new Label("Favoris");
             favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
             favoris.setTextFill(Color.web("#FFFFFF"));
             ImageView logoFavoris = new ImageView(new Image("file:img/coeur.png", 30, 30, true, true));
             boxFavoris.getChildren().addAll(favoris, logoFavoris);
+            boxFavoris.setSpacing(10);
+            boxFavoris.setAlignment(Pos.CENTER_LEFT);
 
             vButton.getChildren().addAll(titre,boxPrix,boxTemps,boxFavoris);
             vButton.setSpacing(10);

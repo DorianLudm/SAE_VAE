@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 
@@ -60,31 +61,7 @@ public class ModeleVAE {
     //     return res;
     // }
 
-    public List<VBox> getEncheresActive(int nombreDencheres) throws SQLException{
-        List<VBox> res = new ArrayList<>();
-        this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select montant, finVe, imgPh, nomOb from ENCHERIR NATURAL JOIN VENTE NATURAL JOIN OBJET NATURAL JOIN PHOTO NATURAL JOIN STATUT where idSt = 2 order by debutVe ASC");
-        int i = nombreDencheres;
-        while(i > 0 && rs.next()){
-            VBox boxElem = new VBox();
-            int montant = rs.getInt(1);
-            String finVe = rs.getString(2);
-            String imgPh = rs.getString(3);
-            String nomOb = rs.getString(4);
-            ImageView image = new ImageView(new Image(imgPh));
-            Label labelObjet = new Label(nomOb);
-            Label labelPrix = new Label(String.valueOf(montant));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime dateTime = LocalDateTime.parse(finVe, formatter);
-            LocalDateTime dateActuel = LocalDateTime.now();
-            Duration tempsDiff = Duration.between((Temporal) dateActuel, dateTime);
-            Label tempsRestant = new Label(tempsDiff.toString());
-            boxElem.getChildren().addAll(image, labelObjet, labelPrix, tempsRestant);
-            res.add(boxElem);
-            i -= 1;
-        }
-        return res;
-    }
+
 
     public List<Button> getEncheresRecentes(int nombreDencheres, String couleur) throws SQLException{
         List<Button> res = new ArrayList<>();
@@ -110,10 +87,6 @@ public class ModeleVAE {
 
 
                 ImageView image = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-                // if (!rs.getString(3).equals(null)){
-                //     String imgPh = rs.getString(3);
-                //     image = new ImageView(new Image(imgPh, 200,200, true, true));
-                // }
                 
                 
             
@@ -130,21 +103,19 @@ public class ModeleVAE {
                 ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
 
                 boxPrix.getChildren().addAll(labelPrix, logoPrix);
+                boxPrix.setSpacing(10);
+                boxPrix.setAlignment(Pos.CENTER_LEFT);
 
 
                 HBox boxTemps = new HBox();
-                // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                // LocalDateTime dateTime = LocalDateTime.parse(finVe, formatter);
-                // LocalDateTime dateActuel = LocalDateTime.now();
-                // Duration tempsDiff = Duration.between((Temporal) dateActuel, dateTime);
-
-                // Label tempsRestant = new Label(tempsDiff.toString());
                 Label tempsRestant = new Label(finVe);
 
                 tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
                 tempsRestant.setTextFill(Color.web("#FFFFFF"));
                 ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
                 boxTemps.getChildren().addAll(tempsRestant, logoTemps);
+                boxTemps.setSpacing(10);
+                boxTemps.setAlignment(Pos.CENTER_LEFT);
                 vButton.getChildren().addAll(image,labelObjet,boxPrix,boxTemps);
                 vButton.setSpacing(10);
 
@@ -167,7 +138,6 @@ public class ModeleVAE {
         }
         return res;
     }
-    //select nomob, descriptionob, prixbase, debutve, finve, nomcat, montantMax from OBJET natural join VENTE natural join CATEGORIE natural join MONTANTENCH where idve = 2;
 
 
 
@@ -177,7 +147,6 @@ public class ModeleVAE {
 
 
     public String getMontantObjet(Objet ob) throws SQLException{
-        //select montantMax from OBJET natural join VENTE natural join MONTANTENCH where idob=4;
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select montantMax, prixbase from OBJET natural join VENTE natural join MONTANTENCH where idob="+String.valueOf(ob.getId()));
         String res = "";
@@ -194,10 +163,7 @@ public class ModeleVAE {
 
     }
 
-    // public String getTempsRestant(Objet ob){
 
-
-    // }
 
     public String getDebutVente(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
@@ -255,12 +221,6 @@ public class ModeleVAE {
         }
         return listeCat;
     }
-
-
-
-
-
-    //public void setObjet()
     
 
 
