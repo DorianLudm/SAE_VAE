@@ -328,7 +328,7 @@ public class AppliVAE extends Application{
         }
     }
 
-    public void modeObjets(){
+    public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
         
         HBox resO = new HBox();
 
@@ -358,7 +358,7 @@ public class AppliVAE extends Application{
         animation.setAlignment(Pos.CENTER);
 
         HBox prix = new HBox();
-        Label prixL = new Label("Prix actuel : ####");
+        Label prixL = new Label("Prix actuel : "+montantAct);
         prixL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -400,16 +400,16 @@ public class AppliVAE extends Application{
 
         VBox droiteO = new VBox();
 
-        Label nomArticle = new Label("####");
+        Label nomArticle = new Label(nomO);
         nomArticle.setStyle("-fx-text-fill: #"+this.couleur+";");
         nomArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
         HBox hbox1 = new HBox();
-        Label ajouteLe = new Label("Ajouté le : ####");
+        Label ajouteLe = new Label("Ajouté le :"+debutve);
         ajouteLe.setStyle("-fx-text-fill: #"+this.couleur+";");
         ajouteLe.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView ajouteLeI = new ImageView(new Image("file:img/calendar.png", 50, 50, true, true));
-        Label prixDep = new Label("Prix de départ : ####");
+        Label prixDep = new Label("Prix de départ :"+prixbase);
         prixDep.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixDep.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixDepI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -419,7 +419,7 @@ public class AppliVAE extends Application{
 
 
         HBox hbox2 = new HBox();
-        Label tempsRestant = new Label("Temps restant : ####");
+        Label tempsRestant = new Label("Temps restant :"+finve);
         tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
         tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView tempsRestantI = new ImageView(new Image("file:img/stopwatch.png", 50, 50, true, true));
@@ -444,7 +444,7 @@ public class AppliVAE extends Application{
         description.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-width: 5px 0 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
         description.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
-        Label desctext = new Label("#######################################\n#######################################\n#######################################\n#######################################\n");
+        Label desctext = new Label(desc);
         desctext.setStyle("-fx-text-fill: #"+this.couleur+";-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         desctext.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         desctext.setPadding(new Insets(10,10,10,10));

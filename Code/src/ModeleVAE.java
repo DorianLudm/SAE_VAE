@@ -28,6 +28,7 @@ public class ModeleVAE {
     private Statement st;
     private AppliVAE app;
 
+
     public ModeleVAE(ConnexionBD laConnexion, AppliVAE app){
         // try{
         //     this.laConnexion = new ConnexionBD();
@@ -178,10 +179,16 @@ public class ModeleVAE {
     public String getMontantObjet(Objet ob) throws SQLException{
         //select montantMax from OBJET natural join VENTE natural join MONTANTENCH where idob=4;
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select montantMax from OBJET natural join VENTE natural join MONTANTENCH where idob=4"+String.valueOf(ob.getId()));
+        ResultSet rs = this.st.executeQuery("select montantMax, prixbase from OBJET natural join VENTE natural join MONTANTENCH where idob="+String.valueOf(ob.getId()));
         String res = "";
         while(rs.next()){
-            res = String.valueOf(rs.getInt(1));
+            
+            int montant = rs.getInt(1);
+            if (montant == 0){
+                montant = rs.getInt(2);
+            }
+            res = String.valueOf(montant);
+
         }
         return res;
 
@@ -192,7 +199,35 @@ public class ModeleVAE {
 
     // }
 
+    public String getDebutVente(Objet ob) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select debutve from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
+        String res = "";
+        while(rs.next()){
+            res = rs.getString(1);
+        }
+        return res;
+    }
 
+    public String getFinVente(Objet ob) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select finve from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
+        String res = "";
+        while(rs.next()){
+            res = rs.getString(1);
+        }
+        return res;
+    }
+
+    public String getPrixBase(Objet ob) throws SQLException{
+        this.st = this.laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select prixbase from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
+        String res = "";
+        while(rs.next()){
+            res = String.valueOf(rs.getInt(1));
+        }
+        return res;
+    }
 
 
 
@@ -220,6 +255,12 @@ public class ModeleVAE {
         }
         return listeCat;
     }
+
+
+
+
+
+    //public void setObjet()
     
 
 
