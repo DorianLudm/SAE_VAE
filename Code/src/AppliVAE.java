@@ -113,18 +113,18 @@ public class AppliVAE extends Application{
         this.recherche.setPromptText("Rechercher");
         this.recherche.setPrefHeight(60);
         this.recherche.setPrefWidth(500);
-        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #9370DB;");
+        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #"+this.couleur+";");
         
 
         this.message = new Button();
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
         this.message.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.message.setOnAction();
+        this.message.setOnAction(new ControleurPopUp(this));
 
         this.favoris = new Button();
         this.favoris.setGraphic(new ImageView(new Image("file:img/favoris.png", 50, 50, true, true)));
         this.favoris.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.favoris.setOnAction();
+        this.favoris.setOnAction(new ControleurPopUp(this));
 
         this.user = new Button();
         this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
@@ -715,6 +715,13 @@ public class AppliVAE extends Application{
         panel.setRight(droite);
     
         this.panelCentral = panel;
+    }
+
+    public Alert popUpIndisponible(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Cette fonctionnalité n'est pas encore disponible.\nVeuillez réessayer plus tard.");  
+        alert.setHeaderText("Non disponible");
+        alert.setTitle("VAE");     
+        return alert;
     }
 
     //public void modeUser()
