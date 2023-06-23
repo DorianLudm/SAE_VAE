@@ -95,6 +95,10 @@ public class AppliVAE extends Application{
     }
 
 
+    /**
+     * 
+     * @return le bandeau en haut de la fenêtre de l'application
+     */
     private BorderPane bandeau() {
         
         this.banniere.setStyle("-fx-background-color: #"+this.couleur+";");
@@ -154,6 +158,10 @@ public class AppliVAE extends Application{
         return banniere;
     }
 
+    /**
+     * Affiche la fenêtre de mise en vente d'un objet
+     * @throws SQLException
+     */
     public void modeAjout() throws SQLException{
         HBox res = new HBox();
         VBox gauche = new VBox();
@@ -316,6 +324,10 @@ public class AppliVAE extends Application{
         this.panelCentral = res;
     }
 
+    /**
+     * Permet d'afficher une image que l'on aura sélectionné dans nos fichiers
+     * @param imageView
+     */
     private void openImageFile(ImageView imageView) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Sélectionner une image");
@@ -328,6 +340,15 @@ public class AppliVAE extends Application{
         }
     }
 
+    /**
+     * Affiche la fenêtre qui permet de connaître les informations d'un objet mis en vente
+     * @param nomO
+     * @param desc
+     * @param debutve
+     * @param finve
+     * @param prixbase
+     * @param montantAct
+     */
     public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
         
         HBox resO = new HBox();
@@ -459,6 +480,9 @@ public class AppliVAE extends Application{
         this.panelCentral = resO;
     }
   
+    /**
+     * Affiche le profil de l'utilisateur
+     */
     public void modeProfil() {
         VBox Vprofil = new VBox();
 
@@ -501,6 +525,10 @@ public class AppliVAE extends Application{
         
     }
 
+    /**
+     * Permet de changer la couleur des éléments (tels que le bandeau) de l'application
+     * @param changeCouleur
+     */
     public void changeCouleur(ColorPicker changeCouleur) {
         String hex = changeCouleur.getValue().toString();
         String color = ""+hex.substring(2,8);
@@ -510,6 +538,10 @@ public class AppliVAE extends Application{
 
     }
 
+    /**
+     * Fenêtre d'accueil de l'application
+     * @throws SQLException
+     */
     public void modeAccueil() throws SQLException {
         BorderPane panel = new BorderPane();
         HBox top = new HBox();
@@ -517,10 +549,7 @@ public class AppliVAE extends Application{
         TitledPane prixPane = new TitledPane("Prix",null);
         prixPane.setExpanded(false);
 
-
         prixPane.setStyle("-fx-color: #"+this.couleur+"; -fx-background-radius: 10px;");
-
-
 
         VBox prixContent = new VBox();
         prixContent.setSpacing(10);
@@ -538,8 +567,6 @@ public class AppliVAE extends Application{
         categoriesComboBox.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
         categoriesComboBox.setValue("Choisissez une catégorie");
 
-        
-
         ComboBox<String> etatComboBox = new ComboBox<>();
         etatComboBox.getItems().addAll("Très bon état", "Bon état", "Correct", "Mauvais état", "Très mauvais état");
         etatComboBox.setPromptText("Choisissez un état");
@@ -554,11 +581,7 @@ public class AppliVAE extends Application{
         top.setSpacing(10);
         top.setPadding(new Insets(10));
 
-
-
-
         //Partie gauche
-
         VBox gauche = new VBox();
         gauche.setPadding(new Insets(0,10,50,100));
         gauche.setSpacing(5);
@@ -575,19 +598,14 @@ public class AppliVAE extends Application{
             container.getChildren().add(but);
         }
        
-
         ScrollPane scrollPaneR = new ScrollPane();
         container.setSpacing(20);
         scrollPaneR.setContent(container);
         scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
         scrollPaneR.setPadding(new Insets(10, 0, 0, 0));
-
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
-
         scrollPaneR.setPrefSize(1200,600);
-
-
 
         Label actu = new Label("Fil d'actu");
         actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -599,7 +617,6 @@ public class AppliVAE extends Application{
         for (Button but: this.modele.getEncheresRecentes(10,this.couleur)) {
             container2.getChildren().add(but);
         }
-       
 
         ScrollPane scrollPaneA = new ScrollPane();
         scrollPaneA.setContent(container2);
@@ -608,23 +625,13 @@ public class AppliVAE extends Application{
         container2.setSpacing(20);
         scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneA.setVbarPolicy(ScrollBarPolicy.NEVER);
-
-
         scrollPaneA.setPrefSize(1200,600);
         
-
-
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
-
-
-
-
-
 
         VBox droite = new VBox();
         droite.setSpacing(10);
         droite.setPadding(new Insets(0,100,50,50));
-
 
         Label vente = new Label("Vos ventes");
         vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -676,7 +683,6 @@ public class AppliVAE extends Application{
             vButton.setSpacing(10);
             vButton.setAlignment(Pos.CENTER);
             
-
             hButton.getChildren().addAll(imgO,vButton);
             hButton.setAlignment(Pos.CENTER);
             hButton.setSpacing(10);
@@ -684,7 +690,6 @@ public class AppliVAE extends Application{
             Button button = new Button();
             // button.setOnAction(new ControleurObjet(this));
             button.setGraphic(hButton);
-
 
             button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
 
@@ -700,7 +705,6 @@ public class AppliVAE extends Application{
         scrollPaneO.setPrefSize(450,600);
         scrollPaneO.setPannable(true);
         container3.setSpacing(10);
-
 
         HBox contenantBouton = new HBox();
         contenantBouton.setAlignment(Pos.CENTER);
@@ -726,6 +730,10 @@ public class AppliVAE extends Application{
         this.panelCentral = panel;
     }
 
+    /**
+     * 
+     * @return une pop-up pour informer l'utilisateur d'une fonctionnalité non disponible pour le moment
+     */
     public Alert popUpIndisponible(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Cette fonctionnalité n'est pas encore disponible.\nVeuillez réessayer plus tard.");  
         alert.setHeaderText("Non disponible");
@@ -733,8 +741,9 @@ public class AppliVAE extends Application{
         return alert;
     }
 
-    //public void modeUser()
-
+    /**
+     * Affiche la fenêtre de connexion de l'application
+     */
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
         this.scene.setRoot(root);
@@ -743,19 +752,24 @@ public class AppliVAE extends Application{
         this.stage.centerOnScreen();
     }
 
+    /**
+     * Met à jour l'affichage de l'application
+     */
     public void majAffichage(){
         this.banniere = this.bandeau();
         this.fenetre.setTop(this.banniere);
         this.fenetre.setCenter(this.panelCentral);
     }
 
+    /**
+     * Affiche l'interface de l'utilisateur
+     * @throws SQLException
+     */
     public void afficheApp() throws SQLException{
         if (this.stage == null) {
             this.stage = new Stage();
         }
         this.modele.setUser(this.vueConnexion.getUser());
-    
-
     
         this.stage.setTitle("VAE");
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -763,19 +777,14 @@ public class AppliVAE extends Application{
         this.stage.setY(screenBounds.getMinY());
         this.stage.setWidth(screenBounds.getWidth());
         this.stage.setHeight(screenBounds.getHeight());
-    
 
         this.modeAccueil();
      
         this.scene = this.laScene();
-    
         this.stage.setScene(this.scene);
         this.majAffichage();
         this.stage.show();
     }
-    
-    
-
 
     /**
      * créer le graphe de scène et lance le jeu
