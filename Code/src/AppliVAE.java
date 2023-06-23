@@ -81,6 +81,7 @@ public class AppliVAE extends Application{
 
 
 
+
     @Override
     public void init() {
         
@@ -121,18 +122,19 @@ public class AppliVAE extends Application{
         this.recherche.setPromptText("Rechercher");
         this.recherche.setPrefHeight(60);
         this.recherche.setPrefWidth(500);
-        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #9370DB;");
+        this.recherche.setStyle("-fx-background-radius: 30;-fx-font-size: 25px; -fx-prompt-text-fill: #"+this.couleur+";");
         
 
         this.message = new Button();
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
         this.message.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.message.setOnAction();
+        this.message.setOnAction(new ControleurPopUp(this));
+
 
         this.favoris = new Button();
         this.favoris.setGraphic(new ImageView(new Image("file:img/favoris.png", 50, 50, true, true)));
         this.favoris.setStyle("-fx-background-color: #"+this.couleur+";");
-        //this.favoris.setOnAction();
+        this.favoris.setOnAction(new ControleurPopUp(this));
 
         this.user = new Button();
         this.user.setGraphic(new ImageView(new Image("file:img/user2.png", 50, 50, true, true)));
@@ -226,7 +228,9 @@ public class AppliVAE extends Application{
         gauche.setStyle("-fx-border-width: 0 5px 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
         gauche.setAlignment(Pos.CENTER);
 
+
         //Droite
+
   
         VBox droite = new VBox();
   
@@ -235,9 +239,9 @@ public class AppliVAE extends Application{
         nomL.setStyle("-fx-text-fill: #"+this.couleur+";");
         nomL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         nomL.setPadding(new Insets(0, 50, 0, 0));
-        this.nomT = new TextField();
-        this.nomT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        nom.getChildren().addAll(nomL, this.nomT);
+        TextField nomT = new TextField();
+        nomT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        nom.getChildren().addAll(nomL, nomT);
         nom.setPadding(new Insets(20,10,20,10));
         nom.setAlignment(Pos.CENTER_LEFT);
 
@@ -246,9 +250,9 @@ public class AppliVAE extends Application{
         prixdebL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixdebL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         prixdebL.setPadding(new Insets(0, 50, 0, 0));
-        this.prixdebT = new TextField();
-        this.prixdebT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        prixdeb.getChildren().addAll(prixdebL, this.prixdebT);
+        TextField prixdebT = new TextField();
+        prixdebT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        prixdeb.getChildren().addAll(prixdebL, prixdebT);
         prixdeb.setPadding(new Insets(20,10,20,10));
         prixdeb.setAlignment(Pos.CENTER_LEFT);
 
@@ -257,9 +261,9 @@ public class AppliVAE extends Application{
         prixminL.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixminL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         prixminL.setPadding(new Insets(0, 50, 0, 0));
-        this.prixminT = new TextField();
-        this.prixminT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        prixmin.getChildren().addAll(prixminL, this.prixminT);
+        TextField prixminT = new TextField();
+        prixminT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        prixmin.getChildren().addAll(prixminL, prixminT);
         prixmin.setPadding(new Insets(20,10,20,10));
         prixmin.setAlignment(Pos.CENTER_LEFT);
 
@@ -268,13 +272,13 @@ public class AppliVAE extends Application{
         categorieL.setStyle("-fx-text-fill: #"+this.couleur+";");
         categorieL.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         categorieL.setPadding(new Insets(0, 50, 0, 0));
-        this.categorieC = new ComboBox<String>();
+        ComboBox<String> categorieC = new ComboBox<String>();
         for (String cate : this.modele.getCategorie()) {
-            this.categorieC.getItems().add(cate);
+            categorieC.getItems().add(cate);
         }
-        this.categorieC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
-        this.categorieC.setValue("Choisissez une catégorie");
-        categorie.getChildren().addAll(categorieL, this.categorieC);
+        categorieC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        categorieC.setValue("Choisissez une catégorie");
+        categorie.getChildren().addAll(categorieL, categorieC);
         categorie.setPadding(new Insets(20,10,20,10));
         categorie.setAlignment(Pos.CENTER_LEFT);
 
@@ -288,12 +292,12 @@ public class AppliVAE extends Application{
         String c = "Correct";
         String me = "Mauvais état";
         String tme = "Très mauvais état";
-        this.etatC = new ComboBox<String>();
-        this.etatC.getItems().addAll(tbe,be,c,me,tme);
-        this.etatC.setValue(tbe);
-        this.etatC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
+        ComboBox<String> etatC = new ComboBox<String>();
+        etatC.getItems().addAll(tbe,be,c,me,tme);
+        etatC.setValue(tbe);
+        etatC.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;");
         etat.setPadding(new Insets(20,10,20,10));
-        etat.getChildren().addAll(etatL, this.etatC);
+        etat.getChildren().addAll(etatL, etatC);
         etat.setAlignment(Pos.CENTER_LEFT);
 
         HBox desc = new HBox();
@@ -310,13 +314,13 @@ public class AppliVAE extends Application{
         this.descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         this.descriptionT.setWrapText(true);
 
+
         Button ajouter = new Button("Ajouter");
         ajouter.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
         ajouter.setPadding(new Insets(10,20,10,20));
         ajouter.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-        ajouter.setOnAction(new ControleurAjoutObjet(this,this.modele));
 
-        droite.getChildren().addAll(nom, prixdeb, prixmin, categorie, etat, description, this.descriptionT, ajouter);
+        droite.getChildren().addAll(nom, prixdeb, prixmin, categorie, etat, description, descriptionT, ajouter);
         droite.setSpacing(10);
         droite.setPadding(new Insets(0,0,0,300));
         droite.setAlignment(Pos.CENTER_RIGHT);
@@ -338,6 +342,7 @@ public class AppliVAE extends Application{
             imageView.setImage(image);
         }
     }
+
 
       /**
      * Affiche la fenêtre qui permet de consulter un objet mis en vente
@@ -483,6 +488,7 @@ public class AppliVAE extends Application{
         this.panelCentral = resO;
     }
 
+
     public String getNom() {
         return this.nomT.getText();
     }
@@ -507,6 +513,7 @@ public class AppliVAE extends Application{
         return this.descriptionT.getText();
     }
     
+
   
     public void modeProfil() {
         VBox Vprofil = new VBox();
@@ -628,12 +635,16 @@ public class AppliVAE extends Application{
         ScrollPane scrollPaneR = new ScrollPane();
         container.setSpacing(20);
         scrollPaneR.setContent(container);
-        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneR.setPadding(new Insets(10, 0, 0, 0));
+
 
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
 
         scrollPaneR.setPrefSize(1200,600);
+
+
 
         Label actu = new Label("Fil d'actu");
         actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -649,7 +660,8 @@ public class AppliVAE extends Application{
 
         ScrollPane scrollPaneA = new ScrollPane();
         scrollPaneA.setContent(container2);
-        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 0 0 0 2 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
+        scrollPaneA.setPadding(new Insets(10, 0, 0, 0));        
         container2.setSpacing(20);
         scrollPaneA.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneA.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -657,7 +669,14 @@ public class AppliVAE extends Application{
 
         scrollPaneA.setPrefSize(1200,600);
         
+
+
+
+
+        scrollPaneA.setPrefSize(1200,600);
+        
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
+
 
 
         VBox droite = new VBox();
@@ -668,10 +687,12 @@ public class AppliVAE extends Application{
         Label vente = new Label("Vos ventes");
         vente.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         vente.setTextFill(Color.web("#"+this.couleur));
-        vente.setPadding(new Insets(15));
+        vente.setPadding(new Insets(15, 235, 20,15));
+        vente.setStyle("-fx-border-width: 0 0 5 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
 
         VBox container3 = new VBox();
         
+
         for (Button but: this.modele.getMesVentes(10,this.couleur)) {
             container3.getChildren().add(but);
         }
@@ -681,7 +702,7 @@ public class AppliVAE extends Application{
         scrollPaneO.setContent(container3);
         scrollPaneO.setVbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneO.setHbarPolicy(ScrollBarPolicy.NEVER);
-        scrollPaneO.setPrefSize(470,600);
+        scrollPaneO.setPrefSize(450,600);
         scrollPaneO.setPannable(true);
         container3.setSpacing(10);
 
@@ -696,7 +717,7 @@ public class AppliVAE extends Application{
         contenantBouton.getChildren().addAll(plus, ajout);
 
         Button boutonAjout = new Button();
-        boutonAjout.setPrefSize(470, 220);
+        boutonAjout.setPrefSize(320, 120);
         boutonAjout.setGraphic(contenantBouton);
         boutonAjout.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
         boutonAjout.setOnAction(new ControleurNouvelleEnchere(this));
@@ -709,6 +730,15 @@ public class AppliVAE extends Application{
     
         this.panelCentral = panel;
     }
+
+
+    public Alert popUpIndisponible(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Cette fonctionnalité n'est pas encore disponible.\nVeuillez réessayer plus tard.");  
+        alert.setHeaderText("Non disponible");
+        alert.setTitle("VAE");     
+        return alert;
+    }
+
 
 
     public void afficheFenetreConexion(){
@@ -764,6 +794,13 @@ public class AppliVAE extends Application{
         this.stage = stage;
 
         this.stage.setTitle("VAE");
+
+        // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
+        // stage.setX(screenBounds.getMinX());
+        // stage.setY(screenBounds.getMinY());
+        // stage.setWidth(screenBounds.getWidth());
+        // stage.setHeight(screenBounds.getHeight());
+
         
         this.stage.setScene(this.scene);
         

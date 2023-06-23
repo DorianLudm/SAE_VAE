@@ -53,6 +53,7 @@ public class ModeleVAE {
         return this.user;
     }
 
+
     /**
      * Récupère les enchères les plus récentes.
      * @param nombreDencheres Le nombre d'enchères à récupérer.
@@ -60,6 +61,7 @@ public class ModeleVAE {
      * @return La liste des boutons représentant les enchères récentes.
      * @throws SQLException Si une erreur SQL se produit.
      */
+
     public List<Button> getEncheresRecentes(int nombreDencheres, String couleur) throws SQLException{
         List<Button> res = new ArrayList<>();
         this.st = this.laConnexion.createStatement();
@@ -90,15 +92,18 @@ public class ModeleVAE {
                 ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
 
                 boxPrix.getChildren().addAll(labelPrix, logoPrix);
+                boxPrix.setSpacing(10);
+                boxPrix.setAlignment(Pos.CENTER_LEFT);
 
                 HBox boxTemps = new HBox();
-
                 Label tempsRestant = new Label(finVe);
 
                 tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
                 tempsRestant.setTextFill(Color.web("#FFFFFF"));
                 ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
                 boxTemps.getChildren().addAll(tempsRestant, logoTemps);
+                boxTemps.setSpacing(10);
+                boxTemps.setAlignment(Pos.CENTER_LEFT);
                 vButton.getChildren().addAll(image,labelObjet,boxPrix,boxTemps);
                 vButton.setSpacing(10);
 
@@ -123,7 +128,7 @@ public class ModeleVAE {
      */
     public String getMontantObjet(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select IFNULL(montantMax, 0) as montantMax, prixbase from OBJET natural join VENTE natural left join MONTANTENCH where idob="+String.valueOf(ob.getId()));
+        ResultSet rs = this.st.executeQuery("select montantMax, prixbase from OBJET natural join VENTE natural join MONTANTENCH where idob="+String.valueOf(ob.getId()));
         String res = "";
         while(rs.next()){
 
@@ -222,6 +227,21 @@ public class ModeleVAE {
         }
         return listeCat;
     }
+
+    // public Vente getEnchere(int idv) throws SQLException{
+    //     this.st = this.laConnexion.createStatement();
+    //     ResultSet rs = this.st.executeQuery("select * from VENTE where idve="+String.valueOf(idv));
+    //     if(rs.next()){
+    //         int idve = idv;
+    //         double prixBase = rs.getDouble(2);
+    //         double prixMin = rs.getDouble(3);
+    //         String debutve = rs.getString(4);
+    //         String finve = rs.getString(5);
+    //         int intob = rs.getInt(6);
+    //         int idst = rs.getInt(7);
+    //         Vente res = new Vente(idve, debutve, finve, prixMin, prixBase, intob, idst);
+    //     }
+    // }
 
 
     /**
@@ -377,4 +397,5 @@ public class ModeleVAE {
         }
         return res;
     }
+
 }

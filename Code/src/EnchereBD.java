@@ -3,33 +3,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-/**
- * Cette classe représente un gestionnaire d'enchères dans la base de données.
- * Elle permet d'effectuer des opérations telles que l'insertion, la suppression, la mise à jour et la récupération des enchères.
- * La classe utilise une instance de ConnexionBD pour interagir avec la base de données.
- */
 public class EnchereBD {
-    /**Instance de ConnexionBD utilisée pour se connecter à la base de données. */
     private ConnexionBD laConnexion;
-    /**Statement utilisé pour exécuter des requêtes SQL. */
     private Statement st;
 
-
-    /**
-     * Constructeur de la classe EnchereBD.
-     * @param laConnexion L'instance de ConnexionBD à utiliser pour se connecter à la base de données.
-     */
     public EnchereBD(ConnexionBD laConnexion){
         this.laConnexion = laConnexion;
     }
 
-
-    /**
-     * Insère une enchère dans la base de données.
-     * @param enchere L'enchère à insérer.
-     * @throws SQLException En cas d'erreur lors de l'exécution de la requête SQL.
-     */
     public void insererEnchereBD(Enchere enchere) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(enchere.getDateHeure());
         PreparedStatement s = this.laConnexion.prepareStatement("insert into ENCHERIR values (?,?,?,?)");
@@ -40,14 +21,6 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
-
-     /**
-     * Supprime une enchère de la base de données.
-     * @param idUt L'ID de l'utilisateur associé à l'enchère.
-     * @param idVe L'ID de la vente associée à l'enchère.
-     * @param dateheure La date et heure de l'enchère.
-     * @throws SQLException En cas d'erreur lors de l'exécution de la requête SQL.
-     */
     public void effacerEnchereBD(int idUt, int idVe, String dateheure) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(dateheure);
         PreparedStatement s = this.laConnexion.prepareStatement("delete from ENCHERIR where idUt = ? and idVe = ? and dateheure = ?");
@@ -57,12 +30,6 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
-
-    /**
-     * Met à jour une enchère dans la base de données.
-     * @param enchere L'enchère mise à jour.
-     * @throws SQLException En cas d'erreur lors de l'exécution de la requête SQL.
-     */
     public void majEnchereBD(Enchere enchere) throws SQLException{
         java.sql.Date date = java.sql.Date.valueOf(enchere.getDateHeure());
         PreparedStatement s = this.laConnexion.prepareStatement("update ENCHERIR SET idut=?, idve=?, dateheure=?, montant=?");
@@ -73,12 +40,6 @@ public class EnchereBD {
         s.executeUpdate();
     }
 
-    /**
-     * Récupère une enchère de la base de données en fonction de son ID.
-     * @param id L'ID de l'enchère à récupérer.
-     * @return L'enchère récupérée, ou null si aucune enchère correspondante n'a été trouvée.
-     * @throws SQLException En cas d'erreur lors de l'exécution de la requête SQL.
-     */
     public Enchere getEnchereBD(Integer id) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select * from ENCHERIR natural join UTILISATEUR natural join VENTE natural join ROLE natural join OBJET natural join CATEGORIE natural join STATUT where idve="+id.toString());
