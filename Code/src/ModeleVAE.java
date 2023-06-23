@@ -221,7 +221,21 @@ public class ModeleVAE {
         }
         return listeCat;
     }
-    
+
+    // public Vente getEnchere(int idv) throws SQLException{
+    //     this.st = this.laConnexion.createStatement();
+    //     ResultSet rs = this.st.executeQuery("select * from VENTE where idve="+String.valueOf(idv));
+    //     if(rs.next()){
+    //         int idve = idv;
+    //         double prixBase = rs.getDouble(2);
+    //         double prixMin = rs.getDouble(3);
+    //         String debutve = rs.getString(4);
+    //         String finve = rs.getString(5);
+    //         int intob = rs.getInt(6);
+    //         int idst = rs.getInt(7);
+    //         Vente res = new Vente(idve, debutve, finve, prixMin, prixBase, intob, idst);
+    //     }
+    // }
 
 
 }

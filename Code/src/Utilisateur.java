@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilisateur {
     private int idUt;
     private String pseudo;
@@ -5,6 +8,7 @@ public class Utilisateur {
     private String mdp;
     private String active;
     private Role role;
+    private List<Vente> listeFav;
 
     public Utilisateur(int idUt, String pseudo, String email, String mdp, String active, Role role){
         this.idUt = idUt;
@@ -13,6 +17,15 @@ public class Utilisateur {
         this.mdp = mdp;
         this.active = active;
         this.role = role;
+        this.listeFav = new ArrayList<>();
+    }
+
+    public List<Vente> getListeFav(){
+        return this.listeFav;
+    }
+
+    public void addListeFav(Vente vente){
+        this.listeFav.add(vente);
     }
 
     public int getId(){
