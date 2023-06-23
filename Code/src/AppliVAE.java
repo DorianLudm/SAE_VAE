@@ -71,6 +71,15 @@ public class AppliVAE extends Application{
 
     private ModeleVAE modele;
 
+    private TextField nomT;
+    private TextField prixdebT;
+    private TextField prixminT;
+    private ComboBox<String> categorieC;
+    private ComboBox<String> etatC;
+    private TextArea descriptionT;
+
+
+
 
 
     @Override
@@ -120,6 +129,7 @@ public class AppliVAE extends Application{
         this.message.setGraphic(new ImageView(new Image("file:img/message.png", 50, 50, true, true)));
         this.message.setStyle("-fx-background-color: #"+this.couleur+";");
         this.message.setOnAction(new ControleurPopUp(this));
+
 
         this.favoris = new Button();
         this.favoris.setGraphic(new ImageView(new Image("file:img/favoris.png", 50, 50, true, true)));
@@ -217,6 +227,10 @@ public class AppliVAE extends Application{
         gauche.setPadding(new Insets(0, 150, 0, 100));
         gauche.setStyle("-fx-border-width: 0 5px 0 0;-fx-border-color: #"+this.couleur+";-fx-border-style: solid;");
         gauche.setAlignment(Pos.CENTER);
+
+
+        //Droite
+
   
         VBox droite = new VBox();
   
@@ -295,10 +309,11 @@ public class AppliVAE extends Application{
         desc.setAlignment(Pos.CENTER_LEFT);
 
 
-        TextArea descriptionT = new TextArea();
-        descriptionT.setPadding(new Insets(8));
-        descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
-        descriptionT.setWrapText(true);
+        this.descriptionT = new TextArea();
+        this.descriptionT.setPadding(new Insets(8));
+        this.descriptionT.setStyle("-fx-border-color: #"+this.couleur+";-fx-border-width: 5px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
+        this.descriptionT.setWrapText(true);
+
 
         Button ajouter = new Button("Ajouter");
         ajouter.setStyle("-fx-background-color: #"+this.couleur+";-fx-text-fill: #FFFFFF;-fx-border-width: 3px;-fx-border-radius: 30px;-fx-background-radius: 30px;");
@@ -328,8 +343,18 @@ public class AppliVAE extends Application{
         }
     }
 
+
+      /**
+     * Affiche la fenêtre qui permet de consulter un objet mis en vente
+     * @param nomO
+     * @param desc
+     * @param debutve
+     * @param finve
+     * @param prixbase
+     * @param montantAct
+     */
     public void modeObjets(int idVe, String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
-        
+
         HBox resO = new HBox();
 
 
@@ -462,6 +487,33 @@ public class AppliVAE extends Application{
 
         this.panelCentral = resO;
     }
+
+
+    public String getNom() {
+        return this.nomT.getText();
+    }
+    
+    public String getPrixDeDepart() {
+        return this.prixdebT.getText();
+    }
+    
+    public String getPrixVenteMinimum() {
+        return this.prixminT.getText();
+    }
+    
+    public String getCategorie() {
+        return this.categorieC.getValue().toString();
+    }
+    
+    public String getEtat() {
+        return this.etatC.getValue().toString();
+    }
+    
+    public String getDescription() {
+        return this.descriptionT.getText();
+    }
+    
+
   
     public void modeProfil() {
         VBox Vprofil = new VBox();
@@ -586,6 +638,7 @@ public class AppliVAE extends Application{
         scrollPaneR.setStyle("-fx-background-color: transparent; -fx-background-color: linear-gradient(to right, transparent, white); -fx-border-width: 5 0 0 0 ; -fx-border-color: #"+this.couleur+"; -fx-border-style: solid ;");
         scrollPaneR.setPadding(new Insets(10, 0, 0, 0));
 
+
         scrollPaneR.setHbarPolicy(ScrollBarPolicy.ALWAYS);
         scrollPaneR.setVbarPolicy(ScrollBarPolicy.NEVER);
 
@@ -618,10 +671,11 @@ public class AppliVAE extends Application{
         
 
 
+
+
+        scrollPaneA.setPrefSize(1200,600);
+        
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
-
-
-
 
 
 
@@ -638,62 +692,9 @@ public class AppliVAE extends Application{
 
         VBox container3 = new VBox();
         
-        for (int i = 1; i <= 10; i++) {
-            
-            HBox hButton = new HBox();
-            
-            
-            VBox vButton = new VBox();
-            ImageView imgO = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
-            Label titre = new Label("Nom de \nl'objet");
-            titre.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
-            titre.setTextFill(Color.web("#FFFFFF"));
 
-            HBox boxPrix = new HBox();
-            Label prix = new Label("Prix de l'objet");
-            prix.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            prix.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoPrix = new ImageView(new Image("file:img/euro.png", 30, 30, true, true));
-            boxPrix.getChildren().addAll(prix, logoPrix);
-            boxPrix.setSpacing(10);
-            boxPrix.setAlignment(Pos.CENTER_LEFT);
-
-            HBox boxTemps = new HBox();
-            Label temps = new Label("Temps restant");
-            temps.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            temps.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoTemps = new ImageView(new Image("file:img/chrono.png", 30, 30, true, true));
-            boxTemps.getChildren().addAll(temps, logoTemps);
-            boxTemps.setSpacing(10);
-            boxTemps.setAlignment(Pos.CENTER_LEFT);
-
-            HBox boxFavoris = new HBox();
-            Label favoris = new Label("Favoris");
-            favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 20));
-            favoris.setTextFill(Color.web("#FFFFFF"));
-            ImageView logoFavoris = new ImageView(new Image("file:img/coeur.png", 30, 30, true, true));
-            boxFavoris.getChildren().addAll(favoris, logoFavoris);
-            boxFavoris.setSpacing(10);
-            boxFavoris.setAlignment(Pos.CENTER_LEFT);
-
-            vButton.getChildren().addAll(titre,boxPrix,boxTemps,boxFavoris);
-            vButton.setSpacing(10);
-            vButton.setAlignment(Pos.CENTER);
-            
-
-            hButton.getChildren().addAll(imgO,vButton);
-            hButton.setAlignment(Pos.CENTER);
-            hButton.setSpacing(10);
-
-            Button button = new Button();
-            // button.setOnAction(new ControleurObjet(this));
-            button.setGraphic(hButton);
-
-
-            button.setStyle("-fx-background-color: #"+this.couleur+"; -fx-background-radius: 25px");
-
-            button.setPrefSize(410, 220);
-            container3.getChildren().add(button);
+        for (Button but: this.modele.getMesVentes(10,this.couleur)) {
+            container3.getChildren().add(but);
         }
 
         ScrollPane scrollPaneO = new ScrollPane();
@@ -730,6 +731,7 @@ public class AppliVAE extends Application{
         this.panelCentral = panel;
     }
 
+
     public Alert popUpIndisponible(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Cette fonctionnalité n'est pas encore disponible.\nVeuillez réessayer plus tard.");  
         alert.setHeaderText("Non disponible");
@@ -737,7 +739,7 @@ public class AppliVAE extends Application{
         return alert;
     }
 
-    //public void modeUser()
+
 
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
@@ -792,11 +794,13 @@ public class AppliVAE extends Application{
         this.stage = stage;
 
         this.stage.setTitle("VAE");
+
         // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
         // stage.setX(screenBounds.getMinX());
         // stage.setY(screenBounds.getMinY());
         // stage.setWidth(screenBounds.getWidth());
         // stage.setHeight(screenBounds.getHeight());
+
         
         this.stage.setScene(this.scene);
         
