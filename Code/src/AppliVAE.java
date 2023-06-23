@@ -776,16 +776,8 @@ public class AppliVAE extends Application{
         this.vueConnexion = new ConnexionIHM(this);
         this.scene = new Scene(this.vueConnexion, 400, 650);
         this.stage = stage;
-
-        this.stage.setTitle("VAE");
-        // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
-        // stage.setX(screenBounds.getMinX());
-        // stage.setY(screenBounds.getMinY());
-        // stage.setWidth(screenBounds.getWidth());
-        // stage.setHeight(screenBounds.getHeight());
-        
+        this.stage.setTitle("VAE");        
         this.stage.setScene(this.scene);
-        
         this.majAffichage();
         this.stage.show();
     }
