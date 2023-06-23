@@ -1,7 +1,10 @@
 import java.io.File;
 
 public class Photo {
+    /**L'identifiant de la photo */
     private int id;
+
+    /**Le titre  */
     private String titre;
     private String urlImg;
     private Objet objet;
