@@ -19,7 +19,6 @@ public class ControleurAccueil implements EventHandler<ActionEvent> {
         catch(SQLException e){
             
         }
-        
         this.vueVAE.majAffichage();
     }
 }

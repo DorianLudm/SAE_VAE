@@ -48,6 +48,10 @@ public class ModeleVAE {
         this.user = user;
     }
 
+    public Utilisateur getUser(){
+        return this.user;
+    }
+
     // public List<VBox> getEncheresLiked(){
     //     List<VBox> res = new ArrayList<>();
     //     for(Enchere elem: this.user.getEncheresLiked()){
@@ -251,6 +255,12 @@ public class ModeleVAE {
         }
         return listeCat;
     }
+
+
+
+
+
+    //public void setObjet()
     
 
 
