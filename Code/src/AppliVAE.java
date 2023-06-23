@@ -339,8 +339,17 @@ public class AppliVAE extends Application{
         }
     }
 
-    public void modeObjets(String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
-        
+      /**
+     * Affiche la fenêtre qui permet de consulter un objet mis en vente
+     * @param nomO
+     * @param desc
+     * @param debutve
+     * @param finve
+     * @param prixbase
+     * @param montantAct
+     */
+    public void modeObjets(int idVe, String nomO, String desc, String debutve, String finve, String prixbase, String montantAct){
+
         HBox resO = new HBox();
 
 
@@ -416,11 +425,11 @@ public class AppliVAE extends Application{
         nomArticle.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
 
         HBox hbox1 = new HBox();
-        Label ajouteLe = new Label("Ajouté le :"+debutve);
+        Label ajouteLe = new Label("Ajouté le : "+debutve);
         ajouteLe.setStyle("-fx-text-fill: #"+this.couleur+";");
         ajouteLe.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView ajouteLeI = new ImageView(new Image("file:img/calendar.png", 50, 50, true, true));
-        Label prixDep = new Label("Prix de départ :"+prixbase);
+        Label prixDep = new Label("Prix de départ : "+prixbase);
         prixDep.setStyle("-fx-text-fill: #"+this.couleur+";");
         prixDep.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView prixDepI = new ImageView(new Image("file:img/euro2.png", 50, 50, true, true));
@@ -430,15 +439,19 @@ public class AppliVAE extends Application{
 
 
         HBox hbox2 = new HBox();
-        Label tempsRestant = new Label("Temps restant :"+finve);
+        Label tempsRestant = new Label("Temps restant : "+finve);
         tempsRestant.setStyle("-fx-text-fill: #"+this.couleur+";");
         tempsRestant.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView tempsRestantI = new ImageView(new Image("file:img/stopwatch.png", 50, 50, true, true));
-        Label favoris = new Label("Favoris : ####");
+        Label favoris = new Label("Favoris");
         favoris.setStyle("-fx-text-fill: #"+this.couleur+";");
         favoris.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         ImageView favorisI = new ImageView(new Image("file:img/favourite-heart.png", 50, 50, true, true));
-        hbox2.getChildren().addAll(tempsRestant, tempsRestantI, favoris, favorisI);
+        Button favB = new Button();
+        favB.setGraphic(favorisI);
+        favB.setStyle("-fx-background-color: #FFF5EE");
+        favB.setOnAction(new ControleurFav(this, this.modele, idVe));
+        hbox2.getChildren().addAll(tempsRestant, tempsRestantI, favoris, favB);
         hbox2.setSpacing(10);
         hbox2.setAlignment(Pos.CENTER_LEFT);
 

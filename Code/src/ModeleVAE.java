@@ -223,6 +223,7 @@ public class ModeleVAE {
         return listeCat;
     }
 
+
     /**
      * Récupère le numéro maximum de vente.
      *

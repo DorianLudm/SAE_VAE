@@ -42,4 +42,15 @@ public class Enchere {
     public void setMontant(double newMontant){
         this.montant = newMontant;
     }
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Enchere){
+            Enchere enchere = (Enchere) o;
+            return this.encherisseur.equals(enchere.getUtilisateur()) &&
+                    this.vente.equals(enchere.getVente()) &&
+                    this.dateheure.equals(enchere.getDateHeure()) &&
+                    this.montant == enchere.getMontant();
+        }
+        return false;
+    }
 }
