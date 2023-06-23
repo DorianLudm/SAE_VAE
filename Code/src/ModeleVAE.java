@@ -212,6 +212,7 @@ public class ModeleVAE {
         return listeCat;
     }
 
+
     public int maxNumVente() throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select max(idve) from VENTE");
@@ -302,6 +303,7 @@ public class ModeleVAE {
                 
                 String finVe = rs.getString(2);
                 String nomOb = rs.getString(1);
+
 
 
                 ImageView image = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));

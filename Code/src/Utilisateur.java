@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilisateur {
     /**L'identifiant de l'utilisateur */
     private int idUt;
@@ -16,6 +19,7 @@ public class Utilisateur {
 
     /**Le rôle de l'utilisateur */
     private Role role;
+    private List<Vente> listeFav;
 
     /**
      * Constructeur de base de la classe Utilisateur
@@ -33,6 +37,15 @@ public class Utilisateur {
         this.mdp = mdp;
         this.active = active;
         this.role = role;
+        this.listeFav = new ArrayList<>();
+    }
+
+    public List<Vente> getListeFav(){
+        return this.listeFav;
+    }
+
+    public void addListeFav(Vente vente){
+        this.listeFav.add(vente);
     }
 
     /**
