@@ -20,24 +20,16 @@ import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
+
+
+
 public class ModeleVAE {
-    /**La connexion */
     private ConnexionBD laConnexion;
-
-    /**L'utilisateur de l'application */
     private Utilisateur user;
-
     private Statement st;
-
-    /**L'application */
     private AppliVAE app;
 
 
-    /**
-     * Constructeur de base de la classe ModeleVAE
-     * @param laConnexion
-     * @param app
-     */
     public ModeleVAE(ConnexionBD laConnexion, AppliVAE app){
         // try{
         //     this.laConnexion = new ConnexionBD();
@@ -53,29 +45,16 @@ public class ModeleVAE {
         this.app = app;
     }
 
-    /**
-     * Rentre les informations de l'utilisateur qui se connecte à l'application
-     * @param user
-     */
     public void setUser(Utilisateur user){
         this.user = user;
     }
 
-    /**
-     * @return l'utilisateur de l'application
-     */
     public Utilisateur getUser(){
         return this.user;
     }
 
 
-    /**
-     * 
-     * @param nombreDencheres
-     * @param couleur
-     * @return La liste des boutons représentant les enchères qui ont récemment été ajoutées
-     * @throws SQLException
-     */
+
     public List<Button> getEncheresRecentes(int nombreDencheres, String couleur) throws SQLException{
         List<Button> res = new ArrayList<>();
         this.st = this.laConnexion.createStatement();
@@ -85,15 +64,24 @@ public class ModeleVAE {
             if (!rs.getString(2).equals("0")){    
                 VBox vButton = new VBox();
 
+
                 int montant = rs.getInt(4);
                 if (montant == 0){
                     montant = rs.getInt(5);
                 }
                 
+                    
+                
+                
+
                 String finVe = rs.getString(2);
                 String nomOb = rs.getString(1);
 
+
                 ImageView image = new ImageView(new Image("file:img/app_photo.png", 200,200, true, true));
+
+                
+                
             
                 Label labelObjet = new Label(nomOb);
                 labelObjet.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
@@ -109,6 +97,7 @@ public class ModeleVAE {
 
                 boxPrix.getChildren().addAll(labelPrix, logoPrix);
 
+
                 HBox boxTemps = new HBox();
 
                 Label tempsRestant = new Label(finVe);
@@ -123,22 +112,30 @@ public class ModeleVAE {
                 Button button = new Button();
                 button.setGraphic(vButton);
 
+
                 button.setStyle("-fx-background-color: #"+couleur+"; -fx-background-radius: 25px");
                 button.setOnAction(new ControleurObjet(this,rs.getInt(3),this.app));
 
                 button.setPrefSize(270, 320);
                 res.add(button);
             }
+ 
+
             i -= 1;
+
+
+            
         }
         return res;
     }
 
-    /**
-     * @param ob
-     * @throws SQLException
-     * @return le montant de l'objet en chaîne de caractères
-     */
+
+
+
+
+
+
+
     public String getMontantObjet(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select IFNULL(montantMax, 0) as montantMax, prixbase from OBJET natural join VENTE natural left join MONTANTENCH where idob="+String.valueOf(ob.getId()));
@@ -156,11 +153,8 @@ public class ModeleVAE {
 
     }
 
-    /**
-     * @param ob
-     * @throws SQLException
-     * @return la date de début de la vente en chaînes de caractères
-     */
+
+
     public String getDebutVente(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select debutve from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
@@ -171,12 +165,6 @@ public class ModeleVAE {
         return res;
     }
 
-    /**
-     * 
-     * @param ob
-     * @throws SQLException
-     * @return la date de fin de la vente en chaînes de caractères
-     */
     public String getFinVente(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select finve from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
@@ -187,12 +175,6 @@ public class ModeleVAE {
         return res;
     }
 
-    /**
-     * 
-     * @param ob
-     * @throws SQLException
-     * @return le prix de base en chaînes de caractères
-     */
     public String getPrixBase(Objet ob) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select prixbase from OBJET natural join VENTE where idob="+String.valueOf(ob.getId()));
@@ -204,12 +186,7 @@ public class ModeleVAE {
     }
 
 
-    /**
-     * 
-     * @param idv
-     * @throws SQLException
-     * @return l'objet grâce à l'identifiant de la vente
-     */
+
     public Objet getObjet(int idv) throws SQLException{
         this.st = this.laConnexion.createStatement();
         ResultSet rs = this.st.executeQuery("select idut,pseudout,emailut,mdput,activeut,idrole,nomrole,idob,nomob,descriptionob,idcat,nomcat from UTILISATEUR natural join ROLE natural join OBJET natural join VENTE natural join CATEGORIE where idve="+String.valueOf(idv));
@@ -223,11 +200,8 @@ public class ModeleVAE {
         return obj;
     }
 
-    /**
-     * 
-     * @throws SQLException
-     * @return la liste des catégories présentes dans la base de données
-     */
+    
+
     public List<String> getCategorie() throws SQLException{
         List<String> listeCat = new ArrayList<>();
         this.st = this.laConnexion.createStatement();
@@ -237,7 +211,6 @@ public class ModeleVAE {
         }
         return listeCat;
     }
-
 
     public int maxNumVente() throws SQLException{
         this.st = this.laConnexion.createStatement();
@@ -276,12 +249,6 @@ public class ModeleVAE {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String dateTimeFormatted = dateTime.format(formatter);
 
-
-
-
-
-            // Obtention de la date et l'heure actuelles
-            // LocalDateTime dateTime2 = LocalDateTime.now();
 
             // Ajout de deux semaines à la date et l'heure actuelles
             LocalDateTime dateTimePlusTwoWeeks = dateTime.plusWeeks(2);
@@ -392,6 +359,5 @@ public class ModeleVAE {
         }
         return res;
     }
-
 
 }

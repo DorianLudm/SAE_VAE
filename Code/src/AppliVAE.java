@@ -622,8 +622,6 @@ public class AppliVAE extends Application{
 
         scrollPaneR.setPrefSize(1200,600);
 
-
-
         Label actu = new Label("Fil d'actu");
         actu.setFont(Font.font("Ubuntu", FontWeight.BOLD, 30));
         actu.setTextFill(Color.web("#"+this.couleur));
@@ -646,13 +644,7 @@ public class AppliVAE extends Application{
 
         scrollPaneA.setPrefSize(1200,600);
         
-
-
         gauche.getChildren().addAll(recommandation, scrollPaneR, actu, scrollPaneA);
-
-
-
-
 
 
         VBox droite = new VBox();
@@ -705,7 +697,6 @@ public class AppliVAE extends Application{
         this.panelCentral = panel;
     }
 
-    //public void modeUser()
 
     public void afficheFenetreConexion(){
         GridPane root = new ConnexionIHM(this);
@@ -760,11 +751,6 @@ public class AppliVAE extends Application{
         this.stage = stage;
 
         this.stage.setTitle("VAE");
-        // Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Retrieve screen dimensions
-        // stage.setX(screenBounds.getMinX());
-        // stage.setY(screenBounds.getMinY());
-        // stage.setWidth(screenBounds.getWidth());
-        // stage.setHeight(screenBounds.getHeight());
         
         this.stage.setScene(this.scene);
         
